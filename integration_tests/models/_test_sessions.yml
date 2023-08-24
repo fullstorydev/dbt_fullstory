@@ -1,0 +1,262 @@
+version: 2
+
+models:
+  - name: test_sessions
+    tests:
+      - dbt_utils.expression_is_true:
+          name: simple_session_duration_is_3600
+          expression: duration = 3600
+          config:
+            where: full_session_id = '1:1'
+
+      - dbt_utils.expression_is_true:
+          name: simple_session_total_events_is_3
+          expression: total_events = 3
+          config:
+            where: full_session_id = '1:1'
+
+      - dbt_utils.expression_is_true:
+          name: identify_user_id_is_correct
+          expression: user_id = 'good_user_id'
+          config:
+            where: full_session_id = '2:2'
+
+      - dbt_utils.expression_is_true:
+          name: identify_last_email_is_correct
+          expression: last_email = 'good_user_email@fullstory.com'
+          config:
+            where: full_session_id = '2:2'
+
+      - dbt_utils.expression_is_true:
+          name: identify_last_display_name_is_correct
+          expression: last_display_name = 'good_display_name'
+          config:
+            where: full_session_id = '2:2'
+
+      - dbt_utils.expression_is_true:
+          name: session_total_background_events_is_correct
+          expression: total_background_events = 2
+          config:
+            where: full_session_id = '3:3'
+
+      - dbt_utils.expression_is_true:
+          name: session_total_change_events_is_correct
+          expression: total_change_events = 2
+          config:
+            where: full_session_id = '3:3'
+
+      - dbt_utils.expression_is_true:
+          name: session_total_click_events_is_correct
+          expression: total_click_events = 2
+          config:
+            where: full_session_id = '3:3'
+
+      - dbt_utils.expression_is_true:
+          name: session_total_consent_events_is_correct
+          expression: total_consent_events = 2
+          config:
+            where: full_session_id = '3:3'
+
+      - dbt_utils.expression_is_true:
+          name: session_total_console_message_events_is_correct
+          expression: total_console_message_events = 2
+          config:
+            where: full_session_id = '3:3'
+
+      - dbt_utils.expression_is_true:
+          name: session_total_copy_events_is_correct
+          expression: total_copy_events = 2
+          config:
+            where: full_session_id = '3:3'
+
+      - dbt_utils.expression_is_true:
+          name: session_total_crash_events_is_correct
+          expression: total_crash_events = 2
+          config:
+            where: full_session_id = '3:3'
+
+      - dbt_utils.expression_is_true:
+          name: session_total_cumulative_layout_shift_events_is_correct
+          expression: total_cumulative_layout_shift_events = 2
+          config:
+            where: full_session_id = '3:3'
+
+      - dbt_utils.expression_is_true:
+          name: session_total_custom_events_is_correct
+          expression: total_custom_events = 2
+          config:
+            where: full_session_id = '3:3'
+
+      - dbt_utils.expression_is_true:
+          name: session_total_element_seen_events_is_correct
+          expression: total_element_seen_events = 2
+          config:
+            where: full_session_id = '3:3'
+
+      - dbt_utils.expression_is_true:
+          name: session_total_exception_events_is_correct
+          expression: total_exception_events = 2
+          config:
+            where: full_session_id = '3:3'
+
+      - dbt_utils.expression_is_true:
+          name: session_total_first_input_delay_events_is_correct
+          expression: total_first_input_delay_events = 2
+          config:
+            where: full_session_id = '3:3'
+
+      - dbt_utils.expression_is_true:
+          name: session_total_form_abandon_events_is_correct
+          expression: total_form_abandon_events = 2
+          config:
+            where: full_session_id = '3:3'
+
+      - dbt_utils.expression_is_true:
+          name: session_total_highlight_events_is_correct
+          expression: total_highlight_events = 2
+          config:
+            where: full_session_id = '3:3'
+
+      - dbt_utils.expression_is_true:
+          name: session_total_identify_events_is_correct
+          expression: total_identify_events = 2
+          config:
+            where: full_session_id = '3:3'
+
+      - dbt_utils.expression_is_true:
+          name: session_total_keyboard_close_events_is_correct
+          expression: total_keyboard_close_events = 2
+          config:
+            where: full_session_id = '3:3'
+
+      - dbt_utils.expression_is_true:
+          name: session_total_keyboard_open_events_is_correct
+          expression: total_keyboard_open_events = 2
+          config:
+            where: full_session_id = '3:3'
+
+      - dbt_utils.expression_is_true:
+          name: session_total_load_events_is_correct
+          expression: total_load_events = 2
+          config:
+            where: full_session_id = '3:3'
+
+      - dbt_utils.expression_is_true:
+          name: session_total_low_memory_events_is_correct
+          expression: total_low_memory_events = 2
+          config:
+            where: full_session_id = '3:3'
+
+      - dbt_utils.expression_is_true:
+          name: session_total_mouse_thrash_events_is_correct
+          expression: total_mouse_thrash_events = 2
+          config:
+            where: full_session_id = '3:3'
+
+      - dbt_utils.expression_is_true:
+          name: session_total_navigate_events_is_correct
+          expression: total_navigate_events = 2
+          config:
+            where: full_session_id = '3:3'
+
+      - dbt_utils.expression_is_true:
+          name: session_total_paste_events_is_correct
+          expression: total_paste_events = 2
+          config:
+            where: full_session_id = '3:3'
+
+      - dbt_utils.expression_is_true:
+          name: session_total_pinch_gesture_events_is_correct
+          expression: total_pinch_gesture_events = 2
+          config:
+            where: full_session_id = '3:3'
+
+      - dbt_utils.expression_is_true:
+          name: session_total_request_events_is_correct
+          expression: total_request_events = 2
+          config:
+            where: full_session_id = '3:3'
+
+      - dbt_utils.expression_is_true:
+          name: session_total_web_events_is_correct
+          expression: total_web_events = 2
+          config:
+            where: full_session_id = '4:4'
+
+      - dbt_utils.expression_is_true:
+          name: session_total_mobile_app_events_is_correct
+          expression: total_mobile_app_events = 3
+          config:
+            where: full_session_id = '4:4'
+
+      - dbt_utils.expression_is_true:
+          name: session_last_user_agent_is_correct
+          expression: last_user_agent = 'good_user_agent'
+          config:
+            where: full_session_id = '5:5'
+
+      - dbt_utils.expression_is_true:
+          name: session_last_device_type_is_correct
+          expression: last_device_type = 'good_device_type'
+          config:
+            where: full_session_id = '5:5'
+
+      - dbt_utils.expression_is_true:
+          name: session_last_operating_system_is_correct
+          expression: last_operating_system = 'good_operating_system'
+          config:
+            where: full_session_id = '5:5'
+
+      - dbt_utils.expression_is_true:
+          name: session_last_browser_is_correct
+          expression: last_browser = 'good_browser'
+          config:
+            where: full_session_id = '5:5'
+
+      - dbt_utils.expression_is_true:
+          name: session_last_browser_version_is_correct
+          expression: last_browser_version = 'good_browser_version'
+          config:
+            where: full_session_id = '5:5'
+
+      - dbt_utils.expression_is_true:
+          name: session_last_ip_address_is_correct
+          expression: last_ip_address = 'good_ip_address'
+          config:
+            where: full_session_id = '5:5'
+
+      - dbt_utils.expression_is_true:
+          name: session_last_country_is_correct
+          expression: last_country = 'good_country'
+          config:
+            where: full_session_id = '5:5'
+
+      - dbt_utils.expression_is_true:
+          name: session_last_region_is_correct
+          expression: last_region = 'good_region'
+          config:
+            where: full_session_id = '5:5'
+
+      - dbt_utils.expression_is_true:
+          name: session_last_city_is_correct
+          expression: last_city = 'good_city'
+          config:
+            where: full_session_id = '5:5'
+
+      - dbt_utils.expression_is_true:
+          name: session_last_lat_long_is_correct
+          expression: last_lat_long = 'good_lat_long'
+          config:
+            where: full_session_id = '5:5'
+
+      - dbt_utils.expression_is_true:
+          name: session_anonymous_user_id_is_correct
+          expression: user_id = 'anon_9'
+          config:
+            where: full_session_id = '9:9'
+
+      - dbt_utils.expression_is_true:
+          name: session_device_identify_user_works
+          expression: user_id = 'session_device_identify_user_id'
+          config:
+            where: full_session_id = '12:1'

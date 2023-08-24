@@ -1,0 +1,8 @@
+
+.dbtenv/
+.ds_store
+.vscode/
+target/
+dbt_packages/
+logs/
+working/

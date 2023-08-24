@@ -1,0 +1,88 @@
+name: "dbt_fullstory"
+version: "0.1.0"
+config-version: 2
+
+# This setting configures which "profile" dbt uses for this project.
+profile: "dbt_fullstory"
+
+# These configurations specify where dbt should look for different types of files.
+# The `model-paths` config, for example, states that models in this project can be
+# found in the "models/" directory. You probably won't need to change these!
+model-paths: ["models"]
+analysis-paths: ["analyses"]
+test-paths: ["tests"]
+seed-paths: ["seeds"]
+macro-paths: ["macros"]
+snapshot-paths: ["snapshots"]
+
+clean-targets: # directories to be removed by `dbt clean`
+  - "target"
+  - "dbt_packages"
+
+# Configuring models
+# Full documentation: https://docs.getdbt.com/docs/configuring-models
+models:
+  # This controls how incremental models are changed when dbt encounters schema changes.
+  # See https://docs.getdbt.com/docs/build/incremental-models#what-if-the-columns-of-my-incremental-model-change for more details.
+  # - ignore -> the dbt default
+  # - fail -> triggers an error message, we will pick for safety since incremental processing could be expensive and time consuming to add/drop columns
+  # - append_new_columns -> will only add new columns, will not drop columns
+  # - sync_all_columns -> is helpful for dev, provided datasets are reasonably small, and will add and drop columns as needed
+  +on_schema_change: fail
+
+  # This controls how incremental models are sync'ed.
+  # The FullStory event pipeline is not a monotonic process (append-only);
+  # therefore, merge is required on incremental models.
+  +incremental_strategy: merge
+
+  dbt_fullstory:
+    # Materializations for "final", top-level semantic models are controlled via a config block in the sql files themselves.
+    # The models in the /models folder are intended for use in databases and/or consumption in other dbt packages.
+    # See https://docs.getdbt.com/docs/build/incremental-models for more details.
+
+    # These materializations are for the protected, intermediate and staging models; they are not intended for direct querying
+    # or use in other dbt packages.
+    staging:
+      +materialized: ephemeral
+    intermediate:
+      +materialized: ephemeral
+
+  +persist_docs:
+    columns: true
+    relation: true
+
+vars:
+  dbt_date:time_zone: Etc/UTC
+  fullstory_replay_host: app.fullstory.com
+
+  # For filtering all event data, if necessary
+  fullstory_min_event_time: "1900-01-01 00:00:00" # Inclusive
+
+  fullstory_events_types:
+    [
+      "background",
+      "change",
+      "click",
+      "consent",
+      "console_message",
+      "copy",
+      "crash",
+      "cumulative_layout_shift",
+      "custom",
+      "element_seen",
+      "exception",
+      "first_input_delay",
+      "form_abandon",
+      "highlight",
+      "identify",
+      "keyboard_close",
+      "keyboard_open",
+      "load",
+      "low_memory",
+      "mouse_thrash",
+      "navigate",
+      "page_properties",
+      "paste",
+      "pinch_gesture",
+      "request",
+    ]
