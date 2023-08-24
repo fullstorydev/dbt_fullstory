@@ -21,7 +21,7 @@ To deploy or update this package in your warehouse, follow these steps:
 #### BigQuery
 ```yaml
 dbt_fullstory:
-  target: fullstory_data_destinations
+  target: o-abcd-na1 # Your FullStory org ID
   outputs:
     staging:
       # The project and dataset should match Data Destinations settings
@@ -36,7 +36,7 @@ dbt_fullstory:
 #### SnowFlake
 ```yaml
 dbt_fullstory:
-  target: fullstory_data_destinations
+  target: o-abcd-na1 # Your FullStory org ID
   outputs:
     staging:
       # The account, database, and warehouse should match Data Destinations
