@@ -1,0 +1,4 @@
+name,description
+mobile_app,"Mobile app as a orginating source of events."
+server,"Server-side API as the orginating source of events."
+web,"Website as the orginating source of events."

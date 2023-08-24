@@ -1,0 +1,20 @@
+version: 2
+
+seeds:
+  - name: event_types
+    description: Classifiers for the types of event.
+    columns:
+      - name: name
+        tests:
+          - unique
+          - not_null
+      - name: description
+
+  - name: source_types
+    description: Classifiers for the originating source of events.
+    columns:
+      - name: name
+        tests:
+          - unique
+          - not_null
+      - name: description

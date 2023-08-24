@@ -1,0 +1,71 @@
+name: "dbt_fullstory_integration_tests"
+version: "0.0.0"
+config-version: 2
+
+# This setting configures which "profile" dbt uses for this project.
+profile: "dbt_fullstory_integration_tests"
+
+# These configurations specify where dbt should look for different types of files.
+# The `model-paths` config, for example, states that models in this project can be
+# found in the "models/" directory. You probably won't need to change these!
+model-paths: ["models"]
+analysis-paths: ["analyses"]
+test-paths: ["tests"]
+seed-paths: ["seeds"]
+macro-paths: ["macros"]
+snapshot-paths: ["snapshots"]
+
+clean-targets: # directories to be removed by `dbt clean`
+  - "target"
+  - "dbt_packages"
+
+# Configuring models
+# Full documentation: https://docs.getdbt.com/docs/configuring-models
+models:
+  +materialized: view
+
+  +persist_docs:
+    columns: true
+    relation: true
+
+vars:
+  dbt_date:time_zone: Etc/UTC
+  fullstory_replay_host: app.fullstory.com
+  fullstory_events_types:
+    [
+      "background",
+      "change",
+      "click",
+      "consent",
+      "console_message",
+      "copy",
+      "crash",
+      "cumulative_layout_shift",
+      "custom",
+      "element_seen",
+      "exception",
+      "first_input_delay",
+      "form_abandon",
+      "highlight",
+      "identify",
+      "keyboard_close",
+      "keyboard_open",
+      "load",
+      "low_memory",
+      "mouse_thrash",
+      "navigate",
+      "page_properties",
+      "paste",
+      "pinch_gesture",
+      "request",
+    ]
+
+seeds:
+  dbt_fullstory_integration_tests:
+    +enabled: true
+
+    # Override column types on all
+    +column_types:
+      event_time: datetime
+      processed_time: datetime
+      updated_time: datetime

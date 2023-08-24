@@ -1,0 +1,12 @@
+**/.dbtenv/
+**/.vscode/
+**/target/
+**/dbt_packages/
+**/logs/
+**/macros/*.sql
+**/working/
+**/.git
+**/*.sql
+**/*.md
+**/*.csv
+**/*.txt

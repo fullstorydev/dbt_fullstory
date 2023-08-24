@@ -1,0 +1,19 @@
+version: 2
+
+sources:
+  - name: fullstory
+    database: "{{ target.database }}"
+    schema: "{{ target.schema or target.dataset}}"
+    tables:
+      - name: events
+        description: The FullStory events table.
+        identifier: "{% if target.type == 'bigquery' %}fullstory_events_{{ modules.re.sub('[^a-zA-Z\\d_\\-]', '_', target.name) }}{% else %}events{% endif %}"
+        columns:
+          - name: event_id
+          - name: device_id
+          - name: session_id
+          - name: view_id
+          - name: event_type
+          - name: event_properties
+          - name: source_type
+          - name: source_properties
