@@ -32,6 +32,7 @@ jobs:
       - image: cimg/python:3.11.4
 
     steps:
+      - checkout
       - restore_cache:
           key: *deps1-cache
 
@@ -59,6 +60,7 @@ jobs:
     docker:
       - image: cimg/python:3.11.4
     steps:
+      - checkout
       - restore_cache:
           key: *deps1-cache
 
@@ -84,6 +86,7 @@ jobs:
     docker:
       - image: cimg/python:3.11.4
     steps:
+      - checkout
       - restore_cache:
           key: *deps1-cache
 
