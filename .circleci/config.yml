@@ -1,0 +1,67 @@
+version: 2.1
+
+jobs:
+  build-and-test:
+    docker:
+      - image: cimg/python:3.11.4
+    steps:
+      - checkout
+
+      - run:
+          run: setup_creds
+          name: "Setup Credentials"
+          command: |
+            echo $BIGQUERY_SERVICE_ACCOUNT_JSON > ${HOME}/bigquery-service-key.json
+
+      - restore_cache:
+          key: &deps1-cache deps1-{{ .Branch }}-{{ checksum "requirements.txt" }}
+
+      - run:
+          name: "Setup dbt"
+          command: |
+            python3 -m venv venv
+            . venv/bin/activate
+
+            pip install --upgrade pip
+            pip install -r requirements.txt
+
+            mkdir -p ~/.dbt
+            cp integration_tests/ci/profiles.yml ~/.dbt/profiles.yml
+
+      - save_cache:
+          key: *deps1-cache
+          paths:
+            - "venv"
+
+      - run:
+          name: "Run Tests - BigQuery"
+          environment:
+            BIGQUERY_SERVICE_KEY_PATH: "/home/circleci/bigquery-service-key.json"
+
+          command: |
+            . venv/bin/activate
+            echo `pwd`
+            cd integration_tests
+            dbt deps --target bigquery --vars 'events_table: fullstory_events_integration_tests'
+            dbt seed --target bigquery --vars 'events_table: fullstory_events_integration_tests'
+            dbt compile --target bigquery --vars 'events_table: fullstory_events_integration_tests'
+            dbt run --target bigquery --vars 'events_table: fullstory_events_integration_tests'
+            dbt test --target bigquery --vars 'events_table: fullstory_events_integration_tests'
+
+      - run:
+          name: "Run Tests - Snowflake"
+
+          command: |
+            . venv/bin/activate
+            echo `pwd`
+            cd integration_tests
+            dbt deps --target snowflake --vars 'events_table: fullstory_events_integration_tests'
+            dbt seed --target snowflake --vars 'events_table: fullstory_events_integration_tests'
+            dbt compile --target snowflake --vars 'events_table: fullstory_events_integration_tests'
+            dbt run --target snowflake --vars 'events_table: fullstory_events_integration_tests'
+            dbt test --target snowflake --vars 'events_table: fullstory_events_integration_tests'
+
+workflows:
+  commit:
+    jobs:
+      - build-and-test
