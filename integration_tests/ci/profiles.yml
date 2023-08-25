@@ -8,19 +8,19 @@ dbt_fullstory_integration_tests:
     bigquery:
       type: bigquery
       method: service-account
-      keyfile: "{{ env_var('BIGQUERY_SERVICE_KEY_PATH', '.') }}"
-      project: "{{ env_var('BIGQUERY_GCP_PROJECT', '') }}"
+      keyfile: "{{ env_var('BIGQUERY_SERVICE_KEY_PATH') }}"
+      project: "{{ env_var('BIGQUERY_GCP_PROJECT') }}"
       dataset: "dbt_fullstory_testing"
       threads: 4
       priority: interactive
 
     snowflake:
       type: snowflake
-      account: "{{ env_var('SNOWFLAKE_ACCOUNT', '') }}"
-      user: "{{ env_var('SNOWFLAKE_TEST_USER', '') }}"
-      password: "{{ env_var('SNOWFLAKE_TEST_PASSWORD', '') }}"
-      role: "{{ env_var('SNOWFLAKE_TEST_ROLE', '') }}"
-      database: "{{ env_var('SNOWFLAKE_TEST_DATABASE', '') }}"
-      warehouse: "{{ env_var('SNOWFLAKE_TEST_WAREHOUSE, '') }}"
+      account: "{{ env_var('SNOWFLAKE_ACCOUNT') }}"
+      user: "{{ env_var('SNOWFLAKE_TEST_USER') }}"
+      password: "{{ env_var('SNOWFLAKE_TEST_PASSWORD') }}"
+      role: "{{ env_var('SNOWFLAKE_TEST_ROLE') }}"
+      database: "{{ env_var('SNOWFLAKE_TEST_DATABASE') }}"
+      warehouse: "{{ env_var('SNOWFLAKE_TEST_WAREHOUSE') }}"
       schema: dbt_fullstory_testing
       threads: 4
