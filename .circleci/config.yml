@@ -117,7 +117,7 @@ workflows:
             - compile
       - bigquery_test:
           requires:
-            - hold
+            - wait_for_approval
       - snowflake_test:
           requires:
-            - hold
+            - wait_for_approval
