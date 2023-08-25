@@ -29,6 +29,7 @@ models:
     relation: true
 
 vars:
+  events_table: fullstory_events_integration_tests
   dbt_date:time_zone: Etc/UTC
   fullstory_replay_host: app.fullstory.com
   fullstory_events_types:
@@ -64,8 +65,9 @@ seeds:
   dbt_fullstory_integration_tests:
     +enabled: true
 
-    # Override column types on all
-    +column_types:
-      event_time: datetime
-      processed_time: datetime
-      updated_time: datetime
+    fullstory_events_integration_tests:
+      +alias: "{% if target.type == 'snowflake' %}fullstory_events_integration_tests_raw{% endif %}"
+      +column_types:
+        event_time: datetime
+        processed_time: datetime
+        updated_time: datetime
