@@ -9,7 +9,7 @@ commands:
           command: ./integration_tests/ci/checksum.sh
 
       - restore_cache:
-          key: &deps1-cache deps2-{{ .Branch }}-{{ checksum "/tmp/checksum.txt" }}
+          key: &deps1-cache deps1-{{ .Branch }}-{{ checksum "/tmp/checksum.txt" }}
       - run:
           name: "Setup profile"
           command: |
@@ -42,7 +42,7 @@ jobs:
           key: *deps1-cache
           paths:
             - "venv"
-            - "dbt_packages"
+            - "integration_tests/dbt_packages"
 
   compile:
     docker:
