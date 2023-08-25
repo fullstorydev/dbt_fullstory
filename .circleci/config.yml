@@ -1,17 +1,11 @@
 version: 2.1
 
 jobs:
-  build-and-test:
+  setup_commit:
     docker:
       - image: cimg/python:3.11.4
     steps:
       - checkout
-
-      - run:
-          run: setup_creds
-          name: "Setup Credentials"
-          command: |
-            echo $BIGQUERY_SERVICE_ACCOUNT_JSON > ${HOME}/bigquery-service-key.json
 
       - restore_cache:
           key: &deps1-cache deps1-{{ .Branch }}-{{ checksum "requirements.txt" }}
@@ -33,24 +27,59 @@ jobs:
           paths:
             - "venv"
 
+  compile:
+    docker:
+      - image: cimg/python:3.11.4
+
+    steps:
       - run:
-          name: "Run Tests - BigQuery"
-          environment:
-            BIGQUERY_SERVICE_KEY_PATH: "/home/circleci/bigquery-service-key.json"
+          name: "Compile - BigQuery"
 
           command: |
             . venv/bin/activate
             echo `pwd`
             cd integration_tests
             dbt deps --target bigquery
+            dbt compile --target bigquery
+
+      - run:
+          name: "Compile - Snowflake"
+
+          command: |
+            . venv/bin/activate
+            echo `pwd`
+            cd integration_tests
+            dbt deps --target snowflake
+            dbt compile --target snowflake
+
+  bigquery_test:
+    docker:
+      - image: cimg/python:3.11.4
+    steps:
+      - run:
+          name: "Setup BigQuery Credentials"
+          command: |
+            echo $BIGQUERY_SERVICE_ACCOUNT_JSON > ${HOME}/bigquery-service-key.json
+
+      - run:
+          name: "Test - BigQuery"
+          environment:
+            BIGQUERY_SERVICE_KEY_PATH: "/home/circleci/bigquery-service-key.json"
+          command: |
+            . venv/bin/activate
+            echo `pwd`
+            dbt deps --target bigquery
             dbt seed --target bigquery
             dbt compile --target bigquery
             dbt run --target bigquery
             dbt test --target bigquery
 
+  snowflake_test:
+    docker:
+      - image: cimg/python:3.11.4
+    steps:
       - run:
-          name: "Run Tests - Snowflake"
-
+          name: "Test - Snowflake"
           command: |
             . venv/bin/activate
             echo `pwd`
@@ -64,4 +93,17 @@ jobs:
 workflows:
   commit:
     jobs:
-      - build-and-test
+      - setup_commit
+      - compile:
+          requires:
+            - setup_commit
+      - hold:
+          type: approval
+          requires:
+            - compile
+      - bigquery_test:
+          requires:
+            - hold
+      - snowflake_test:
+          requires:
+            - hold
