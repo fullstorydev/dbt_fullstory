@@ -26,6 +26,7 @@ jobs:
           key: *deps1-cache
           paths:
             - "venv"
+            - ".dbt"
 
   compile:
     docker:
