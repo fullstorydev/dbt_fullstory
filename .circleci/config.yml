@@ -1,0 +1,123 @@
+version: 2.1
+
+commands:
+  setup_job:
+    steps:
+      - checkout
+      - run:
+          name: "Generate cache key"
+          command: ./integration_tests/ci/checksum.sh
+
+      - restore_cache:
+          key: &deps1-cache deps1-{{ .Branch }}-{{ checksum "/tmp/checksum.txt" }}
+      - run:
+          name: "Setup profile"
+          command: |
+            mkdir -p ~/.dbt
+            cp integration_tests/ci/profiles.yml ~/.dbt/profiles.yml
+      - run:
+          name: "Setup BigQuery Credentials"
+          command: |
+            echo $BIGQUERY_SERVICE_ACCOUNT_JSON > ${HOME}/bigquery-service-key.json
+
+jobs:
+  setup_commit:
+    docker:
+      - image: cimg/python:3.11.4
+    steps:
+      - setup_job
+
+      - run:
+          name: "Setup dbt"
+          command: |
+            python3 -m venv venv
+            . venv/bin/activate
+
+            pip install --upgrade pip
+            pip install -r requirements.txt
+
+            cd integration_tests
+            dbt deps
+      - save_cache:
+          key: *deps1-cache
+          paths:
+            - "venv"
+            - "integration_tests/dbt_packages"
+
+  compile:
+    docker:
+      - image: cimg/python:3.11.4
+
+    steps:
+      - setup_job
+      - run:
+          name: "Compile - BigQuery"
+          environment:
+            BIGQUERY_SERVICE_KEY_PATH: "/home/circleci/bigquery-service-key.json"
+          command: |
+            . venv/bin/activate
+            echo `pwd`
+            cd integration_tests
+            dbt compile --target bigquery
+
+      - run:
+          name: "Compile - Snowflake"
+          command: |
+            . venv/bin/activate
+            echo `pwd`
+            cd integration_tests
+            dbt compile --target snowflake
+
+  bigquery_test:
+    docker:
+      - image: cimg/python:3.11.4
+    steps:
+      - setup_job
+
+      - run:
+          name: "Test - BigQuery"
+          environment:
+            BIGQUERY_SERVICE_KEY_PATH: "/home/circleci/bigquery-service-key.json"
+          command: |
+            . venv/bin/activate
+            echo `pwd`
+            cd integration_tests
+            dbt seed --target bigquery
+            dbt compile --target bigquery
+            dbt run --target bigquery
+            dbt test --target bigquery
+
+  snowflake_test:
+    docker:
+      - image: cimg/python:3.11.4
+    steps:
+      - setup_job
+
+      - run:
+          name: "Test - Snowflake"
+          command: |
+            . venv/bin/activate
+            echo `pwd`
+            cd integration_tests
+            dbt seed --target snowflake
+            dbt compile --target snowflake
+            dbt run --target snowflake
+            dbt test --target snowflake
+
+workflows:
+  commit:
+    jobs:
+      - setup_commit
+      - compile:
+          requires:
+            - setup_commit
+      - wait_for_approval:
+          type: approval
+          requires:
+            - compile
+      - bigquery_test:
+          requires:
+            - wait_for_approval
+      - snowflake_test:
+          requires:
+            - wait_for_approval
