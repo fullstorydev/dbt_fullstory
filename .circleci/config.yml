@@ -5,7 +5,7 @@ commands:
     steps:
       - checkout
       - restore_cache:
-          key: &deps1-cache deps3-{{ .Branch }}-{{ checksum "requirements.txt" }}
+          key: &deps1-cache deps1-{{ .Branch }}-{{ checksum "requirements.txt" }}
       - run:
           name: "Setup profile"
           command: |
@@ -47,6 +47,8 @@ jobs:
       - setup_job
       - run:
           name: "Compile - BigQuery"
+          environment:
+            BIGQUERY_SERVICE_KEY_PATH: "/home/circleci/bigquery-service-key.json"
           command: |
             . venv/bin/activate
             echo `pwd`
