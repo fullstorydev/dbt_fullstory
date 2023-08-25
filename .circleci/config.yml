@@ -42,11 +42,11 @@ jobs:
             . venv/bin/activate
             echo `pwd`
             cd integration_tests
-            dbt deps --target bigquery --vars 'events_table: fullstory_events_integration_tests'
-            dbt seed --target bigquery --vars 'events_table: fullstory_events_integration_tests'
-            dbt compile --target bigquery --vars 'events_table: fullstory_events_integration_tests'
-            dbt run --target bigquery --vars 'events_table: fullstory_events_integration_tests'
-            dbt test --target bigquery --vars 'events_table: fullstory_events_integration_tests'
+            dbt deps --target bigquery
+            dbt seed --target bigquery
+            dbt compile --target bigquery
+            dbt run --target bigquery
+            dbt test --target bigquery
 
       - run:
           name: "Run Tests - Snowflake"
@@ -55,11 +55,11 @@ jobs:
             . venv/bin/activate
             echo `pwd`
             cd integration_tests
-            dbt deps --target snowflake --vars 'events_table: fullstory_events_integration_tests'
-            dbt seed --target snowflake --vars 'events_table: fullstory_events_integration_tests'
-            dbt compile --target snowflake --vars 'events_table: fullstory_events_integration_tests'
-            dbt run --target snowflake --vars 'events_table: fullstory_events_integration_tests'
-            dbt test --target snowflake --vars 'events_table: fullstory_events_integration_tests'
+            dbt deps --target snowflake
+            dbt seed --target snowflake
+            dbt compile --target snowflake
+            dbt run --target snowflake
+            dbt test --target snowflake
 
 workflows:
   commit:
