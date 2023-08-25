@@ -1,0 +1,1 @@
+find . '(' -name "packages.yml" -o -name "requirements.txt" ')' -not -path "./dbt_packages/*" -exec md5sum {} \; >/tmp/checksum.txt

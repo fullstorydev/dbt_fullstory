@@ -4,8 +4,12 @@ commands:
   setup_job:
     steps:
       - checkout
+      - run:
+          name: "Generate cache key"
+          command: ./integration_tests/ci/checksum.sh
+
       - restore_cache:
-          key: &deps1-cache deps1-{{ .Branch }}-{{ checksum "requirements.txt" }}
+          key: &deps1-cache deps2-{{ .Branch }}-{{ checksum "/tmp/checksum.txt" }}
       - run:
           name: "Setup profile"
           command: |
@@ -21,10 +25,7 @@ jobs:
     docker:
       - image: cimg/python:3.11.4
     steps:
-      - checkout
-
-      - restore_cache:
-          key: *deps1-cache
+      - setup_job
 
       - run:
           name: "Setup dbt"
@@ -34,10 +35,14 @@ jobs:
 
             pip install --upgrade pip
             pip install -r requirements.txt
+
+            cd integration_tests
+            dbt deps
       - save_cache:
           key: *deps1-cache
           paths:
             - "venv"
+            - "dbt_packages"
 
   compile:
     docker:
@@ -53,7 +58,6 @@ jobs:
             . venv/bin/activate
             echo `pwd`
             cd integration_tests
-            dbt deps --target bigquery
             dbt compile --target bigquery
 
       - run:
@@ -62,7 +66,6 @@ jobs:
             . venv/bin/activate
             echo `pwd`
             cd integration_tests
-            dbt deps --target snowflake
             dbt compile --target snowflake
 
   bigquery_test:
@@ -78,7 +81,7 @@ jobs:
           command: |
             . venv/bin/activate
             echo `pwd`
-            dbt deps --target bigquery
+            cd integration_tests
             dbt seed --target bigquery
             dbt compile --target bigquery
             dbt run --target bigquery
@@ -96,7 +99,6 @@ jobs:
             . venv/bin/activate
             echo `pwd`
             cd integration_tests
-            dbt deps --target snowflake
             dbt seed --target snowflake
             dbt compile --target snowflake
             dbt run --target snowflake
@@ -109,7 +111,7 @@ workflows:
       - compile:
           requires:
             - setup_commit
-      - hold:
+      - wait_for_approval:
           type: approval
           requires:
             - compile
