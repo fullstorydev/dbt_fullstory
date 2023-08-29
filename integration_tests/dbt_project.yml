@@ -30,6 +30,8 @@ models:
 
 vars:
   events_table: fullstory_events_integration_tests
+  sessions_identifier: fullstory_sessions_integration_tests
+  users_identifier: fullstory_users_integration_tests
   dbt_date:time_zone: Etc/UTC
   fullstory_replay_host: app.fullstory.com
   fullstory_events_types:
