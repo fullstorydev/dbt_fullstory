@@ -6,7 +6,7 @@
 }}
 select
     base.full_session_id,
-    coalesce(base.user_id, concat('anon_', base.device_id)) as user_id,
+    coalesce(base.user_id, {{ dbt.concat(["'anon_'", "base.device_id"]) }}) as user_id,
     base.device_id,
     base.session_id,
     base.start_time,

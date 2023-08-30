@@ -1,8 +1,8 @@
 select
     events.full_session_id as full_session_id,
-    any_value(users.user_id) as user_id,
-    any_value(events.device_id) as device_id,
-    any_value(events.session_id) as session_id,
+    {{ dbt.any_value("users.user_id") }} as user_id,
+    {{ dbt.any_value("events.device_id") }} as device_id,
+    {{ dbt.any_value("events.session_id") }} as session_id,
     min(events.event_time) as start_time,
     max(events.event_time) as end_time,
     max(events.updated_time) as updated_time,
@@ -14,13 +14,13 @@ select
     count(
         distinct case when events.event_type = 'navigate' then events.url_full_url end
     ) as total_unique_urls,
-    concat(
-        {{ get_replay_url_path() }},
-        any_value(events.device_id),
-        ':',
-        any_value(events.session_id),
-        '?url_source=DD'
-    ) as replay_url,
+    {{ dbt.concat([
+        get_replay_url_path(),
+        dbt.any_value("events.device_id"),
+        "':'",
+        dbt.any_value("events.session_id"),
+        "'?url_source=DD'"
+    ]) }} as replay_url,
     {% for type in var("fullstory_events_types") -%}
     count(case when events.event_type = '{{ type }}' then 1 end) as total_{{ type }}_events{% if not loop.last %},{% endif %}
     {% endfor %},

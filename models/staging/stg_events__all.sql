@@ -8,7 +8,7 @@ select
     source_type,
     updated_time,
     processed_time,
-    concat(device_id, ':', session_id) as full_session_id,
+    {{ dbt.concat(["device_id", "':'", "session_id"]) }} as full_session_id,
     {{
         parse_json_into_columns(
             "source_properties",
