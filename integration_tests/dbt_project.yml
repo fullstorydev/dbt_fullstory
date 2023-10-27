@@ -30,6 +30,7 @@ models:
 
 vars:
   events_table: fullstory_events_integration_tests
+  page_definitions_table: fullstory_page_definitions_integration_tests
   sessions_identifier: fullstory_sessions_integration_tests
   users_identifier: fullstory_users_integration_tests
   dbt_date:time_zone: Etc/UTC
@@ -58,6 +59,7 @@ vars:
       "mouse_thrash",
       "navigate",
       "page_properties",
+      "page_view",
       "paste",
       "pinch_gesture",
       "request",
@@ -69,6 +71,12 @@ seeds:
 
     fullstory_events_integration_tests:
       +alias: "{% if target.type == 'snowflake' %}fullstory_events_integration_tests_raw{% endif %}"
+      +column_types:
+        event_time: datetime
+        processed_time: datetime
+        updated_time: datetime
+    fullstory_page_definitions_integration_tests:
+      +alias: "{% if target.type == 'snowflake' %}fullstory_page_definitions_integration_tests_raw{% endif %}"
       +column_types:
         event_time: datetime
         processed_time: datetime

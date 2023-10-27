@@ -56,6 +56,8 @@ session_event_type_counts_test_45,2023-01-01 13:00:00,2023-01-01 12:00:00,2023-0
 session_event_type_counts_test_46,2023-01-01 13:00:00,2023-01-01 12:00:00,2023-01-01 00:00:00,3,3,1,pinch_gesture,{},web,{}
 session_event_type_counts_test_47,2023-01-01 13:00:00,2023-01-01 12:00:00,2023-01-01 00:00:00,3,3,1,request,{},web,{}
 session_event_type_counts_test_48,2023-01-01 13:00:00,2023-01-01 12:00:00,2023-01-01 00:00:00,3,3,1,request,{},web,{}
+session_event_type_counts_test_49,2023-01-01 13:00:00,2023-01-01 12:00:00,2023-01-01 00:00:00,3,3,1,page_view,{},web,"{""page_definition_id"": 1}"
+session_event_type_counts_test_50,2023-01-01 13:00:00,2023-01-01 12:00:00,2023-01-01 00:00:00,3,3,1,page_view,{},web,"{""page_definition_id"": 1}"
 session_source_type_counts_test_1,2023-01-01 13:00:00,2023-01-01 12:00:00,2023-01-01 00:00:00,4,4,1,click,{},web,{}
 session_source_type_counts_test_2,2023-01-01 13:00:00,2023-01-01 12:00:00,2023-01-01 00:00:00,4,4,1,click,{},web,{}
 session_source_type_counts_test_3,2023-01-01 13:00:00,2023-01-01 12:00:00,2023-01-01 00:00:00,4,4,1,click,{},mobile_app,{}
@@ -80,3 +82,4 @@ user_total_sessions_test_4,2023-01-01 13:01:05,2023-01-01 12:00:00,2023-01-01 00
 session_device_identify_user_test_1,2023-01-01 13:00:00,2023-01-01 12:00:00,2023-01-01 00:00:00,12,1,1,load,{},web,{}
 session_device_identify_user_test_2,2023-01-01 13:00:05,2023-01-01 12:00:00,2023-01-01 00:00:00,12,1,1,click,{},web,{}
 session_device_identify_user_test_3,2023-01-01 13:00:00,2023-01-01 12:00:00,2023-01-01 00:00:00,12,2,1,identify,"{""user_id"":""session_device_identify_user_id""}",web,{}
+user_total_page_view_events_test,2023-01-01 13:00:00,2023-01-01 12:00:00,2023-01-01 00:00:00,3,3,1,page_view,{},web,"{""page_definition_id"": 1}"
