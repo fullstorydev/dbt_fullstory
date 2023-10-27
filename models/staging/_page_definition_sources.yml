@@ -1,0 +1,22 @@
+version: 2
+
+sources:
+  - name: fullstory
+    database: "{{ target.database }}"
+    schema: "{{ target.schema or target.dataset}}"
+    tables:
+      - name: page_definitions
+        description: All of the pages that have been defined in FullStory.
+        identifier: "{% if var('page_definitions_table', '') %}{{ var('page_definitions_table') }}{% else %}{% if target.type == 'bigquery' %}fullstory_page_definitions_{{ modules.re.sub('[^a-zA-Z\\d_\\-]', '_', target.name) }}{% else %}page_definitions{% endif %}{% endif %}"
+        columns:
+          - name: id
+          - name: fs_link_id
+          - name: name
+          - name: description
+          - name: is_user_defined
+          - name: state
+          - name: created_time
+          - name: created_by
+          - name: modified_time
+          - name: modified_by
+          - name: updated_time

@@ -1,0 +1,662 @@
+columns:
+  # Common column definitions
+  - &device_id_col
+    name: device_id
+    data_type: number
+    description: The user's device Id. Users can have many devices.
+    constraints:
+      - type: not_null
+    tests:
+      - not_null
+
+  - &event_id_col
+    name: event_id
+    data_type: string
+    description: The unique ID for the interaction.
+    contraints:
+      - type: not_null
+    tests:
+      - not_null
+
+  - &event_time_col
+    name: event_time
+    data_type: datetime
+    description: The event's timestamp (UTC).
+    constraints:
+      - type: not_null
+    tests:
+      - not_null
+
+  - &full_session_id_col
+    name: full_session_id
+    data_type: number
+    description: |-
+      The unique ID corresponding to a single user device and session.
+
+      Users can have many devices which, in turn, can have many sessions.
+      This is the device_id and session_id separated by a colon.
+
+      Note that for server events (source_type = 'server'), session_id is
+      optional, producing a NULL value for this column.
+    constraints:
+      - type: primary_key
+      - type: not_null
+    tests:
+      - unique
+      - not_null
+
+  - &last_browser_col
+    name: last_browser
+    data_type: string
+    description: The user's last Internet browser for the session.
+
+  - &last_browser_version_col
+    name: last_browser_version
+    data_type: string
+    description: The user's last Internet browser verison for the session.
+
+  - &last_city_col
+    name: last_city
+    data_type: string
+    description: The user's last city for the session.
+
+  - &last_country_col
+    name: last_country
+    data_type: string
+    description: The user's last country for the session.
+
+  - &last_device_type_col
+    name: last_device_type
+    data_type: string
+    description: |-
+      The last device type for the session: web, mobile, server, or null.
+
+  - &last_display_name_col
+    name: last_display_name
+    data_type: string
+    description: The user's last display name.
+
+  - &last_email_col
+    name: last_email
+    data_type: string
+    description: The user's last email address.
+
+  - &last_ip_address_col
+    name: last_ip_address
+    data_type: string
+    description: The device's last IP address for the session.
+
+  - &last_lat_long_col
+    name: last_lat_long
+    data_type: string
+    description: The user's last latitude and longitude coordinates for the session.
+
+  - &last_operating_system_col
+    name: last_operating_system
+    data_type: string
+    description: The user's last operating system for the session.
+
+  - &last_region_col
+    name: last_region
+    data_type: string
+    description: The user's last region within a country (a.k.a. state, province, or territory) for the session.
+
+  - &last_user_agent_col
+    name: last_user_agent
+    data_type: string
+    description: The device's last user agent (UA).
+
+  - &processed_time_col
+    name: processed_time
+    data_type: datetime
+    description: The record's processed time (UTC).
+    constraints:
+      - type: not_null
+    tests:
+      - not_null
+
+  - &session_id_col
+    name: session_id
+    data_type: number
+    description: The unique ID corresponding to a specific session. Devices can have many sessions.
+    constraints:
+      - type: not_null
+    tests:
+      - not_null
+
+  - &total_background_events_col
+    name: total_background_events
+    data_type: number
+    description: Total number of background events.
+    constraints:
+      - type: not_null
+    tests:
+      - not_null
+
+  - &total_change_events_col
+    name: total_change_events
+    data_type: number
+    description: Total number of change events.
+    constraints:
+      - type: not_null
+    tests:
+      - not_null
+
+  - &total_click_events_col
+    name: total_click_events
+    data_type: number
+    description: Total number of click events.
+    constraints:
+      - type: not_null
+    tests:
+      - not_null
+
+  - &total_consent_events_col
+    name: total_consent_events
+    data_type: number
+    description: Total number of consent events.
+    constraints:
+      - type: not_null
+    tests:
+      - not_null
+
+  - &total_console_message_events_col
+    name: total_console_message_events
+    data_type: number
+    description: Total number of console_message events.
+    constraints:
+      - type: not_null
+    tests:
+      - not_null
+
+  - &total_copy_events_col
+    name: total_copy_events
+    data_type: number
+    description: Total number of copy events.
+    constraints:
+      - type: not_null
+    tests:
+      - not_null
+
+  - &total_crash_events_col
+    name: total_crash_events
+    data_type: number
+    description: Total number of crash events during the session.
+    constraints:
+      - type: not_null
+    tests:
+      - not_null
+
+  - &total_cumulative_layout_shift_events_col
+    name: total_cumulative_layout_shift_events
+    data_type: number
+    description: Total number of cumulative_layout_shift events.
+    constraints:
+      - type: not_null
+    tests:
+      - not_null
+
+  - &total_custom_events_col
+    name: total_custom_events
+    data_type: number
+    description: Total number of custom events during the session.
+    constraints:
+      - type: not_null
+    tests:
+      - not_null
+
+  - &total_element_seen_events_col
+    name: total_element_seen_events
+    data_type: number
+    description: Total number of element_seen events.
+    constraints:
+      - type: not_null
+    tests:
+      - not_null
+
+  - &total_events_col
+    name: total_events
+    data_type: number
+    description: The number of processed events.
+
+  - &total_exception_events_col
+    name: total_exception_events
+    data_type: number
+    description: Total number of exception events.
+    constraints:
+      - type: not_null
+    tests:
+      - not_null
+
+  - &total_first_input_delay_events_col
+    name: total_first_input_delay_events
+    data_type: number
+    description: Total number of first_input_delay events.
+    constraints:
+      - type: not_null
+    tests:
+      - not_null
+
+  - &total_form_abandon_events_col
+    name: total_form_abandon_events
+    data_type: number
+    description: Total number of form_abandon events.
+    constraints:
+      - type: not_null
+    tests:
+      - not_null
+
+  - &total_highlight_events_col
+    name: total_highlight_events
+    data_type: number
+    description: Total number of highlight events.
+    constraints:
+      - type: not_null
+    tests:
+      - not_null
+
+  - &total_identify_events_col
+    name: total_identify_events
+    data_type: number
+    description: Total number of identify events.
+    constraints:
+      - type: not_null
+    tests:
+      - not_null
+
+  - &total_keyboard_close_events_col
+    name: total_keyboard_close_events
+    data_type: number
+    description: Total number of keyboard_close events.
+    constraints:
+      - type: not_null
+    tests:
+      - not_null
+
+  - &total_keyboard_open_events_col
+    name: total_keyboard_open_events
+    data_type: number
+    description: Total number of keyboard_open events.
+    constraints:
+      - type: not_null
+    tests:
+      - not_null
+
+  - &total_load_events_col
+    name: total_load_events
+    data_type: number
+    description: Total number of load events.
+    constraints:
+      - type: not_null
+    tests:
+      - not_null
+
+  - &total_low_memory_events_col
+    name: total_low_memory_events
+    data_type: number
+    description: Total number of low_memory events.
+    constraints:
+      - type: not_null
+    tests:
+      - not_null
+
+  - &total_mobile_app_events_col
+    name: total_mobile_app_events
+    data_type: number
+    description: Total number of events with mobile_app source_type.
+    constraints:
+      - type: not_null
+    tests:
+      - not_null
+
+  - &total_mouse_thrash_events_col
+    name: total_mouse_thrash_events
+    data_type: number
+    description: Total number of mouse_thrash events.
+    constraints:
+      - type: not_null
+    tests:
+      - not_null
+
+  - &total_navigate_events_col
+    name: total_navigate_events
+    data_type: number
+    description: Total number of navigate events.
+    constraints:
+      - type: not_null
+    tests:
+      - not_null
+
+  - &total_page_properties_events_col
+    name: total_page_properties_events
+    data_type: number
+    description: Total number of page_properties events.
+    constraints:
+      - type: not_null
+    tests:
+      - not_null
+
+  - &total_page_view_events_col
+    name: total_page_view_events
+    data_type: number
+    description: Total number of page_view events.
+    constraints:
+      - type: not_null
+    tests:
+      - not_null
+
+  - &total_paste_events_col
+    name: total_paste_events
+    data_type: number
+    description: Total number of paste events.
+    constraints:
+      - type: not_null
+    tests:
+      - not_null
+
+  - &total_pinch_gesture_events_col
+    name: total_pinch_gesture_events
+    data_type: number
+    description: Total number of pinch_gesture events.
+    constraints:
+      - type: not_null
+    tests:
+      - not_null
+
+  - &total_request_events_col
+    name: total_request_events
+    data_type: number
+    description: Total number of request error events, that is, requests returning error code >= 400.
+    constraints:
+      - type: not_null
+    tests:
+      - not_null
+
+  - &total_web_events_col
+    name: total_web_events
+    data_type: number
+    description: Total number of events with web source_type.
+    constraints:
+      - type: not_null
+    tests:
+      - not_null
+
+  - &updated_time_col
+    name: updated_time
+    data_type: datetime
+    description: The record's last updated time (UTC).
+
+  - &user_id_col
+    name: user_id
+    data_type: string
+    description: The ID corresponding to a single user. Can be null; not all sessions have an identified user.
+
+  - &view_id_col
+    name: view_id
+    data_type: string
+
+models:
+  - name: pageviews
+    access: public
+    config:
+      alias: fullstory_pageviews_{{ modules.re.sub('[^a-zA-Z\\d_\\-]', '_', target.name) }}
+      contract:
+        enforce: true
+    description: |-
+      All pageviews and their associated page definitions.
+    columns:
+      - *event_id_col
+      - *device_id_col
+      - *session_id_col
+      - *full_session_id_col
+      - *view_id_col
+      - *event_time_col
+      - *updated_time_col
+      - *processed_time_col
+      - name: device_user_agent
+        data_type: string
+        description: The user agent of the device that recorded the page view.
+      - name: device_type
+        data_type: string
+        description: The user agent of the device that recorded the page view. (Unknown, Robot, Mobile, Table, Desktop)
+      - name: device_operating_system
+        data_type: string
+        description: The operating system of the device that recorded the page view.
+      - name: device_browser
+        data_type: string
+        description: The browser of the device that recorded the page view.
+      - name: device_browser_version
+        data_type: string
+        description: The version of the browser.
+      - name: geo_ip_address
+        data_type: string
+        description: The IP address of the device that recorded the page view.
+      - name: geo_country
+        data_type: string
+        description: The country inferred by the IP address.
+      - name: geo_region
+        data_type: string
+        description: The region inferred by the IP address.
+      - name: geo_city
+        data_type: string
+        description: The city inferred by the IP address.
+      - name: geo_lat_long
+        data_type: string
+        description: The latitude and longitude inferred by the IP address.
+      - name: url_full_url
+        data_type: string
+        description: The full URL of the page view.
+      - name: url_host
+        data_type: string
+        description: The host of the page view.
+      - name: url_path
+        data_type: string
+        description: The path of the page view.
+      - name: url_query
+        data_type: string
+        description: The query string of the page view.
+      - name: url_hash_path
+        data_type: string
+        description: The hash path of the page view.
+      - name: url_hash_query
+        data_type: string
+        description: The hash query string of the page view.
+      - name: initial_referrer_full_url
+        data_type: string
+        description: The full URL of the initial referrer.
+      - name: initial_referrer_host
+        data_type: string
+        description: The host of the initial referrer.
+      - name: initial_referrer_path
+        data_type: string
+        description: The path of the initial referrer.
+      - name: initial_referrer_query
+        data_type: string
+        description: The query string of the initial referrer.
+      - name: initial_referrer_hash_path
+        data_type: string
+        description: The hash path of the initial referrer.
+      - name: initial_referrer_hash_query
+        data_type: string
+        description: The hash query string of the initial referrer.
+      - name: page_id
+        data_type: int64
+        description: The ID of the page definition associated with the page view. This page has been defined in FullStory the app.
+      - name: page_name
+        data_type: string
+        description: The name of the page definition associated with the page view. This page has been defined in FullStory the app.
+      - name: page_description
+        data_type: string
+        description: The description of the page definition associated with the page view. This page has been defined in FullStory the app.
+      - name: page_is_user_defined
+        data_type: string
+        description: The user-defined status of the page definition associated with the page view. User defined means a FullStory user created this page.
+      - name: page_state
+        data_type: string
+        description: The state of the page definition associated with the page view. (Active, Archived)
+
+  - name: sessions
+    access: public
+    config:
+      alias: "{% if var('sessions_identifier', '') %}{{ var('sessions_identifier') }}{% else %}{% if target.type == 'bigquery' %}fullstory_sessions_{{ modules.re.sub('[^a-zA-Z\\d_\\-]', '_', target.name) }}{% else %}sessions{% endif %}{% endif %}"
+      contract:
+        enforce: true
+    description: |-
+      All user sessions with additional computed columns such as
+      duration, replay URLs, event totals, and so on.
+    columns:
+      - *full_session_id_col
+      - *user_id_col
+      - *device_id_col
+      - *session_id_col
+      - name: start_time
+        data_type: datetime
+        description: The session start time (UTC) as reported by the browser.
+      - name: end_time
+        data_type: datetime
+        description: The session end time (UTC) as reported by the browser.
+      - *updated_time_col
+      # The "give me the latest value" session column definitions.
+      # These columns will be stable and predicatable.
+      # Again, these values may change throughout the session. This is especially true of
+      # "twitchy" values like the minutes on a user's lat_long coordinates.
+      - name: last_source_type
+        data_type: string
+        description: |-
+          The last source type for the session: mobile_app, server, or web.
+      - *last_email_col
+      - *last_display_name_col
+      - *last_user_agent_col
+      - *last_device_type_col
+      - *last_operating_system_col
+      - *last_browser_col
+      - *last_browser_version_col
+      - *last_ip_address_col
+      - *last_country_col
+      - *last_region_col
+      - *last_city_col
+      - *last_lat_long_col
+      - name: duration
+        data_type: number
+        description: The session duration in seconds.
+      - name: replay_url
+        data_type: string
+        description: |-
+          The FullStory replay URL for the session.
+          You may receive an 'unable to retrieve session' error on FullStory if the session is outside of your retention window.
+      - *total_events_col
+      - *total_web_events_col
+      - *total_mobile_app_events_col
+      - name: total_page_views
+        data_type: number
+        description: Deprecated, Use total_page_view_events. The number of page views for the session.
+      - name: total_unique_urls
+        data_type: number
+        description: The number of unique URLs visited during the session.
+      - *total_background_events_col
+      - *total_change_events_col
+      - *total_click_events_col
+      - *total_consent_events_col
+      - *total_console_message_events_col
+      - *total_copy_events_col
+      - *total_crash_events_col
+      - *total_cumulative_layout_shift_events_col
+      - *total_custom_events_col
+      - *total_element_seen_events_col
+      - *total_exception_events_col
+      - *total_first_input_delay_events_col
+      - *total_form_abandon_events_col
+      - *total_highlight_events_col
+      - *total_identify_events_col
+      - *total_keyboard_close_events_col
+      - *total_keyboard_open_events_col
+      - *total_load_events_col
+      - *total_low_memory_events_col
+      - *total_mouse_thrash_events_col
+      - *total_navigate_events_col
+      - *total_page_properties_events_col
+      - *total_page_view_events_col
+      - *total_paste_events_col
+      - *total_pinch_gesture_events_col
+      - *total_request_events_col
+
+  - name: users
+    access: public
+    config:
+      alias: "{% if var('users_identifier', '') %}{{ var('users_identifier') }}{% else %}{% if target.type == 'bigquery' %}fullstory_users_{{ modules.re.sub('[^a-zA-Z\\d_\\-]', '_', target.name) }}{% else %}users{% endif %}{% endif %}"
+      contract:
+        enforce: true
+    description: |-
+      All users with parsed properties, basic aggregations, and event counts.
+
+      Note that not all events and sessions have an identified user.
+    columns:
+      - *user_id_col
+      - *updated_time_col
+      - name: last_event_time
+        description: The last time an event was recorded for the user.
+      - *last_email_col
+      - *last_display_name_col
+      - *last_user_agent_col
+      - *last_device_type_col
+      - *last_operating_system_col
+      - *last_browser_col
+      - *last_browser_version_col
+      - *last_ip_address_col
+      - *last_country_col
+      - *last_region_col
+      - *last_city_col
+      - *last_lat_long_col
+      - *total_events_col
+      - name: total_sessions
+        description: The total number of sessions recorded for this user.
+        constraints:
+          - type: not_null
+        tests:
+          - not_null
+      - name: total_session_duration
+        description: The total duration (in seconds) of all sessions for this user.
+        constraints:
+          - type: not_null
+        tests:
+          - not_null
+      - *total_web_events_col
+      - name: total_web_sessions
+        description: The total number of web sessions recorded for this user.
+        constraints:
+          - type: not_null
+        tests:
+          - not_null
+      - *total_mobile_app_events_col
+      - name: total_mobile_app_sessions
+        description: The total number of mobile app sessions recorded for this user.
+        constraints:
+          - type: not_null
+        tests:
+          - not_null
+      - *total_background_events_col
+      - *total_change_events_col
+      - *total_click_events_col
+      - *total_consent_events_col
+      - *total_console_message_events_col
+      - *total_copy_events_col
+      - *total_crash_events_col
+      - *total_cumulative_layout_shift_events_col
+      - *total_custom_events_col
+      - *total_element_seen_events_col
+      - *total_exception_events_col
+      - *total_first_input_delay_events_col
+      - *total_form_abandon_events_col
+      - *total_highlight_events_col
+      - *total_identify_events_col
+      - *total_keyboard_close_events_col
+      - *total_keyboard_open_events_col
+      - *total_load_events_col
+      - *total_low_memory_events_col
+      - *total_mouse_thrash_events_col
+      - *total_navigate_events_col
+      - *total_page_properties_events_col
+      - *total_page_view_events_col
+      - *total_paste_events_col
+      - *total_pinch_gesture_events_col
+      - *total_request_events_col
