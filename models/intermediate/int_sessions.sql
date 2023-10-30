@@ -9,7 +9,7 @@ select
     {{- dbt.datediff("min(event_time)", "max(event_time)", "second") -}} as duration,
     count(distinct events.event_id) as total_events,
     count(
-        distinct case when events.event_type = 'navigate' then events.event_id end
+        distinct case when events.event_type = 'page_view' then events.event_id end
     ) as total_page_views,
     count(
         distinct case when events.event_type = 'navigate' then events.url_full_url end

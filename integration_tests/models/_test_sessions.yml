@@ -160,6 +160,12 @@ models:
             where: full_session_id = '3:3'
 
       - dbt_utils.expression_is_true:
+          name: session_total_page_view_events_is_correct
+          expression: total_page_view_events = 3
+          config:
+            where: full_session_id = '3:3'
+
+      - dbt_utils.expression_is_true:
           name: session_total_paste_events_is_correct
           expression: total_paste_events = 2
           config:

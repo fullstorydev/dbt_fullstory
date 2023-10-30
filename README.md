@@ -23,7 +23,7 @@ To deploy or update this package in your warehouse, follow these steps:
 dbt_fullstory:
   target: o-abcd-na1 # Your FullStory org ID
   outputs:
-    staging:
+    o-abcd-na1: # You are targeting this output
       # The project and dataset should match Data Destinations settings
       # configured within FullStory
       type: bigquery
@@ -38,7 +38,7 @@ dbt_fullstory:
 dbt_fullstory:
   target: o-abcd-na1 # Your FullStory org ID
   outputs:
-    staging:
+    o-abcd-na1: # You are targeting this output
       # The account, database, and warehouse should match Data Destinations
       # settings configured within FullStory. The schema is automatically
       # created in your warehouse the first time FullStory syncs data. The

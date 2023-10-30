@@ -83,6 +83,7 @@ vars:
       "mouse_thrash",
       "navigate",
       "page_properties",
+      "page_view",
       "paste",
       "pinch_gesture",
       "request",

@@ -123,6 +123,11 @@ select
                     "path": "$.initial_referrer.hash_query",
                     "cast_as": "string",
                 },
+                {
+                    "name": "page_definition_id",
+                    "path": "$.page_definition_id",
+                    "cast_as": "int64",
+                },
             ],
         )
     }},

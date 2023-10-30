@@ -92,3 +92,9 @@ models:
           expression: total_mobile_app_sessions = 1
           config:
             where: user_id = 'user_test_total_sessions_user_id'
+
+      - dbt_utils.expression_is_true:
+          name: user_total_page_view_events_is_correct
+          expression: total_page_view_events = 3
+          config:
+            where: user_id = 'user_total_page_view_events_test'
