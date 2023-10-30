@@ -35,4 +35,4 @@ select
   p.is_user_defined as page_is_user_defined,
   p.state as page_state
 from {{ ref('int_pageviews')}} e
-join {{ ref('stg_page_definitions__all') }} p on e.page_definition_id = p.id
+left join {{ ref('stg_page_definitions__all') }} p on e.page_definition_id = p.id

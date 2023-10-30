@@ -38,12 +38,6 @@ columns:
 
       Note that for server events (source_type = 'server'), session_id is
       optional, producing a NULL value for this column.
-    constraints:
-      - type: primary_key
-      - type: not_null
-    tests:
-      - unique
-      - not_null
 
   - &last_browser_col
     name: last_browser
@@ -408,7 +402,16 @@ models:
       - *event_id_col
       - *device_id_col
       - *session_id_col
-      - *full_session_id_col
+      - name: full_session_id
+        data_type: string
+        description: |-
+          The unique ID corresponding to a single user device and session.
+
+          Users can have many devices which, in turn, can have many sessions.
+        constraints:
+          - type: not_null
+        tests:
+          - not_null
       - *view_id_col
       - *event_time_col
       - *updated_time_col
