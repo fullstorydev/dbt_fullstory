@@ -390,14 +390,14 @@ columns:
     data_type: string
 
 models:
-  - name: pageviews
+  - name: pages
     access: public
     config:
-      alias: fullstory_pageviews_{{ modules.re.sub('[^a-zA-Z\\d_\\-]', '_', target.name) }}
+      alias: fullstory_pages_{{ modules.re.sub('[^a-zA-Z\\d_\\-]', '_', target.name) }}
       contract:
         enforce: true
     description: |-
-      All pageviews and their associated page definitions.
+      All page views and their associated page definitions.
     columns:
       - *event_id_col
       - *device_id_col
