@@ -1,5 +1,19 @@
+{{
+    config(
+        materialized='incremental',
+        partition_by={
+            "field": "updated_time",
+            "data_type": "timestamp",
+            "granularity": "day"
+        },
+        sort=['updated_time', 'event_time'],
+        dist=['device_id', 'session_id'],
+        cluster_by=['device_id', 'session_id'],
+    )
+}}
+
 select
-    event_id as event_id,
+    event_id,
     device_id,
     session_id,
     view_id,
@@ -189,5 +203,8 @@ select
     }}
 from {{ source("fullstory", "events") }}
 where
-    event_type is not null and
-    event_time >= '{{ var("fullstory_min_event_time") }}'
+    event_type is not null
+    and event_time >= '{{ var("fullstory_min_event_time") }}'
+{% if is_incremental() %}
+    and updated_time > (select max(updated_time) from  {{ this }})
+{% endif %}

@@ -1,11 +1,20 @@
 {{
     config(
-        materialized='view',
-        unique_key='full_session_id'
+        materialized='incremental',
+        unique_key='full_session_id',
+        partition_by={
+            "field": "updated_time",
+            "data_type": "timestamp",
+            "granularity": "day"
+        },
+        sort=['updated_time', 'start_time', 'end_time'],
+        dist=['device_id', 'user_id'],
+        cluster_by=['device_id', 'user_id'],
     )
 }}
+
 select
-    base.full_session_id,
+    base.full_session_id as full_session_id,
     coalesce(base.user_id, {{ dbt.concat(["'anon_'", "base.device_id"]) }}) as user_id,
     base.device_id,
     base.session_id,
@@ -34,13 +43,7 @@ select
     base.total_unique_urls,
     {% for type in var("fullstory_events_types") -%}
     base.total_{{ type }}_events{% if not loop.last %},{% endif %}
-    {% endfor %},
-    row_number() over (
-        partition by base.user_id
-        order by
-            base.end_time desc,
-            base.full_session_id desc
-    ) as desc_row_num
+    {% endfor %}
 from {{ ref("int_sessions") }} as base
 left join
     {{ ref("stg_events__source_types") }} as sources
@@ -62,3 +65,6 @@ left join
     {{ ref("stg_events__locations") }} as locations
     on locations.desc_row_num = 1
     and base.full_session_id = locations.full_session_id
+{% if is_incremental() %}
+where base.updated_time > (select max(updated_time) from  {{ this }})
+{% endif %}
