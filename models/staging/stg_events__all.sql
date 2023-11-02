@@ -1,6 +1,7 @@
 {{
     config(
         materialized='incremental',
+        unique_key='event_id',
         partition_by={
             "field": "updated_time",
             "data_type": "timestamp",
