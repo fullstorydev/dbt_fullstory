@@ -164,7 +164,16 @@ select
                 },
                 {
                     "name": "element_definition_id",
-                    "path": "$.element_id",
+                    "path": "$.click.target.named_element_id",
+                    "additional_paths": [
+                        "$.change.target.named_element_id",
+                        "$.copy.target.named_element_id",
+                        "$.form_abandon.target.named_element_id",
+                        "$.highlight.target.named_element_id",
+                        "$.paste.target.named_element_id",
+                        "$.target.element_definition_id",
+                        "$.watched_element.target.named_element_id",
+                    ],
                     "cast_as": "string",
                 },
                 {
