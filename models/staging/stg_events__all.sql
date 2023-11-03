@@ -154,8 +154,6 @@ select
                     "name": "target_masked",
                     "path": "$.target.text.masked",
                     "cast_as": "boolean",
-                    "prefix": "coalesce(",
-                    "postfix": ", FALSE)",
                 },
                 {
                     "name": "target_raw_selector",
@@ -164,8 +162,9 @@ select
                 },
                 {
                     "name": "element_definition_id",
-                    "path": "$.click.target.named_element_id",
+                    "path": "$.element_definition_id",
                     "additional_paths": [
+                        "$.click.target.named_element_id",
                         "$.change.target.named_element_id",
                         "$.copy.target.named_element_id",
                         "$.form_abandon.target.named_element_id",
