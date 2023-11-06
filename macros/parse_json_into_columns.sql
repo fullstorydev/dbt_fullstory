@@ -1,9 +1,9 @@
 {%- macro parse_json_into_columns(field, columns) -%}
 {%- for column in columns -%}
 
-{%- set paths = [json_value(field, column.path, column.array)] -%}
-{%- for path in column.additional_paths -%}
-{%- do paths.append(json_value(field, path, false)) -%}
+{%- set paths = [] -%}
+{%- for path in column.paths -%}
+{%- do paths.append(json_value(field, path, column.array)) -%}
 {%- endfor -%}
 
 {%- if column.cast_as -%}

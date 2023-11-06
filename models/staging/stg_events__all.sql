@@ -30,112 +30,156 @@ select
             [
                 {
                     "name": "device_user_agent",
-                    "path": "$.user_agent.raw_user_agent",
+                    "paths": [
+                        "$.user_agent.raw_user_agent",
+                    ],
                     "cast_as": "string",
                 },
                 {
                     "name": "device_type",
-                    "path": "$.user_agent.device",
+                    "paths": [
+                        "$.user_agent.device",
+                    ],
                     "cast_as": "string",
                 },
                 {
                     "name": "device_operating_system",
-                    "path": "$.user_agent.operating_system",
+                    "paths": [
+                        "$.user_agent.operating_system",
+                    ],
                     "cast_as": "string",
                 },
                 {
                     "name": "device_browser",
-                    "path": "$.user_agent.browser",
+                    "paths": [
+                        "$.user_agent.browser",
+                    ],
                     "cast_as": "string",
                 },
                 {
                     "name": "device_browser_version",
-                    "path": "$.user_agent.browser_version",
+                    "paths": [
+                        "$.user_agent.browser_version",
+                    ],
                     "cast_as": "string",
                 },
                 {
                     "name": "geo_ip_address",
-                    "path": "$.location.ip_address",
+                    "paths": [
+                        "$.location.ip_address",
+                    ],
                     "cast_as": "string",
                 },
                 {
                     "name": "geo_country",
-                    "path": "$.location.country",
+                    "paths": [
+                        "$.location.country",
+                    ],
                     "cast_as": "string",
                 },
                 {
                     "name": "geo_region",
-                    "path": "$.location.region",
+                    "paths": [
+                        "$.location.region",
+                    ],
                     "cast_as": "string",
                 },
                 {
                     "name": "geo_city",
-                    "path": "$.location.city",
+                    "paths": [
+                        "$.location.city",
+                    ],
                     "cast_as": "string"
                 },
                 {
                     "name": "geo_lat_long",
-                    "path": "$.location.lat_long",
+                    "paths": [
+                        "$.location.lat_long",
+                    ],
                     "cast_as": "string",
                 },
                 {
                     "name": "url_full_url",
-                    "path": "$.url.full_url",
+                    "paths": [
+                        "$.url.full_url",
+                    ],
                     "cast_as": "string",
                 },
                 {
                     "name": "url_host",
-                    "path": "$.url.host",
+                    "paths": [
+                        "$.url.host",
+                    ],
                     "cast_as": "string"
                 },
                 {
                     "name": "url_path",
-                    "path": "$.url.path",
+                    "paths": [
+                        "$.url.path",
+                    ],
                     "cast_as": "string"
                 },
                 {
                     "name": "url_query",
-                    "path": "$.url.query",
+                    "paths": [
+                        "$.url.query",
+                    ],
                     "cast_as": "string"
                 },
                 {
                     "name": "url_hash_path",
-                    "path": "$.url.hash_path",
+                    "paths": [
+                        "$.url.hash_path",
+                    ],
                     "cast_as": "string",
                 },
                 {
                     "name": "url_hash_query",
-                    "path": "$.url.hash_query",
+                    "paths": [
+                        "$.url.hash_query",
+                    ],
                     "cast_as": "string",
                 },
                 {
                     "name": "initial_referrer_full_url",
-                    "path": "$.initial_referrer.full_url",
+                    "paths": [
+                        "$.initial_referrer.full_url",
+                    ],
                     "cast_as": "string",
                 },
                 {
                     "name": "initial_referrer_host",
-                    "path": "$.initial_referrer.host",
+                    "paths": [
+                        "$.initial_referrer.host",
+                    ],
                     "cast_as": "string",
                 },
                 {
                     "name": "initial_referrer_path",
-                    "path": "$.initial_referrer.path",
+                    "paths": [
+                        "$.initial_referrer.path",
+                    ],
                     "cast_as": "string",
                 },
                 {
                     "name": "initial_referrer_query",
-                    "path": "$.initial_referrer.query",
+                    "paths": [
+                        "$.initial_referrer.query",
+                    ],
                     "cast_as": "string",
                 },
                 {
                     "name": "initial_referrer_hash_path",
-                    "path": "$.initial_referrer.hash_path",
+                    "paths": [
+                        "$.initial_referrer.hash_path",
+                    ],
                     "cast_as": "string",
                 },
                 {
                     "name": "initial_referrer_hash_query",
-                    "path": "$.initial_referrer.hash_query",
+                    "paths": [
+                        "$.initial_referrer.hash_query",
+                    ],
                     "cast_as": "string",
                 },
             ],
@@ -147,23 +191,29 @@ select
             [
                 {
                     "name": "target_text",
-                    "path": "$.target.text",
+                    "paths": [
+                        "$.target.text",
+                    ],
                     "cast_as": "string"
                 },
                 {
                     "name": "target_masked",
-                    "path": "$.target.text.masked",
+                    "paths": [
+                        "$.target.text.masked",
+                    ],
                     "cast_as": "boolean",
                 },
                 {
                     "name": "target_raw_selector",
-                    "path": "$.target.raw_selector",
+                    "paths": [
+                        "$.target.raw_selector",
+                    ],
                     "cast_as": "string",
                 },
                 {
                     "name": "element_definition_id",
-                    "path": "$.element_definition_id",
-                    "additional_paths": [
+                    "paths": [
+                        "$.element_definition_id",
                         "$.click.target.named_element_id",
                         "$.change.target.named_element_id",
                         "$.copy.target.named_element_id",
@@ -177,7 +227,9 @@ select
                 },
                 {
                     "name": "additonal_element_definition_ids",
-                    "path": "$.additional_element_definition_ids",
+                    "paths": [
+                        "$.additional_element_definition_ids",
+                    ],
                     "array": true,
                 },
             ],
@@ -189,22 +241,30 @@ select
             [
                 {
                     "name": "user_id",
-                    "path": "$.user_id",
+                    "paths": [
+                        "$.user_id",
+                    ],
                     "cast_as": "string"
                 },
                 {
                     "name": "user_email",
-                    "path": "$.user_email",
+                    "paths": [
+                        "$.user_email",
+                    ],
                     "cast_as": "string"
                 },
                 {
                     "name": "user_display_name",
-                    "path": "$.user_display_name",
+                    "paths": [
+                        "$.user_display_name",
+                    ],
                     "cast_as": "string",
                 },
                 {
                     "name": "user_properties",
-                    "path": "$.user_properties",
+                    "paths": [
+                        "$.user_properties",
+                    ],
                     "cast_as": "string",
                 },
             ],
