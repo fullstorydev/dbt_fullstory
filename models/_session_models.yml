@@ -423,7 +423,7 @@ models:
   - name: sessions
     access: public
     config:
-      alias: "{% if var('sessions_identifier', '') %}{{ var('sessions_identifier') }}{% else %}{% if target.type == 'bigquery' %}fullstory_sessions_{{ modules.re.sub('[^a-zA-Z\\d_\\-]', '_', target.name) }}{% else %}sessions{% endif %}{% endif %}"
+      alias: "{% if var('fullstory_sessions_model_name', '') %}{{ var('fullstory_sessions_model_name') }}{% else %}{% if target.type == 'bigquery' %}fullstory_sessions_{{ modules.re.sub('[^a-zA-Z\\d_\\-]', '_', target.name) }}{% else %}sessions{% endif %}{% endif %}"
       contract:
         enforce: true
     description: |-
