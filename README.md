@@ -10,16 +10,16 @@ This dbt package contains models, macros, seeds, and tests for [FullStory](https
 ## Vars
 | var | description |
 | - | - |
-| fullstory_events_database | The database where your raw events table lives. |
-| fullstory_events_schema | The schema inside of your database where your raw events table lives. |
-| fullstory_events_table | The name of the table inside your schema where your raw events table lives. |
+| fullstory_events_database | The database where your FullStory events table lives. |
+| fullstory_events_schema | The schema inside of your database where your FullStory events table lives. |
+| fullstory_events_table | The name of the table inside your schema where your FullStory events table lives. |
 | fullstory_replay_host | The hostname to use when building links to session replay. |
 | fullstory_sessions_model_name | The name of the model for the canonical list of sessions. |
 | fullstory_users_model_name | The name of the model for the canonical list of users. |
 | fullstory_min_event_time | All events before this date will not be considered for analysis. Use this option to limit table size. |
 | fullstory_event_types | A list of event types to auto-generate rollups for in the `users` and `sessions` model. |
 
-> We **highly recommend** using `fullstory_events_database`, `fullstory_events_schema` and `fullstory_events_table` to indicate the location of the raw events table that is synced from Data Destinations. Using these variables allow you to use a separate database or schema for the raw events table than your dbt package.
+> We **highly recommend** using `fullstory_events_database`, `fullstory_events_schema` and `fullstory_events_table` to indicate the location of the FullStory events table that is synced from Data Destinations. Using these variables allow you to use a separate database or schema for the FullStory events table than your dbt package.
 
 #### Example use of vars for Big Query
 ```yaml
@@ -27,6 +27,14 @@ vars:
   fullstory_events_database: my-gcp-project
   fullstory_events_schema: my-big-query-dataset
   fullstory_events_table: fullstory_events_[my-org-id]
+```
+
+#### Example use of vars for Snowflake
+```yaml
+vars:
+  fullstory_events_database: my_database
+  fullstory_events_schema: my_schema
+  fullstory_events_table: my_table
 ```
 
 ## Supported Warehouses
