@@ -376,7 +376,7 @@ models:
   - name: users
     access: public
     config:
-      alias: "{% if var('users_identifier', '') %}{{ var('users_identifier') }}{% else %}{% if target.type == 'bigquery' %}fullstory_users_{{ modules.re.sub('[^a-zA-Z\\d_\\-]', '_', target.name) }}{% else %}users{% endif %}{% endif %}"
+      alias: "{% if var('fullstory_users_model_name', '') %}{{ var('fullstory_users_model_name') }}{% else %}{% if target.type == 'bigquery' %}fullstory_users_{{ modules.re.sub('[^a-zA-Z\\d_\\-]', '_', target.name) }}{% else %}users{% endif %}{% endif %}"
       contract:
         enforce: true
     description: |-
