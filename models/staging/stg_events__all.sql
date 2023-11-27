@@ -153,7 +153,7 @@ select
                     "cast_as": "string",
                 },
                 {
-                    "name": "additonal_element_definition_ids",
+                    "name": "additional_element_definition_ids",
                     "path": "$.additional_element_definition_ids",
                     "array": true,
                 },
