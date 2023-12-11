@@ -10,6 +10,7 @@ select
   geo_region,
   geo_city,
   geo_lat_long,
+  source_type,
   event_time,
   event_id,
   row_number() over (

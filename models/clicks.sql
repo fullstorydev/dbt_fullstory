@@ -5,6 +5,7 @@ select
     view_id,
     event_time,
     updated_time,
+    processed_time,
     url_full_url,
     url_host,
     url_path,

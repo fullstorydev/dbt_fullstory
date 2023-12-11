@@ -2,7 +2,7 @@ models:
   - name: clicks
     access: public
     config:
-      alias: "{% if var('fullstory_clicks_model_name', '') %}{{ var('fullstory_clicks_model_name') }}{% else %}{% if target.type == 'bigquery' %}fullstory_clicks_{{ modules.re.sub('[^a-zA-Z\\d_\\-]', '_', target.name) }}{% else %}clicks{% endif %}{% endif %}"
+      alias: "{{ var('fullstory_anonymous_clicks_model_name', 'clicks') }}"
       contract:
         enforce: true
     description: |-
@@ -11,6 +11,7 @@ models:
       - name: event_id
         description: '{{ doc("column_event_id") }}'
         constraints:
+          - type: primary_key
           - type: not_null
         tests:
           - not_null

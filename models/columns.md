@@ -42,12 +42,16 @@ The path part of the `initial_referrer_full_url`.
 The query part of the `initial_referrer_full_url`.
 {% enddocs %}
 
-{% docs column_last_browser %}
+{% docs column_last_device_browser %}
 The last browser seen for this user, device or session.
 {% enddocs %}
 
-{% docs column_last_browser_version %}
+{% docs column_last_device_browser_version %}
 The last browser version seen for this user, device or session.
+{% enddocs %}
+
+{% docs column_last_device_id %}
+The last device ID seen for this user or session.
 {% enddocs %}
 
 {% docs column_last_event_id %}
@@ -78,20 +82,28 @@ The last latitude and longitude seen for this user, device or session.
 The last region seen for this user, device or session.
 {% enddocs %}
 
-{% docs column_last_operating_system %}
+{% docs column_last_device_operating_system %}
 The last operating system seen for this user, device or session.
 {% enddocs %}
 
-{% docs column_last_type %}
+{% docs column_last_device_type %}
 The last type of the device seen for this user, device or session.
 {% enddocs %}
 
-{% docs column_last_user_agent %}
+{% docs column_last_device_user_agent %}
 The last user agent to be seen for this user, device or session.
+{% enddocs %}
+
+{% docs column_processed_time %}
+The time the event was processed by FullStory internal systems.
 {% enddocs %}
 
 {% docs column_session_id %}
 The unique ID corresponding to a single session. Devices can have many sessions. Users can have many sessions. Sessions have many events.
+{% enddocs %}
+
+{% docs column_source_type %}
+The source of the session, web, mobile or server.
 {% enddocs %}
 
 {% docs column_target_masked %}
@@ -134,8 +146,20 @@ The path part of the URL.
 The query part of the URL.
 {% enddocs %}
 
+{% docs column_user_display_name %}
+The user's name that was used as part of an identify call.
+{% enddocs %}
+
+{% docs column_user_email %}
+The email address that was used as part of an identify call.
+{% enddocs %}
+
 {% docs column_user_id %}
 The unique ID corresponding to a single user. Not all sessions have an identified user.
+{% enddocs %}
+
+{% docs column_user_properties %}
+The JSON properties that were sent via an identify call or setUserVars call.
 {% enddocs %}
 
 {% docs column_view_id %}
