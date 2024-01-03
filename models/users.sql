@@ -1,11 +1,20 @@
 {{
     config(
-        materialized='view',
-        unique_key='user_id'
+        materialized='incremental',
+        unique_key='user_id',
+        partition_by={
+            "field": "updated_time",
+            "data_type": "timestamp",
+            "granularity": "day"
+        },
+        sort=['updated_time', 'last_event_time'],
+        dist=['user_id'],
+        cluster_by=['user_id'],
     )
 }}
+
 select
-    base.user_id,
+    base.user_id as user_id,
     base.updated_time,
     base.last_event_time,
     sessions.last_email as last_email,
@@ -31,6 +40,9 @@ select
     base.total_{{ type }}_events{% if not loop.last %},{% endif %}
     {% endfor %}
 from {{ ref("int_users") }} as base
-join {{ ref("sessions") }} as sessions
+join {{ ref("sessions__ordered") }} as sessions
     on desc_row_num = 1
     and base.user_id = sessions.user_id
+{% if is_incremental() %}
+where base.updated_time > (select max(updated_time) from  {{ this }})
+{% endif %}
