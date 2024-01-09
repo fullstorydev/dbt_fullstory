@@ -21,4 +21,3 @@ from {{ ref('stg_events__all') }} events
 where
   device_id is not null
   and source_type != 'server' -- exclude server events, they won't have geo or device values.
-  and source_type != 'invalid' -- not sure what this is, but it doesn't have any data associated
