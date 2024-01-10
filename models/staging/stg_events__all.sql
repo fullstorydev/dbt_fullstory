@@ -182,7 +182,7 @@ select
                 {
                     "name": "user_properties",
                     "path": "$.user_properties",
-                    "cast_as": "string",
+                    "dtype": "object",
                 },
             ],
         )

@@ -11,6 +11,11 @@ select
     user_email,
     user_display_name,
     user_properties,
+    row_number() over (
+      partition by user_id
+      order by event_time desc
+    ) as identity_num_desc
 from {{ ref("stg_events__all") }} events
 where
   event_type = 'identify'
+  and user_id is not null

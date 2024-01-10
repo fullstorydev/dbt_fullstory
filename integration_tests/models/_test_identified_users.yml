@@ -1,0 +1,75 @@
+version: 2
+
+models:
+  - name: test_identified_users
+    tests:
+      - dbt_utils.expression_is_true:
+          name: user_email_is_correct
+          expression: user_email = 'good_user_email@fullstory.com'
+          config:
+            where: user_id = 'good_user_id'
+      - dbt_utils.expression_is_true:
+          name: user_display_name_is_correct
+          expression: user_display_name = 'good_display_name'
+          config:
+            where: user_id = 'good_user_id'
+      - dbt_utils.expression_is_true:
+          name: user_properties_are_correct
+          expression: JSON_VALUE(user_properties, '$.good_key') = 'good_value'
+          config:
+            where: user_id = 'good_user_id'
+      - dbt_utils.expression_is_true:
+          name: last_device_user_agent_is_correct
+          expression: last_device_user_agent = 'good_user_agent'
+          config:
+            where: user_id = 'user_test_last_properties_user_id'
+      - dbt_utils.expression_is_true:
+          name: last_device_type_is_correct
+          expression: last_device_type = 'good_device_type'
+          config:
+            where: user_id = 'user_test_last_properties_user_id'
+      - dbt_utils.expression_is_true:
+          name: last_device_operating_system_is_correct
+          expression: last_device_operating_system = 'good_operating_system'
+          config:
+            where: user_id = 'user_test_last_properties_user_id'
+      - dbt_utils.expression_is_true:
+          name: last_device_browser_is_correct
+          expression: last_device_browser = 'good_browser'
+          config:
+            where: user_id = 'user_test_last_properties_user_id'
+      - dbt_utils.expression_is_true:
+          name: last_device_browser_version_is_correct
+          expression: last_device_browser_version = 'good_browser_version'
+          config:
+            where: user_id = 'user_test_last_properties_user_id'
+      - dbt_utils.expression_is_true:
+          name: last_geo_ip_address_is_correct
+          expression: last_geo_ip_address = 'good_ip_address'
+          config:
+            where: user_id = 'user_test_last_properties_user_id'
+      - dbt_utils.expression_is_true:
+          name: last_geo_region_is_correct
+          expression: last_geo_region = 'good_region'
+          config:
+            where: user_id = 'user_test_last_properties_user_id'
+      - dbt_utils.expression_is_true:
+          name: last_geo_city_is_correct
+          expression: last_geo_city = 'good_city'
+          config:
+            where: user_id = 'user_test_last_properties_user_id'
+      - dbt_utils.expression_is_true:
+          name: last_geo_lat_long_is_correct
+          expression: last_geo_lat_long = 'good_lat_long'
+          config:
+            where: user_id = 'user_test_last_properties_user_id'
+      - dbt_utils.expression_is_true:
+          name: last_event_time_is_correct
+          expression: last_event_time = '2023-01-01T14:00:00'
+          config:
+            where: user_id = 'user_test_last_properties_user_id'
+      - dbt_utils.expression_is_true:
+          name: last_event_time_is_correct
+          expression: last_event_id = 'user_last_source_properties_test_3'
+          config:
+            where: user_id = 'user_test_last_properties_user_id'

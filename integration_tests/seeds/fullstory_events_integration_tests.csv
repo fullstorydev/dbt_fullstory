@@ -6,9 +6,9 @@ identify_session_test_1,2023-01-01 12:00:00,2023-01-01 12:00:00,2023-01-01 00:00
 identify_session_test_2,2023-01-01 12:01:00,2023-01-01 12:00:00,2023-01-01 00:00:00,2,2,1,identify,"{""user_email"":""bad_user_email@fullstory.com""}",web,{}
 identify_session_test_3,2023-01-01 12:02:00,2023-01-01 12:00:00,2023-01-01 00:00:00,2,2,1,identify,"{""user_display_name"":""bad_user_display_name""}",web,{}
 identify_session_test_4,2023-01-01 12:03:00,2023-01-01 12:00:00,2023-01-01 00:00:00,2,2,1,identify,"{""user_id"":""bad_user_id""}",web,{}
-identify_session_test_6,2023-01-01 13:00:00,2023-01-01 13:00:00,2023-01-01 12:00:00,2,2,1,identify,"{""user_id"":""good_user_id"",""user_display_name"":""good_display_name"",""user_email"":""good_user_email@fullstory.com""}",web,{}
+identify_session_test_6,2023-01-01 13:00:00,2023-01-01 13:00:00,2023-01-01 12:00:00,2,2,1,identify,"{""user_id"":""good_user_id"",""user_display_name"":""good_display_name"",""user_email"":""good_user_email@fullstory.com"",""user_properties"": { ""good_key"":""good_value"" } }",web,{}
 identify_session_test_5,2023-01-01 13:00:00,2023-01-01 12:00:00,2023-01-01 12:00:00,2,2,1,identify,"{""user_id"":""another_bad_user_id"",""user_display_name"":""another_bad_display_name"",""user_email"":""another_bad_user_email@fullstory.com""}",web,{}
-session_event_type_counts_test_1,2023-01-01 13:00:00,2023-01-01 12:00:00,2023-01-01 00:00:00,3,3,1,background,{},web,{}
+session_event_type_counts_test_1,2023-01-01 13:00:00,2023-01-01 12:00:00,2023-01-01 00:00:00,3,3,1,background,{},web,"{""user_agent"":{""raw_user_agent"":""device_3_user_agent""}"
 session_event_type_counts_test_2,2023-01-01 13:00:00,2023-01-01 12:00:00,2023-01-01 00:00:00,3,3,1,background,{},web,{}
 session_event_type_counts_test_3,2023-01-01 13:00:00,2023-01-01 12:00:00,2023-01-01 00:00:00,3,3,1,change,{},web,{}
 session_event_type_counts_test_4,2023-01-01 13:00:00,2023-01-01 12:00:00,2023-01-01 00:00:00,3,3,1,change,{},web,{}

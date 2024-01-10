@@ -19,5 +19,5 @@ where
   and devices.source_type != 'server' -- exclude server events, they won't have geo or device values.
   and devices.device_id not in (
     select device_id
-    from {{ ref('identifies') }}
+    from {{ ref('int_identifies') }}
   )
