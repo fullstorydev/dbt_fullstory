@@ -1,0 +1,64 @@
+models:
+  - name: identified_users
+    access: public
+    config:
+      alias: "{{ var('fullstory_identified_users_model_name', 'identified_users') }}"
+      contract:
+        enforce: true
+    description: |-
+      All users who have been identified.
+    columns:
+      - name: user_id
+        description: '{{ doc("column_user_id") }}'
+        constraints:
+          - type: primary_key
+          - type: not_null
+        tests:
+          - not_null
+          - unique
+      - name: user_email
+        description: '{{ doc("column_user_email") }}'
+        tests:
+          - unique
+      - name: user_display_name
+        description: '{{ doc("column_user_display_name") }}'
+      - name: user_properties
+        description: '{{ doc("column_user_properties") }}'
+      - name: last_device_id
+        description: '{{ doc("column_last_device_id") }}'
+        constraints:
+          - type: not_null
+        tests:
+          - not_null
+      - name: last_device_user_agent
+        description: '{{ doc("column_last_device_user_agent") }}'
+      - name: last_device_type
+        description: '{{ doc("column_last_device_type") }}'
+      - name: last_device_operating_system
+        description: '{{ doc("column_last_device_operating_system") }}'
+      - name: last_device_browser
+        description: '{{ doc("column_last_device_browser") }}'
+      - name: last_device_browser_version
+        description: '{{ doc("column_last_device_browser_version") }}'
+      - name: last_geo_ip_address
+        description: '{{ doc("column_last_geo_ip_address") }}'
+      - name: last_geo_country
+        description: '{{ doc("column_last_geo_country") }}'
+      - name: last_geo_region
+        description: '{{ doc("column_last_geo_region") }}'
+      - name: last_geo_city
+        description: '{{ doc("column_last_geo_city") }}'
+      - name: last_geo_lat_long
+        description: '{{ doc("column_last_geo_lat_long") }}'
+      - name: last_event_time
+        description: '{{ doc("column_last_event_time") }}'
+        constraints:
+          - type: not_null
+        tests:
+          - not_null
+      - name: last_event_id
+        description: '{{ doc("column_last_event_id") }}'
+        constraints:
+          - type: not_null
+        tests:
+          - not_null
