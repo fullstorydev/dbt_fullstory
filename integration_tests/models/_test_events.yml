@@ -113,7 +113,21 @@ models:
           expression: url_path = '/good_url_path'
           config:
             where: event_id = 'user_last_source_properties_test_3'
-      # TODO: add url_query, url_hash_path, url_hash_query
+      - dbt_utils.expression_is_true:
+          name: url_query_is_correct
+          expression: url_query = '?good_key=good_value'
+          config:
+            where: event_id = 'user_last_source_properties_test_3'
+      - dbt_utils.expression_is_true:
+          name: url_hash_path_is_correct
+          expression: url_hash_path = '#good_hash_path'
+          config:
+            where: event_id = 'user_last_source_properties_test_3'
+      - dbt_utils.expression_is_true:
+          name: url_hash_query_is_correct
+          expression: url_hash_query = '?good_key=good_value'
+          config:
+            where: event_id = 'user_last_source_properties_test_3'
       - dbt_utils.expression_is_true:
           name: initial_referrer_full_url_is_correct
           expression: initial_referrer_full_url = 'https://good_initial_referrer.com/initial_referrer_path'
@@ -129,11 +143,39 @@ models:
           expression: initial_referrer_path = '/good_initial_referrer_path'
           config:
             where: event_id = 'user_last_source_properties_test_3'
-      # TODO: add initial_referrer_query, initial_referrer_hash_path, initial_referrer_hash_query
+      - dbt_utils.expression_is_true:
+          name: initial_referrer_url_query_is_correct
+          expression: url_query = '?good_key=good_value'
+          config:
+            where: event_id = 'user_last_source_properties_test_3'
+      - dbt_utils.expression_is_true:
+          name: initial_referrer_url_hash_path_is_correct
+          expression: url_hash_path = '#good_hash_path'
+          config:
+            where: event_id = 'user_last_source_properties_test_3'
+      - dbt_utils.expression_is_true:
+          name: initial_referrer_url_hash_query_is_correct
+          expression: url_hash_query = '?good_key=good_value'
+          config:
+            where: event_id = 'user_last_source_properties_test_3'
       # TODO: add target_text, target_masked, target_raw_selector, element_definition_id, additional_element_definition_ids
       - dbt_utils.expression_is_true:
           name: user_id_is_correct
-          expression: user_id = 'user_test_last_properties_user_id'
+          expression: user_id = 'user_test_total_sessions_user_id'
           config:
-            where: event_id = 'user_last_source_properties_test_3'
-      # TODO add user_email, user_display_name, user_properties
+            where: event_id = 'user_total_sessions_test_3'
+      - dbt_utils.expression_is_true:
+          name: user_email_is_correct
+          expression: user_email = 'good_user@fullstory.com'
+          config:
+            where: event_id = 'user_total_sessions_test_3'
+      - dbt_utils.expression_is_true:
+          name: user_display_name_is_correct
+          expression: user_display_name = 'good_display_name'
+          config:
+            where: event_id = 'user_total_sessions_test_3'
+      - dbt_utils.expression_is_true:
+          name: user_properties_is_correct
+          expression: JSON_VALUE(user_properties, '$.good_key') = 'good_value'
+          config:
+            where: event_id = 'user_total_sessions_test_3'
