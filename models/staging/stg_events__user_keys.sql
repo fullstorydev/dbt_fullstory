@@ -8,6 +8,6 @@ select
             updated_time desc,
             processed_time desc
     ) as desc_row_num
-from {{ ref("stg_events__all") }}
+from {{ ref("events") }}
 where
     user_id is not null

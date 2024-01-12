@@ -1,0 +1,139 @@
+version: 2
+
+models:
+  - name: test_events
+    tests:
+      - dbt_utils.expression_is_true:
+          name: device_id_is_correct
+          expression: device_id = 1
+          config:
+            where: event_id = 'simple_session_test_1'
+      - dbt_utils.expression_is_true:
+          name: session_id_is_correct
+          expression: session_id = 1
+          config:
+            where: event_id = 'simple_session_test_1'
+      - dbt_utils.expression_is_true:
+          name: view_id_is_correct
+          expression: view_id = 1
+          config:
+            where: event_id = 'simple_session_test_1'
+      - dbt_utils.expression_is_true:
+          name: event_time_is_correct
+          expression: event_time = '2023-01-01T12:00:00'
+          config:
+            where: event_id = 'simple_session_test_1'
+      - dbt_utils.expression_is_true:
+          name: event_type_is_correct
+          expression: event_type = 'click'
+          config:
+            where: event_id = 'simple_session_test_1'
+      - dbt_utils.expression_is_true:
+          name: source_type_is_correct
+          expression: source_type = 'web'
+          config:
+            where: event_id = 'simple_session_test_1'
+      - dbt_utils.expression_is_true:
+          name: updated_time_is_correct
+          expression: updated_time = '2023-01-01T01:00:00'
+          config:
+            where: event_id = 'simple_session_test_1'
+      - dbt_utils.expression_is_true:
+          name: processed_time_is_correct
+          expression: processed_time = '2023-01-01T12:00:00'
+          config:
+            where: event_id = 'simple_session_test_1'
+      - dbt_utils.expression_is_true:
+          name: full_session_id_is_correct
+          expression: full_session_id = '1:1'
+          config:
+            where: event_id = 'simple_session_test_1'
+      - dbt_utils.expression_is_true:
+          name: device_user_agent_is_correct
+          expression: device_user_agent = 'good_user_agent'
+          config:
+            where: event_id = 'user_last_source_properties_test_3'
+      - dbt_utils.expression_is_true:
+          name: device_type_is_correct
+          expression: device_type = 'good_device_type'
+          config:
+            where: event_id = 'user_last_source_properties_test_3'
+      - dbt_utils.expression_is_true:
+          name: device_operating_system_is_correct
+          expression: device_operating_system = 'good_operating_system'
+          config:
+            where: event_id = 'user_last_source_properties_test_3'
+      - dbt_utils.expression_is_true:
+          name: device_browser_is_correct
+          expression: device_browser = 'good_browser'
+          config:
+            where: event_id = 'user_last_source_properties_test_3'
+      - dbt_utils.expression_is_true:
+          name: device_browser_version_is_correct
+          expression: device_browser_version = 'good_browser_version'
+          config:
+            where: event_id = 'user_last_source_properties_test_3'
+      - dbt_utils.expression_is_true:
+          name: geo_ip_address_is_correct
+          expression: geo_ip_address = 'good_ip_address'
+          config:
+            where: event_id = 'user_last_source_properties_test_3'
+      - dbt_utils.expression_is_true:
+          name: geo_country_is_correct
+          expression: geo_country = 'good_country'
+          config:
+            where: event_id = 'user_last_source_properties_test_3'
+      - dbt_utils.expression_is_true:
+          name: geo_region_is_correct
+          expression: geo_region = 'good_region'
+          config:
+            where: event_id = 'user_last_source_properties_test_3'
+      - dbt_utils.expression_is_true:
+          name: geo_city_is_correct
+          expression: geo_city = 'good_city'
+          config:
+            where: event_id = 'user_last_source_properties_test_3'
+      - dbt_utils.expression_is_true:
+          name: geo_lat_long_is_correct
+          expression: geo_lat_long = 'good_lat_long'
+          config:
+            where: event_id = 'user_last_source_properties_test_3'
+      - dbt_utils.expression_is_true:
+          name: url_full_url_is_correct
+          expression: url_full_url = 'https://good_url_full_url.com/url_path'
+          config:
+            where: event_id = 'user_last_source_properties_test_3'
+      - dbt_utils.expression_is_true:
+          name: url_host_is_correct
+          expression: url_host = 'good_full_url.com'
+          config:
+            where: event_id = 'user_last_source_properties_test_3'
+      - dbt_utils.expression_is_true:
+          name: url_path_is_correct
+          expression: url_path = '/good_url_path'
+          config:
+            where: event_id = 'user_last_source_properties_test_3'
+      # TODO: add url_query, url_hash_path, url_hash_query
+      - dbt_utils.expression_is_true:
+          name: initial_referrer_full_url_is_correct
+          expression: initial_referrer_full_url = 'https://good_initial_referrer.com/initial_referrer_path'
+          config:
+            where: event_id = 'user_last_source_properties_test_3'
+      - dbt_utils.expression_is_true:
+          name: initial_referrer_host_is_correct
+          expression: initial_referrer_host = 'good_initial_referrer_host.com'
+          config:
+            where: event_id = 'user_last_source_properties_test_3'
+      - dbt_utils.expression_is_true:
+          name: initial_referrer_path_is_correct
+          expression: initial_referrer_path = '/good_initial_referrer_path'
+          config:
+            where: event_id = 'user_last_source_properties_test_3'
+      # TODO: add initial_referrer_query, initial_referrer_hash_path, initial_referrer_hash_query
+      # TODO: add target_text, target_masked, target_raw_selector, element_definition_id, additional_element_definition_ids
+      - dbt_utils.expression_is_true:
+          name: user_id_is_correct
+          expression: user_id = 'user_test_last_properties_user_id'
+          config:
+            where: event_id = 'user_last_source_properties_test_3'
+      # TODO add user_email, user_display_name, user_properties

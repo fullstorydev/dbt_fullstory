@@ -15,7 +15,7 @@ select
       partition by user_id
       order by event_time desc
     ) as identity_num_desc
-from {{ ref("stg_events__all") }} events
+from {{ ref("events") }} events
 where
   event_type = 'identify'
   and user_id is not null

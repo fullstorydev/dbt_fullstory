@@ -22,8 +22,6 @@ clean-targets: # directories to be removed by `dbt clean`
 # Configuring models
 # Full documentation: https://docs.getdbt.com/docs/configuring-models
 models:
-  +materialized: view
-
   +persist_docs:
     columns: true
     relation: true
@@ -58,6 +56,7 @@ vars:
       "pinch_gesture",
       "request",
     ]
+  fullstory_incremental_interval: INTERVAL 12 HOUR
   fullstory_replay_host: app.fullstory.com
 
 seeds:
