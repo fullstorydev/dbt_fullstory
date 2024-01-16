@@ -14,7 +14,7 @@ select
     row_number() over (
       partition by user_id
       order by event_time desc
-    ) as identity_num_desc
+    ) as event_seq_num_desc
 from {{ ref("events") }} events
 where
   event_type = 'identify'

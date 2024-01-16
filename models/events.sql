@@ -149,12 +149,12 @@ select
                 },
                 {
                     "name": "element_definition_id",
-                    "path": "$.element_id",
+                    "path": "$.target.element_definition_id",
                     "cast_as": "string",
                 },
                 {
                     "name": "additional_element_definition_ids",
-                    "path": "$.additional_element_definition_ids",
+                    "path": "$.target.additional_element_definition_ids",
                     "array": true,
                 },
             ],

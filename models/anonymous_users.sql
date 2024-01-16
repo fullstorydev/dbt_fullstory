@@ -15,7 +15,7 @@ select
 from {{ ref('devices') }} devices
 where
   devices.id is not null
-  and devices.device_num_desc = 1
+  and devices.event_seq_num_desc = 1
   and devices.source_type != 'server' -- exclude server events, they won't have geo or device values.
   and devices.id not in (
     select device_id

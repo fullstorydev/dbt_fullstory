@@ -76,7 +76,7 @@ user_total_sessions_test_1,2023-01-01 13:00:00,2023-01-01 12:00:00,2023-01-01 00
 user_total_sessions_test_4,2023-01-01 13:00:05,2023-01-01 12:00:00,2023-01-01 00:00:00,10,1,1,click,{},web,{}
 user_total_sessions_test_2,2023-01-01 13:01:00,2023-01-01 12:00:00,2023-01-01 00:00:00,10,2,1,identify,"{""user_id"":""user_test_total_sessions_user_id""}",web,{}
 user_total_sessions_test_3,2023-01-01 13:01:00,2023-01-01 12:00:00,2023-01-01 00:00:00,11,1,1,identify,"{""user_id"":""user_test_total_sessions_user_id"",""user_email"":""good_user@fullstory.com"",""user_display_name"":""good_display_name"",""user_properites"":{""good_key"":""good_value""}}",mobile_app,{}
-user_total_sessions_test_4,2023-01-01 13:01:05,2023-01-01 12:00:00,2023-01-01 00:00:00,11,1,1,click,{},mobile_app,{}
+user_total_sessions_test_5,2023-01-01 13:01:05,2023-01-01 12:00:00,2023-01-01 00:00:00,11,1,1,click,{},mobile_app,{}
 session_device_identify_user_test_1,2023-01-01 13:00:00,2023-01-01 12:00:00,2023-01-01 00:00:00,12,1,1,load,{},web,{}
 session_device_identify_user_test_2,2023-01-01 13:00:05,2023-01-01 12:00:00,2023-01-01 00:00:00,12,1,1,click,{},web,{}
 session_device_identify_user_test_3,2023-01-01 13:00:00,2023-01-01 12:00:00,2023-01-01 00:00:00,12,2,1,identify,"{""user_id"":""session_device_identify_user_id""}",web,{}

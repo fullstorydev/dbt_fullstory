@@ -19,5 +19,5 @@ select
   devices.updated_time as last_updated_time,
   devices.processed_time as last_processed_time
 from {{ ref('identifies') }} identifies
-join {{ ref('devices') }} devices on identifies.device_id = devices.id and devices.device_num_desc = 1
-where identifies.identity_num_desc = 1
+join {{ ref('devices') }} devices on identifies.device_id = devices.id and devices.event_seq_num_desc = 1
+where identifies.event_seq_num_desc = 1
