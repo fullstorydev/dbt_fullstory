@@ -4,6 +4,11 @@ This dbt package contains models, macros, seeds, and tests for [FullStory](https
 ## Models
 | model | description |
 | - | - |
+| anonymous_users | All users that have not been identified. |
+| devices | All events with their device information parsed. |
+| events | All events (incremental materialization possible) |
+| identified_users | All users who have been identified. |
+| identities | All identify events. |
 | sessions | Session-level aggregations, including event counts broken down by type, location and device information, duration, FullStory session replay links, etc.
 | users | User-level aggregations, including email addresses, location and device information, session counts, etc.
 
@@ -15,7 +20,13 @@ This dbt package contains models, macros, seeds, and tests for [FullStory](https
 | fullstory_events_table | The name of the table inside your schema where your FullStory events table lives. |
 | fullstory_replay_host | The hostname to use when building links to session replay. |
 | fullstory_sessions_model_name | The name of the model for the canonical list of sessions. |
-| fullstory_users_model_name | The name of the model for the canonical list of users. |
+| fullstory_anonymous_users_model_name | The customized name of the `anonymous_users` model. |
+| fullstory_devices_model_name | The customized name of the `devices`` model. |
+| fullstory_events_model_name | The customized name of the `events`` model. |
+| fullstory_identified_users_model_name | The customized name of the `identified_users` model. |
+| fullstory_identities_model_name | The customized name of the `identities`` model. |
+| fullstory_sessions_model_name | The customized name of the `sessions`` model. |
+| fullstory_users_model_name | The customized name of the `users`` model. |
 | fullstory_min_event_time | All events before this date will not be considered for analysis. Use this option to limit table size. |
 | fullstory_event_types | A list of event types to auto-generate rollups for in the `users` and `sessions` model. |
 
