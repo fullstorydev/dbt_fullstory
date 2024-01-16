@@ -27,7 +27,7 @@ models:
     relation: true
 
 vars:
-  fullstory_events_table: fullstory_events_integration_tests
+  fullstory_events_table: fullstory_events_integration_seeds
   fullstory_events_types:
     [
       "background",
@@ -62,7 +62,7 @@ vars:
 seeds:
   dbt_fullstory_integration_tests:
     enabled: true
-    fullstory_events_integration_tests:
+    fullstory_events_integration_seeds:
       +column_types:
         event_time: datetime
         processed_time: datetime
