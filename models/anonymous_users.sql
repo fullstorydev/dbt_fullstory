@@ -11,7 +11,7 @@ select
   devices.geo_city as last_geo_city,
   devices.geo_lat_long as last_geo_lat_long,
   devices.event_time as last_event_time,
-  devices.event_id as last_event_id,
+  devices.event_id as last_event_id
 from {{ ref('devices') }} devices
 where
   devices.id is not null
