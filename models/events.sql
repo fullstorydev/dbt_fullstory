@@ -137,7 +137,7 @@ select
                 },
                 {
                     "name": "target_masked",
-                    "path": "$.target.text.masked",
+                    "path": "$.target.masked",
                     "cast_as": "boolean",
                     "prefix": "coalesce(",
                     "postfix": ", FALSE)",

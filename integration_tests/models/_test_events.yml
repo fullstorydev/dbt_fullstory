@@ -160,6 +160,31 @@ models:
             where: event_id = 'user_last_source_properties_test_3'
       # TODO: add target_text, target_masked, target_raw_selector, element_definition_id, additional_element_definition_ids
       - dbt_utils.expression_is_true:
+          name: target_text_is_correct
+          expression: target_text = 'Test Button ****'
+          config:
+            where: event_id = 'event_properties_target_test_1'
+      - dbt_utils.expression_is_true:
+          name: target_masked_is_correct
+          expression: target_masked = true
+          config:
+            where: event_id = 'event_properties_target_test_1'
+      - dbt_utils.expression_is_true:
+          name: target_raw_selector_is_correct
+          expression: target_raw_selector = '.test-button'
+          config:
+            where: event_id = 'event_properties_target_test_1'
+      - dbt_utils.expression_is_true:
+          name: element_definition_id_is_correct
+          expression: element_definition_id = 'good_element_definition_id'
+          config:
+            where: event_id = 'event_properties_target_test_1'
+      - dbt_utils.expression_is_true:
+          name: additional_element_definition_ids_is_correct
+          expression: additional_element_definition_ids[0] = 'good_additional_element_definition_ids'
+          config:
+            where: event_id = 'event_properties_target_test_1'
+      - dbt_utils.expression_is_true:
           name: user_id_is_correct
           expression: user_id = 'user_test_total_sessions_user_id'
           config:
