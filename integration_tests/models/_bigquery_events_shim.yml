@@ -1,7 +1,0 @@
-version: 2
-
-models:
-  - name: bigquery_events_shim
-    config:
-      enabled: "{{ (target.type == 'bigquery') | as_bool }}"
-      alias: fullstory_events_integration_tests

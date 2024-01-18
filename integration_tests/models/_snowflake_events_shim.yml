@@ -1,7 +1,0 @@
-version: 2
-
-models:
-  - name: snowflake_events_shim
-    config:
-      enabled: "{{ (target.type == 'snowflake') | as_bool }}"
-      alias: fullstory_events_integration_tests

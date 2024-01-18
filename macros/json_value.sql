@@ -13,5 +13,9 @@
 {%- endmacro -%}
 
 {%- macro snowflake__json_value(column, path, array, dtype) -%}
-  GET_PATH(to_variant({{column}}), '{{ modules.re.sub('\$\.', '', path) }}')
+  {# Remove the leading $. from the path #}
+  {% set path = modules.re.sub('\$\.', '', path) %}
+  {# Replace dots with colons in the path #}
+  {% set path = modules.re.sub('\.', ':', path) %}
+  parse_json({{column}}):{{path}}
 {%- endmacro -%}

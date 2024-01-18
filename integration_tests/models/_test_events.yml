@@ -158,7 +158,6 @@ models:
           expression: url_hash_query = '?good_key=good_value'
           config:
             where: event_id = 'user_last_source_properties_test_3'
-      # TODO: add target_text, target_masked, target_raw_selector, element_definition_id, additional_element_definition_ids
       - dbt_utils.expression_is_true:
           name: target_text_is_correct
           expression: target_text = 'Test Button ****'
@@ -181,7 +180,7 @@ models:
             where: event_id = 'event_properties_target_test_1'
       - dbt_utils.expression_is_true:
           name: additional_element_definition_ids_is_correct
-          expression: additional_element_definition_ids[0] = 'good_additional_element_definition_ids'
+          expression: additional_element_definition_ids[0] = 'good_additional_element_definition_id'
           config:
             where: event_id = 'event_properties_target_test_1'
       - dbt_utils.expression_is_true:
