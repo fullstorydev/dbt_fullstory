@@ -10,7 +10,8 @@ select
     user_id,
     user_email,
     user_display_name,
-    user_properties,
+    user_properties
+    event_properties,
     row_number() over (
       partition by user_id
       order by event_time desc
