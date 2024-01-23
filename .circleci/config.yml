@@ -84,6 +84,7 @@ jobs:
             cd integration_tests
             dbt seed --target bigquery --full-refresh
             dbt compile --target bigquery
+            dbt run --target bigquery --full-refresh --select bigquery_events_shim
             dbt run --target bigquery --full-refresh
             dbt test --target bigquery
 
