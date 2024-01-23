@@ -116,7 +116,9 @@ dbt seed
 
 ## Incremental modeling
 
-DBT provides a powerful mechanism for improving the performance of your models and reducing query costs: [incremental models](https://docs.getdbt.com/docs/build/incremental-models). An incremental model only processes new or updated records since the last run, thereby saving significant processing power and time. 
+DBT provides a powerful mechanism for improving the performance of your models and reducing query costs: [incremental models](https://docs.getdbt.com/docs/build/incremental-models). An incremental model only processes new or updated records since the last run, thereby saving significant processing power and time.
+
+> If you are running DBT on a regular interval, be aware that `dbt run` will take longer to run with the incremental materialization than with a view materialization.
 
 In this package, it is important to start with the incrementalization of the `events` model, since it functions as an activity log and is an ancestor to all models in this package.
 
@@ -143,7 +145,9 @@ models:
         - device_id
 ```
 
-When loading data incrementally, DBT needs to know how far back to look in the current table for data to compare to the incoming data. We will look back 7 days for data to update by default. This interval can be configured with the variable `fullstory_incremental_interval` and should be specified as a SQL interval like `INTERVAL 7 DAY`.
+When loading data incrementally, DBT needs to know how far back to look in the current table for data to compare to the incoming data. We will look back 2 days for data to update by default. This interval can be configured with the variable `fullstory_incremental_interval` and should be specified as a SQL interval like `INTERVAL 2 DAY`.
+
+Two days was decided upon because we typically drop late arriving events after 24 hours. To understand why a event may arrive late, please check out [this article on swan songs](https://help.fullstory.com/hc/en-us/articles/360048109714-Swan-songs-How-FullStory-captures-sessions-that-end-unexpectedly#:~:text=If%20the%20user%20navigates%20away,FullStory%20before%20the%20page%20closes.).
 
 This incremental interval is important; it can limit the cost of a query by greatly reducing the amount of work that needs to be done in order to add new data. Ultimatley, this setting will be specific to your needs; we recommend starting with the default and updating once you understand the trends of your data set.
 
