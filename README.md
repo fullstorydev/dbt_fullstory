@@ -163,3 +163,31 @@ Remember, fine tuning model performance and costs is a balancing act. Incrementa
 
 ### Other models
 Although, we often find the incrementalization of the `events` model to be sufficient, you can customize the materialization method of any model in this package. Enabling additional incrementalization can be done in the same way as the `events` table, simply add a configuration block to your `dbt_project.yml`.
+
+## Running Integration Tests
+The `integration_tests` directory is a DBT project itself that depends on `dbt_fullstory`. We use this package to test how our models will execute in the real world as it simulates a live environment and is used in CI to hit actual databases. If you wish, you can run these tests locally. All you need is a target configured in your `profiles.yml` that is authenticated to a supported warehouse type.
+
+> Internally, we name our profiles after the type of warehouse we are connecting (e.g. `bigquery`, `snowflake`, etc.). It makes the command more clear, like: `dbt run --target bigquery`.
+
+To create the test data in your database:
+```
+dbt seed --target my-target
+```
+
+To run the shim for your warehouse:
+> The shim will emulate how data is synced for your particular warehouse. As an example, data is loaded in JSON columns in Snowflake but as strings in BigQuery. You can choose from:
+> - bigquery_events_shim
+> - snowflake_events_shim
+```
+dbt run --target my-target --select <my-warehouse>_events_shim 
+```
+
+To run the models:
+```
+dbt run --target my-target
+```
+
+To run the tests:
+```
+dbt test --target my-target
+```
