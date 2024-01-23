@@ -211,3 +211,8 @@ models:
 >>>>>>> 9e1406b (parse json before querying, output json column types (#17))
           config:
             where: event_id = 'user_total_sessions_test_3'
+      - dbt_utils.expression_is_true:
+          name: event_properties_is_correct
+          expression: "{{ dbt_fullstory.json_value('event_properties', '$.good_key') }} = 'good_value'"
+          config:
+            where: event_id = 'user_total_sessions_test_3'
