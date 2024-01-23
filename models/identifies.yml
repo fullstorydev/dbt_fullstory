@@ -23,13 +23,13 @@ models:
         tests:
           - not_null
       - name: session_id
-        description: '{{ doc("column_device_id") }}'
+        description: '{{ doc("column_session_id") }}'
         constraints:
           - type: not_null
         tests:
           - not_null
       - name: view_id
-        description: '{{ doc("column_device_id") }}'
+        description: '{{ doc("column_view_id") }}'
         constraints:
           - type: not_null
         tests:
@@ -62,6 +62,8 @@ models:
         description: '{{ doc("column_user_display_name") }}'
       - name: user_properties
         description: '{{ doc("column_user_properties") }}'
+      - name: event_properties
+        description: '{{ doc("column_event_properties") }}'
       - name: event_seq_num_desc
         description: '{{ doc("column_event_seq_num_desc") }}'
         constraints:
