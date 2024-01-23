@@ -10,4 +10,4 @@ select
   parse_json(event_properties) as event_properties,
   source_type,
   parse_json(source_properties) as source_properties
-from {{ ref('fullstory_events_integration_tests') }}
+from {{ ref('fullstory_events_integration_seeds') }}

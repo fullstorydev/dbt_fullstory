@@ -1,0 +1,80 @@
+version: 2
+
+models:
+  - name: test_devices
+    tests:
+      - dbt_utils.expression_is_true:
+          name: user_agent_is_correct
+          expression: user_agent = 'good_user_agent'
+          config:
+            where: id = 7 and event_seq_num_desc = 1
+      - dbt_utils.expression_is_true:
+          name: type_is_correct
+          expression: type = 'good_device_type'
+          config:
+            where: id = 7 and event_seq_num_desc = 1
+      - dbt_utils.expression_is_true:
+          name: operating_system_is_correct
+          expression: operating_system = 'good_operating_system'
+          config:
+            where: id = 7 and event_seq_num_desc = 1
+      - dbt_utils.expression_is_true:
+          name: browser_is_correct
+          expression: browser = 'good_browser'
+          config:
+            where: id = 7 and event_seq_num_desc = 1
+      - dbt_utils.expression_is_true:
+          name: browser_version
+          expression: browser_version = 'good_browser_version'
+          config:
+            where: id = 7 and event_seq_num_desc = 1
+      - dbt_utils.expression_is_true:
+          name: geo_ip_address_is_correct
+          expression: geo_ip_address = 'good_ip_address'
+          config:
+            where: id = 7 and event_seq_num_desc = 1
+      - dbt_utils.expression_is_true:
+          name: geo_country_is_correct
+          expression: geo_country = 'good_country'
+          config:
+            where: id = 7 and event_seq_num_desc = 1
+      - dbt_utils.expression_is_true:
+          name: geo_region_is_correct
+          expression: geo_region = 'good_region'
+          config:
+            where: id = 7 and event_seq_num_desc = 1
+      - dbt_utils.expression_is_true:
+          name: geo_city_is_correct
+          expression: geo_city = 'good_city'
+          config:
+            where: id = 7 and event_seq_num_desc = 1
+      - dbt_utils.expression_is_true:
+          name: geo_lat_long_is_correct
+          expression: geo_lat_long = 'good_lat_long'
+          config:
+            where: id = 7 and event_seq_num_desc = 1
+      - dbt_utils.expression_is_true:
+          name: source_type_is_correct
+          expression: source_type = 'mobile_app'
+          config:
+            where: id = 7 and event_seq_num_desc = 1
+      - dbt_utils.expression_is_true:
+          name: event_id_is_correct
+          expression: event_id = 'user_last_source_properties_test_3'
+          config:
+            where: id = 7 and event_seq_num_desc = 1
+      - dbt_utils.expression_is_true:
+          name: event_time_is_correct
+          expression: event_time = '2023-01-01T14:00:00'
+          config:
+            where: id = 7 and event_seq_num_desc = 1
+      - dbt_utils.expression_is_true:
+          name: updated_time_is_correct
+          expression: updated_time = '2023-01-01T00:00:00'
+          config:
+            where: id = 7 and event_seq_num_desc = 1
+      - dbt_utils.expression_is_true:
+          name: processed_time_is_correct
+          expression: processed_time = '2023-01-01T13:00:00'
+          config:
+            where: id = 7 and event_seq_num_desc = 1

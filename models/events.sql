@@ -137,7 +137,7 @@ select
                 },
                 {
                     "name": "target_masked",
-                    "path": "$.target.text.masked",
+                    "path": "$.target.masked",
                     "cast_as": "boolean",
                     "prefix": "coalesce(",
                     "postfix": ", FALSE)",
@@ -149,12 +149,12 @@ select
                 },
                 {
                     "name": "element_definition_id",
-                    "path": "$.element_id",
+                    "path": "$.target.element_definition_id",
                     "cast_as": "string",
                 },
                 {
                     "name": "additional_element_definition_ids",
-                    "path": "$.additional_element_definition_ids",
+                    "path": "$.target.additional_element_definition_ids",
                     "array": true,
                 },
             ],
@@ -191,3 +191,9 @@ from {{ source("fullstory", "events") }}
 where
     event_type is not null and
     event_time >= '{{ var("fullstory_min_event_time") }}'
+    {% if is_incremental() %}
+        -- we can't use the max event_time because event_time is specified by the client. We cannot guarantee
+        -- that it is accurate. Instead, we will use the current timestamp, and look back a configurable
+        -- distance for updates.
+        and event_time >= current_timestamp - {{ var("fullstory_incremental_interval") }}
+    {% endif %}

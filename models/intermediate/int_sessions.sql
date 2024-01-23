@@ -26,7 +26,7 @@ select
     {% endfor %},
     count(case when events.source_type = 'web' then 1 end) as total_web_events,
     count(case when events.source_type = 'mobile_app' then 1 end) as total_mobile_app_events
-from {{ ref("stg_events__all") }} as events
+from {{ ref("events") }} as events
 left outer join
     {{ ref("stg_events__user_keys") }} as users on
         users.desc_row_num = 1 and

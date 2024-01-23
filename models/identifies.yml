@@ -1,0 +1,70 @@
+models:
+  - name: identifies
+    access: public
+    config:
+      alias: "{{ var('fullstory_identifies_model_name', 'identifies') }}"
+      contract:
+        enforce: true
+    description: |-
+      All identify events tracked from the FS SDKs or API.
+    columns:
+      - name: event_id
+        description: '{{ doc("column_event_id") }}'
+        constraints:
+          - type: primary_key
+          - type: not_null
+        tests:
+          - not_null
+          - unique
+      - name: device_id
+        description: '{{ doc("column_device_id") }}'
+        constraints:
+          - type: not_null
+        tests:
+          - not_null
+      - name: session_id
+        description: '{{ doc("column_device_id") }}'
+        constraints:
+          - type: not_null
+        tests:
+          - not_null
+      - name: view_id
+        description: '{{ doc("column_device_id") }}'
+        constraints:
+          - type: not_null
+        tests:
+          - not_null
+      - name: event_time
+        description: '{{ doc("column_event_time") }}'
+        constraints:
+          - type: not_null
+        tests:
+          - not_null
+      - name: updated_time
+        description: '{{ doc("column_updated_time") }}'
+        constraints:
+          - type: not_null
+        tests:
+          - not_null
+      - name: processed_time
+        description: '{{ doc("column_processed_time") }}'
+        constraints:
+          - type: not_null
+        tests:
+          - not_null
+      - name: source_type
+        description: '{{ doc("column_source_type") }}'
+      - name: user_id
+        description: '{{ doc("column_user_id") }}'
+      - name: user_email
+        description: '{{ doc("column_user_email") }}'
+      - name: user_display_name
+        description: '{{ doc("column_user_display_name") }}'
+      - name: user_properties
+        description: '{{ doc("column_user_properties") }}'
+      - name: event_seq_num_desc
+        description: '{{ doc("column_event_seq_num_desc") }}'
+        constraints:
+          - type: not_null
+        tests:
+          - not_null

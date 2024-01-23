@@ -54,6 +54,7 @@ models:
 
 vars:
   dbt_date:time_zone: Etc/UTC
+  fullstory_incremental_interval: INTERVAL 2 DAY
   fullstory_replay_host: app.fullstory.com
 
   # For filtering all event data, if necessary

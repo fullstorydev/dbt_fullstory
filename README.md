@@ -4,6 +4,11 @@ This dbt package contains models, macros, seeds, and tests for [FullStory](https
 ## Models
 | model | description |
 | - | - |
+| anonymous_users | All users that have not been identified. |
+| devices | All events with their device information parsed. |
+| events | All events (incremental materialization possible) |
+| identified_users | All users who have been identified. |
+| identities | All identify events. |
 | sessions | Session-level aggregations, including event counts broken down by type, location and device information, duration, FullStory session replay links, etc.
 | users | User-level aggregations, including email addresses, location and device information, session counts, etc.
 
@@ -15,7 +20,13 @@ This dbt package contains models, macros, seeds, and tests for [FullStory](https
 | fullstory_events_table | The name of the table inside your schema where your FullStory events table lives. |
 | fullstory_replay_host | The hostname to use when building links to session replay. |
 | fullstory_sessions_model_name | The name of the model for the canonical list of sessions. |
-| fullstory_users_model_name | The name of the model for the canonical list of users. |
+| fullstory_anonymous_users_model_name | The customized name of the `anonymous_users` model. |
+| fullstory_devices_model_name | The customized name of the `devices`` model. |
+| fullstory_events_model_name | The customized name of the `events`` model. |
+| fullstory_identified_users_model_name | The customized name of the `identified_users` model. |
+| fullstory_identities_model_name | The customized name of the `identities`` model. |
+| fullstory_sessions_model_name | The customized name of the `sessions`` model. |
+| fullstory_users_model_name | The customized name of the `users`` model. |
 | fullstory_min_event_time | All events before this date will not be considered for analysis. Use this option to limit table size. |
 | fullstory_event_types | A list of event types to auto-generate rollups for in the `users` and `sessions` model. |
 
@@ -102,3 +113,53 @@ To use the seed tables which have some info around common types, run:
 ```sh
 dbt seed
 ```
+
+## Incremental modeling
+
+DBT provides a powerful mechanism for improving the performance of your models and reducing query costs: [incremental models](https://docs.getdbt.com/docs/build/incremental-models). An incremental model only processes new or updated records since the last run, thereby saving significant processing power and time.
+
+> If you are running DBT on a regular interval, be aware that `dbt run` will take longer to run with the incremental materialization than with a view materialization.
+
+In this package, it is important to start with the incrementalization of the `events` model, since it functions as an activity log and is an ancestor to all models in this package.
+
+### Getting started with incremental models
+
+You can configure your project to load the `events` table from this package incrementally. All you need to do is add a configuration block for the `dbt_fullstory` project under the `models` key in your `dbt_project.yml`:
+
+```yaml
+# Configuring models
+# Full documentation: https://docs.getdbt.com/docs/configuring-models
+models:
+  ...
+
+  dbt_fullstory: # The package name you are customizing
+    events: # The model name
+      materialized: incremental
+      unique_key: event_id
+      # The following options are Big Query specific optimizations. For specific configuration options for your warehouse see: https://docs.getdbt.com/reference/model-configs#warehouse-specific-configurations
+      +partition_by: 
+        field: event_time
+        data_type: timestamp
+        granularity: day
+      cluster_by:
+        - device_id
+```
+
+When loading data incrementally, DBT needs to know how far back to look in the current table for data to compare to the incoming data. We will look back 2 days for data to update by default. This interval can be configured with the variable `fullstory_incremental_interval` and should be specified as a SQL interval like `INTERVAL 2 DAY`.
+
+Two days was decided upon because we typically drop late arriving events after 24 hours. To understand why a event may arrive late, please check out [this article on swan songs](https://help.fullstory.com/hc/en-us/articles/360048109714-Swan-songs-How-FullStory-captures-sessions-that-end-unexpectedly#:~:text=If%20the%20user%20navigates%20away,FullStory%20before%20the%20page%20closes.).
+
+This incremental interval is important; it can limit the cost of a query by greatly reducing the amount of work that needs to be done in order to add new data. Ultimatley, this setting will be specific to your needs; we recommend starting with the default and updating once you understand the trends of your data set.
+
+### Considerations
+
+- **Use incrementally-loaded models judiciously:** While incremental loading does improve performance and cut costs, it adds some complexity to managing your dbt project. Ensure you need the trade-off before implementing it.
+
+- **Aggregation challenges:** Aggregations in incrementally-loaded models can be challenging and unreliable. When performing aggregations (such as count, sum, average), best practice is to refresh the complete model to include all data in the aggregation. Incrementally updating aggregated data can yield incorrect results because of missing or partially updated data. 
+
+Think about whether using date-partitioned tables, continuous rollups (using window functions), or occasionally running full-refreshes might serve your use case better.
+
+Remember, fine tuning model performance and costs is a balancing act. Incremental models may not suit all scenarios, but when managed correctly, they can be incredibly powerful. Start with the `events` model, measure the benefits, and then increment other models as necessary. Happy modeling!
+
+### Other models
+Although, we often find the incrementalization of the `events` model to be sufficient, you can customize the materialization method of any model in this package. Enabling additional incrementalization can be done in the same way as the `events` table, simply add a configuration block to your `dbt_project.yml`.

@@ -6,8 +6,32 @@ Any other element definition IDs that match the target element.
 The event's unique identifier.
 {% enddocs %}
 
+{% docs column_device_browser %}
+The browser used by the device.
+{% enddocs %}
+
+{% docs column_device_browser_version %}
+The version of the browser used by the device.
+{% enddocs %}
+
 {% docs column_device_id %}
 The event's device ID. Device details can be viewed by joining the devices table.
+{% enddocs %}
+
+{% docs column_device_operating_system %}
+The operating system installed on the device.
+{% enddocs %}
+
+{% docs column_event_seq_num_desc %}
+The sequence number for the type of event described in this this table in descending order. The latest information for this event type is located at event_seq_num_desc = 1.
+{% enddocs %}
+
+{% docs column_device_type %}
+The type of the device the user used.
+{% enddocs %}
+
+{% docs column_device_user_agent %}
+The device's user agent.
 {% enddocs %}
 
 {% docs column_element_definition_id %}
@@ -16,6 +40,34 @@ The element definition of ID of the configured element in FullStory.
 
 {% docs column_event_time %}
 The time the event was created.
+{% enddocs %}
+
+{% docs column_event_type %}
+The type of event that occured.
+{% enddocs %}
+
+{% docs column_full_session_id %}
+The device id + the session id. This is the unique identifier seen in the URL of Session Replay within app.fullstory.com.
+{% enddocs %}
+
+{% docs column_geo_city %}
+The city the device appeared to be in.
+{% enddocs %}
+
+{% docs column_geo_country %}
+The country the device appeared to be in.
+{% enddocs %}
+
+{% docs column_geo_ip_address %}
+The IP address this user, device or session.
+{% enddocs %}
+
+{% docs column_geo_lat_long %}
+The approximate latitude and longitude of the device.
+{% enddocs %}
+
+{% docs column_geo_region %}
+The region (state if in the US) the device appeared to be in.
 {% enddocs %}
 
 {% docs column_initial_referrer_full_url %}
