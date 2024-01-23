@@ -58,3 +58,8 @@ models:
           expression: "{{ dbt_fullstory.json_value('user_properties', '$.good_key', skip_parse=True) }} = 'good_value'"
           config:
             where: event_id = 'identify_session_test_6'
+      - dbt_utils.expression_is_true:
+          name: event_properties_are_correct
+          expression: "{{ dbt_fullstory.json_value('event_properties', '$.good_key') }} = 'good_value'"
+          config:
+            where: event_id = 'identify_session_test_6'
