@@ -16,6 +16,7 @@ select
   devices.geo_lat_long as last_geo_lat_long,
   devices.event_time as last_event_time,
   devices.event_id as last_event_id,
+  event_properties,
 from {{ ref('int_identifies') }} identifies
 join {{ ref('int_devices') }} devices on identifies.device_id = devices.device_id and devices.device_num_desc = 1
 where identifies.identity_num_desc = 1
