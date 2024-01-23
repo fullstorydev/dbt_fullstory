@@ -184,6 +184,11 @@ select
                     "path": "$.user_properties",
                     "dtype": "object",
                 },
+                {
+                    "name": "event_properties",
+                    "path": "$.event_properties",
+                    "cast_as": "json",
+                },
             ],
         )
     }}
