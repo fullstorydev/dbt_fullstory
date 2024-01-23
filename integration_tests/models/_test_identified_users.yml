@@ -18,6 +18,11 @@ models:
           expression: JSON_VALUE(user_properties, '$.good_key') = 'good_value'
           config:
             where: user_id = 'good_user_id'
+        - dbt_utils.expression_is_true:
+          name: event_properties_are_correct
+          expression: JSON_VALUE(event_properties, '$.good_key') = 'good_value'
+          config:
+            where: user_id = 'good_user_id' 
       - dbt_utils.expression_is_true:
           name: last_device_user_agent_is_correct
           expression: last_device_user_agent = 'good_user_agent'
