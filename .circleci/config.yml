@@ -101,6 +101,7 @@ jobs:
             cd integration_tests
             dbt seed --target snowflake --full-refresh
             dbt compile --target snowflake
+            dbt run --target snowflake --full-refresh --select snowflake_events_shim
             dbt run --target snowflake --full-refresh
             dbt test --target snowflake
 

@@ -27,7 +27,7 @@ models:
     relation: true
 
 vars:
-  fullstory_events_table: fullstory_events_integration_seeds
+  fullstory_events_table: fullstory_events_integration_tests
   fullstory_events_types:
     [
       "background",

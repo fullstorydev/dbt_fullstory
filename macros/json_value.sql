@@ -17,5 +17,5 @@
   {% set path = modules.re.sub('\$\.', '', path) %}
   {# Replace dots with colons in the path #}
   {% set path = modules.re.sub('\.', ':', path) %}
-  parse_json({{column}}):{{path}}
+  {{column}}:{{path}}
 {%- endmacro -%}
