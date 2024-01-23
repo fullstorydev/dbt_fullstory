@@ -214,6 +214,10 @@ The unique ID corresponding to a single user. Not all sessions have an identifie
 The JSON properties that were sent via an identify call or setUserVars call.
 {% enddocs %}
 
+{% docs column_event_properties %}
+The JSON event properties that were sent via an identify call setUserVars call or custom event call.
+{% enddocs %}
+
 {% docs column_view_id %}
 The unique ID corresponding to a single load of FS.js. A session may have many views.
 {% enddocs %}
