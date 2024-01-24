@@ -17,5 +17,9 @@
   {% set path = modules.re.sub('\$\.', '', path) %}
   {# Replace dots with colons in the path #}
   {% set path = modules.re.sub('\.', ':', path) %}
-  {{column}}:{{path}}
+    {%- if path != '' -%}
+        {{column}}:{{path}}
+    {%- else -%}
+        {{column}}
+    {%- endif -%}
 {%- endmacro -%}
