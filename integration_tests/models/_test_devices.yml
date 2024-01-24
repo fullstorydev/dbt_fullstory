@@ -82,4 +82,4 @@ models:
           name: source_properties_is_correct
           expression: "{{ dbt_fullstory.json_value('source_properties', '$.good_key') }} = 'good_value'"
           config:
-            where: event_id = 'user_total_sessions_test_3'
+            where: id = 7 and event_seq_num_desc = 1
