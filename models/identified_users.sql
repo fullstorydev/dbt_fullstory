@@ -18,7 +18,8 @@ select
   devices.event_time as last_event_time,
   devices.updated_time as last_updated_time,
   devices.processed_time as last_processed_time,
-  event_properties
+  event_properties,
+  source_properties
 from {{ ref('identifies') }} identifies
 join {{ ref('devices') }} devices on identifies.device_id = devices.id and devices.event_seq_num_desc = 1
 where identifies.event_seq_num_desc = 1
