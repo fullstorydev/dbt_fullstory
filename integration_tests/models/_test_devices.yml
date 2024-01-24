@@ -78,3 +78,8 @@ models:
           expression: processed_time = '2023-01-01T13:00:00'
           config:
             where: id = 7 and event_seq_num_desc = 1
+      - dbt_utils.expression_is_true:
+          name: source_properties_is_correct
+          expression: "{{ dbt_fullstory.json_value('source_properties', '$.good_key') }} = 'good_value'"
+          config:
+            where: event_id = 'user_total_sessions_test_3'
