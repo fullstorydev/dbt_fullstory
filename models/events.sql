@@ -187,7 +187,7 @@ select
                 {
                     "name": "event_properties",
                     "path": "$",
-                    "dtype": "json",
+                    "dtype": "object",
                 },
             ],
         )
