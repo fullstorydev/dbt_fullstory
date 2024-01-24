@@ -218,6 +218,10 @@ The JSON properties that were sent via an identify call or setUserVars call.
 The JSON event properties that were sent via an identify call setUserVars call or custom event call.
 {% enddocs %}
 
+{% docs column_source_properties %}
+The JSON source properties that contain all the captured properties associated with the originating source.
+{% enddocs %}
+
 {% docs column_view_id %}
 The unique ID corresponding to a single load of FS.js. A session may have many views.
 {% enddocs %}
