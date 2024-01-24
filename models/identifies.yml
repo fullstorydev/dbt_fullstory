@@ -62,10 +62,6 @@ models:
         description: '{{ doc("column_user_display_name") }}'
       - name: user_properties
         description: '{{ doc("column_user_properties") }}'
-      - name: event_properties
-        description: '{{ doc("column_event_properties") }}'
-      - name: source_properties
-        description: '{{ doc("column_source_properties") }}'
       - name: event_seq_num_desc
         description: '{{ doc("column_event_seq_num_desc") }}'
         constraints:
