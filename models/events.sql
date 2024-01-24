@@ -123,6 +123,11 @@ select
                     "path": "$.initial_referrer.hash_query",
                     "cast_as": "string",
                 },
+                {
+                    "name": "source_properties",
+                    "path": "$",
+                    "dtype": "object",
+                },
             ],
         )
     }},
