@@ -117,4 +117,4 @@ models:
        - name: event_properties
         description: '{{ doc("column_event_properties") }}'
       - name: source_properties
-        description: '{{ doc("source_properties") }}'
+        description: '{{ doc("column_source_properties") }}'
