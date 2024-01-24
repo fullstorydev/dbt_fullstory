@@ -114,3 +114,7 @@ models:
         description: '{{ doc("column_initial_referrer_hash_path") }}'
       - name: initial_referrer_hash_query
         description: '{{ doc("column_initial_referrer_hash_query") }}'
+       - name: event_properties
+        description: '{{ doc("event_properties") }}'
+      - name: source_properties
+        description: '{{ doc("source_properties") }}'
