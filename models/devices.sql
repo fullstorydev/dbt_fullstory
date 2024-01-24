@@ -15,6 +15,7 @@ select
   geo_city,
   geo_lat_long,
   source_type,
+  source_properties,
   row_number() over (
     partition by device_id
     order by event_time desc
