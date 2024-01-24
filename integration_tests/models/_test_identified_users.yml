@@ -24,6 +24,11 @@ models:
           config:
             where: user_id = 'good_user_id'
       - dbt_utils.expression_is_true:
+          name: source_properties_is_correct
+          expression: "{{ dbt_fullstory.json_value('source_properties', '$.good_key') }} = 'good_value'"
+          config:
+            where: event_id = 'user_total_sessions_test_3'
+      - dbt_utils.expression_is_true:
           name: last_device_user_agent_is_correct
           expression: last_device_user_agent = 'good_user_agent'
           config:
