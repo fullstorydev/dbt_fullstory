@@ -62,8 +62,6 @@ models:
         description: '{{ doc("column_geo_lat_long") }}'
       - name: source_type
         description: '{{ doc("column_source_type") }}'
-      - name: source_properties
-        description: '{{ doc("column_source_properties") }}'
       - name: event_seq_num_desc
         description: '{{ doc("column_event_seq_num_desc") }}'
         constraints:
