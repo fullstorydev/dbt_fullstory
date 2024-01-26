@@ -5,7 +5,8 @@
 {%- macro default__json_value(column, path, array, dtype, skip_parse) -%}
 {# We need to parse the json if we don't explicitly skip it. #}
 {%- if not skip_parse -%}
-{%- set column = 'PARSE_JSON(' + column +')' -%}
+{# We should round big numbers so that they can be round-tripped from string > double > string. #}
+{%- set column = "PARSE_JSON(" + column +",wide_number_mode=>'round')" -%}
 {%- endif %}
 
 {%- if array -%}
