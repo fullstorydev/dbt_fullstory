@@ -1,8 +1,13 @@
-{%- macro json_value(column, path, array=False, dtype=none) -%}
-    {{ return(adapter.dispatch('json_value', 'dbt_fullstory')(column, path, array, dtype)) }}
+{%- macro json_value(column, path, array=False, dtype=none, skip_parse=False) -%}
+    {{ return(adapter.dispatch('json_value', 'dbt_fullstory')(column, path, array, dtype, skip_parse)) }}
 {% endmacro %}
 
-{%- macro default__json_value(column, path, array, dtype) -%}
+{%- macro default__json_value(column, path, array, dtype, skip_parse) -%}
+{# We need to parse the json if we don't explicitly skip it. #}
+{%- if not skip_parse -%}
+{%- set column = 'PARSE_JSON(' + column +')' -%}
+{%- endif %}
+
 {%- if array -%}
   JSON_VALUE_ARRAY({{column}}, '{{path}}')
 {%- elif dtype == "object" -%}
@@ -12,7 +17,7 @@
 {%- endif -%}
 {%- endmacro -%}
 
-{%- macro snowflake__json_value(column, path, array, dtype) -%}
+{%- macro snowflake__json_value(column, path, array, dtype, skip_parse) -%}
   {# Remove the leading $. from the path #}
   {% set path = modules.re.sub('\$\.', '', path) %}
   {# Replace dots with colons in the path #}

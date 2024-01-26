@@ -15,7 +15,7 @@ models:
             where: user_id = 'good_user_id'
       - dbt_utils.expression_is_true:
           name: user_properties_are_correct
-          expression: "{{ dbt_fullstory.json_value('user_properties', '$.good_key') }} = 'good_value'"
+          expression: "{{ dbt_fullstory.json_value('user_properties', '$.good_key', skip_parse=True) }} = 'good_value'"
           config:
             where: user_id = 'good_user_id'
       - dbt_utils.expression_is_true:
