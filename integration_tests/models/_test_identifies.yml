@@ -1,0 +1,60 @@
+version: 2
+
+models:
+  - name: test_identifies
+    tests:
+      - dbt_utils.expression_is_true:
+          name: device_id_is_correct
+          expression: device_id = 2
+          config:
+            where: event_id = 'identify_session_test_6'
+      - dbt_utils.expression_is_true:
+          name: session_id_is_correct
+          expression: session_id = 2
+          config:
+            where: event_id = 'identify_session_test_6'
+      - dbt_utils.expression_is_true:
+          name: view_id_is_correct
+          expression: view_id = 1
+          config:
+            where: event_id = 'identify_session_test_6'
+      - dbt_utils.expression_is_true:
+          name: event_time_is_correct
+          expression: event_time = '2023-01-01T13:00:00'
+          config:
+            where: event_id = 'identify_session_test_6'
+      - dbt_utils.expression_is_true:
+          name: updated_time_is_correct
+          expression: updated_time = '2023-01-01T12:00:00'
+          config:
+            where: event_id = 'identify_session_test_6'
+      - dbt_utils.expression_is_true:
+          name: processed_time_is_correct
+          expression: processed_time = '2023-01-01T13:00:00'
+          config:
+            where: event_id = 'identify_session_test_6'
+      - dbt_utils.expression_is_true:
+          name: source_type_is_correct
+          expression: source_type = 'web'
+          config:
+            where: event_id = 'identify_session_test_6'
+      - dbt_utils.expression_is_true:
+          name: user_id_is_correct
+          expression: user_id = 'good_user_id'
+          config:
+            where: event_id = 'identify_session_test_6'
+      - dbt_utils.expression_is_true:
+          name: user_email_is_correct
+          expression: user_email = 'good_user_email@fullstory.com'
+          config:
+            where: event_id = 'identify_session_test_6'
+      - dbt_utils.expression_is_true:
+          name: user_display_name_is_correct
+          expression: user_display_name = 'good_display_name'
+          config:
+            where: event_id = 'identify_session_test_6'
+      - dbt_utils.expression_is_true:
+          name: user_properties_are_correct
+          expression: "{{ dbt_fullstory.json_value('user_properties', '$.good_key', skip_parse=True) }} = 'good_value'"
+          config:
+            where: event_id = 'identify_session_test_6'
