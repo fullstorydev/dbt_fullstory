@@ -20,8 +20,12 @@
 
 {%- macro snowflake__json_value(column, path, array, dtype, skip_parse) -%}
   {# Remove the leading $. from the path #}
-  {% set path = modules.re.sub('\$\.?', '', path) %}
+  {%- set path = modules.re.sub('\$\.?', '', path) -%}
   {# Replace dots with colons in the path #}
-  {% set path = modules.re.sub('\.', ':', path) %}
-  {{column}}:{{path}}
+  {%- set path = modules.re.sub('\.', ':', path) -%}
+  {# If there is a path, prefix with a colon #}
+  {%- if path != '' -%}
+  {%- set path = ':' + path -%}
+  {%- endif -%}
+  {{column}}{{path}}
 {%- endmacro -%}
