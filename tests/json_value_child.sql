@@ -1,5 +1,5 @@
 with x as (
-  select '{"good_key":"good_value"}' as col
+  select PARSE_JSON('{"good_key":"good_value"}') as col
 )
 select *
 from x
