@@ -23,13 +23,13 @@ models:
         tests:
           - not_null
       - name: session_id
-        description: '{{ doc("column_device_id") }}'
+        description: '{{ doc("column_session_id") }}'
         constraints:
           - type: not_null
         tests:
           - not_null
       - name: view_id
-        description: '{{ doc("column_device_id") }}'
+        description: '{{ doc("column_view_id") }}'
         constraints:
           - type: not_null
         tests:
