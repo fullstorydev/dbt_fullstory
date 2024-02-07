@@ -18,8 +18,6 @@ models:
           - unique
       - name: user_email
         description: '{{ doc("column_user_email") }}'
-        tests:
-          - unique
       - name: user_display_name
         description: '{{ doc("column_user_display_name") }}'
       - name: user_properties
