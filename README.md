@@ -26,6 +26,7 @@ This dbt package contains models, macros, seeds, and tests for [FullStory](https
 | fullstory_identified_users_model_name | The customized name of the `identified_users` model. |
 | fullstory_identities_model_name | The customized name of the `identities`` model. |
 | fullstory_sessions_model_name | The customized name of the `sessions`` model. |
+| fullstory_skip_json_parse | Whether or not to skip JSON parsing when processing the data, default False. |
 | fullstory_users_model_name | The customized name of the `users`` model. |
 | fullstory_min_event_time | All events before this date will not be considered for analysis. Use this option to limit table size. |
 | fullstory_event_types | A list of event types to auto-generate rollups for in the `users` and `sessions` model. |

@@ -14,6 +14,15 @@ dbt_fullstory_integration_tests:
       threads: 4
       priority: interactive
 
+    bigquery_v2:
+      type: bigquery
+      method: service-account
+      keyfile: "{{ env_var('BIGQUERY_SERVICE_KEY_PATH') }}"
+      project: "{{ env_var('BIGQUERY_GCP_PROJECT') }}"
+      dataset: "dbt_fullstory_testing_v2"
+      threads: 4
+      priority: interactive
+
     snowflake:
       type: snowflake
       account: "{{ env_var('SNOWFLAKE_ACCOUNT') }}"
