@@ -88,6 +88,26 @@ jobs:
             dbt run --target bigquery --full-refresh
             dbt test --target bigquery
 
+  bigquery_v2_test:
+    docker:
+      - image: cimg/python:3.11.4
+    steps:
+      - setup_job
+
+      - run:
+          name: "Test - BigQuery V2"
+          environment:
+            BIGQUERY_SERVICE_KEY_PATH: "/home/circleci/bigquery-service-key.json"
+          command: |
+            . venv/bin/activate
+            echo `pwd`
+            cd integration_tests
+            dbt seed --target bigquery_v2 --full-refresh
+            dbt compile --target bigquery_v2 --vars '{"fullstory_skip_json_parse": true}'
+            dbt run --target bigquery_v2 --full-refresh --select bigquery_v2_events_shim --vars '{"fullstory_skip_json_parse": true}'
+            dbt run --target bigquery_v2 --full-refresh --vars '{"fullstory_skip_json_parse": true}'
+            dbt test --target bigquery_v2 --vars '{"fullstory_skip_json_parse": true}'
+
   snowflake_test:
     docker:
       - image: cimg/python:3.11.4
