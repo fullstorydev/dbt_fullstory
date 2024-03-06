@@ -1,0 +1,7 @@
+version: 2
+
+models:
+  - name: redshift_events_shim
+    config:
+      enabled: "{{ (target.type == 'redshift') | as_bool }}"
+      alias: fullstory_events_integration_tests
