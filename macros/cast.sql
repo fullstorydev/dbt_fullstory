@@ -17,3 +17,8 @@ END
 {{- dbt.safe_cast(column, as) -}}
 {%- endif -%}
 {%- endmacro -%}
+
+{%- macro snowflake__cast(column, as) -%}
+{# We don't want to use try_cast for Snowflake. You can't use try_cast on a variant type. #}
+cast({{column}} as {{ api.Column.translate_type(as)}})
+{%- endmacro -%}
