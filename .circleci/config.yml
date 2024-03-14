@@ -37,8 +37,8 @@ commands:
             aws ec2-instance-connect send-ssh-public-key \
               --region ${AWS_REGION_NAME} \
               --availability-zone ${AWS_AVAILABILITY_ZONE} \
-              --instance-id ${BASTION_INSTANCE_ID}
-              --instance-os-user ${AWS_BASTION_USER}
+              --instance-id ${BASTION_INSTANCE_ID} \
+              --instance-os-user ${AWS_BASTION_USER} \
               --ssh-public-key file://aws-temp.pub
 
             ssh -N -f \
