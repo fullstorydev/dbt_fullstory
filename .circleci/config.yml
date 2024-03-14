@@ -108,7 +108,7 @@ jobs:
       - image: cimg/python:3.11.4
     steps:
       - setup_job
-      - setup_reshift
+      - setup_redshift
       - run:
           name: "Compile - Redshift"
           command: |
