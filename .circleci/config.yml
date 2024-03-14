@@ -31,11 +31,9 @@ commands:
           role-arn: AWS_ROLE_ARN
           aws-region: AWS_REGION_NAME
       - run:
-          name: Prepare ssh
+          name: Setup SSH Tunnel
           command: |
             ssh-keygen -t rsa -f aws-temp -q -N "" <<<y >/dev/null 2>&1
-            cp aws-temp ~/.ssh/id_aws
-            touch ~/.ssh/id_aws.pub
 
             aws ec2-instance-connect send-ssh-public-key \
               --region ${AWS_REGION_NAME} \
@@ -44,8 +42,13 @@ commands:
               --instance-os-user ${AWS_BASTION_USER}
               --ssh-public-key file://aws-temp.pub
 
+            ssh -N -f \
+             -L 5439:${REDSHIFT_URL}:5439 \
+              -o "IdentitiesOnly=yes" -o "Port=22" \
+              -i aws-temp \
+              ${AWS_BASTION_USER}@${BASTION_HOST}
+
 orbs:
-  ssh: lansweeper/ssh@0.0.3
   aws-cli: circleci/aws-cli@4.1.3
 
 jobs:
