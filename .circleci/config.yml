@@ -34,6 +34,8 @@ commands:
           name: Prepare ssh
           command: |
             ssh-keygen -t rsa -f aws-temp -q -N "" <<<y >/dev/null 2>&1
+            cp aws-temp ~/.ssh/id_aws
+            touch ~/.ssh/id_aws.pub
 
             aws ec2-instance-connect send-ssh-public-key \
               --region ${AWS_REGION_NAME} \
@@ -164,7 +166,7 @@ jobs:
           target_port: 5439
           bastion_user: AWS_BASTION_USER
           bastion_host: BASTION_HOST
-          options: Port=22,IdentitiesOnly=yes,
+          options: Port=22,IdentitiesOnly=yes
       - run:
           name: "Test - Redshift"
           command: |
