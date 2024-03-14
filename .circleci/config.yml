@@ -20,6 +20,32 @@ commands:
           command: |
             echo $BIGQUERY_SERVICE_ACCOUNT_JSON > ${HOME}/bigquery-service-key.json
 
+  setup_redshift:
+    steps:
+      # TODO: remove when https://github.com/dbt-labs/dbt-redshift/issues/729 is resolved
+      - run:
+          name: Add redshift URL to hosts
+          command: |
+            sudo tee -a /etc/hosts \<<<'127.0.0.1 ${REDSHIFT_URL}'
+      - aws-cli/setup:
+          role-arn: AWS_ROLE_ARN
+          aws-region: AWS_REGION_NAME
+      - run:
+          name: Prepare ssh
+          command: |
+            ssh-keygen -t rsa -f aws-temp -q -N "" <<<y >/dev/null 2>&1
+
+            aws ec2-instance-connect send-ssh-public-key \
+              --region ${AWS_REGION_NAME} \
+              --availability-zone ${AWS_AVAILABILITY_ZONE} \
+              --instance-id ${BASTION_INSTANCE_ID}
+              --instance-os-user ${AWS_BASTION_USER}
+              --ssh-public-key file://aws-temp.pub
+
+orbs:
+  ssh: lansweeper/ssh@0.0.3
+  aws-cli: circleci/aws-cli@4.1.3
+
 jobs:
   setup_commit:
     docker:
@@ -126,6 +152,31 @@ jobs:
             dbt run --target snowflake --full-refresh
             dbt test --target snowflake
 
+  redshift_test:
+    docker:
+      - image: cimg/python:3.11.4
+    steps:
+      - setup_job
+      - setup_redshift
+      - ssh/tunnel:
+          local_port: 5439
+          target_host: REDSHIFT_URL
+          target_port: 5439
+          bastion_user: AWS_BASTION_USER
+          bastion_host: BASTION_HOST
+          options: Port=22,IdentitiesOnly=yes,
+      - run:
+          name: "Test - Redshift"
+          command: |
+            . venv/bin/activate
+            echo `pwd`
+            cd integration_tests
+            dbt seed --target redshift --full-refresh
+            dbt compile --target redshift
+            dbt run --target redshift --full-refresh --select redshift_events_shim
+            dbt run --target redshift --full-refresh
+            dbt test --target redshift
+
 workflows:
   commit:
     jobs:
@@ -141,5 +192,8 @@ workflows:
           requires:
             - wait_for_approval
       - snowflake_test:
+          requires:
+            - wait_for_approval
+      - redshift_test:
           requires:
             - wait_for_approval

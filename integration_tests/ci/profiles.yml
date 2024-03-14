@@ -33,3 +33,16 @@ dbt_fullstory_integration_tests:
       warehouse: "{{ env_var('SNOWFLAKE_TEST_WAREHOUSE') }}"
       schema: dbt_fullstory_testing
       threads: 4
+
+    redshift:
+      type: redshift
+      host: "{{ env_var('REDSHIFT_URL') }}"
+      port: 5439
+      method: iam
+      user: serverlessuser
+      iam_profile: default
+      dbname: dev
+      schema: dbt_fullstory_integration_tests
+      region: "{{ env_var('REDSHIFT_REGION') }}"
+      threads: 4
+      connect_timeout: 30
