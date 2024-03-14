@@ -28,12 +28,11 @@ commands:
           command: |
             sudo tee -a /etc/hosts \<<<'127.0.0.1 ${REDSHIFT_URL}'
       - aws-cli/setup:
-          role-arn: AWS_ROLE_ARN
-          aws-region: AWS_REGION_NAME
+          role_arn: AWS_ROLE_ARN
       - run:
           name: Setup SSH Tunnel
           command: |
-            ssh-keygen -t rsa -f aws-temp -q -N "" <<<y >/dev/null 2>&1
+            ssh-keygen -t rsa -f aws-temp -q -N "" \<<<y >/dev/null 2>&1
 
             aws ec2-instance-connect send-ssh-public-key \
               --region ${AWS_REGION_NAME} \
@@ -163,13 +162,6 @@ jobs:
     steps:
       - setup_job
       - setup_redshift
-      - ssh/tunnel:
-          local_port: 5439
-          target_host: REDSHIFT_URL
-          target_port: 5439
-          bastion_user: AWS_BASTION_USER
-          bastion_host: BASTION_HOST
-          options: Port=22,IdentitiesOnly=yes
       - run:
           name: "Test - Redshift"
           command: |
