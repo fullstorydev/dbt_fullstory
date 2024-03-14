@@ -207,6 +207,7 @@ workflows:
           requires:
             - setup_commit
       - compile_redshift:
+          context: aws
           requires:
             - setup_commit
       - wait_for_approval:
@@ -222,5 +223,6 @@ workflows:
           requires:
             - wait_for_approval
       - redshift_test:
+          context: aws
           requires:
             - wait_for_approval
