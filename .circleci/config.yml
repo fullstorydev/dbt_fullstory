@@ -30,7 +30,7 @@ commands:
       - run:
           name: Add redshift URL to hosts
           command: |
-            sudo tee -a /etc/hosts \<<<'127.0.0.1 ${REDSHIFT_URL}'
+            sudo tee -a /etc/hosts \<<<"127.0.0.1 ${REDSHIFT_URL}"
       - run:
           name: Setup SSH Tunnel
           command: |
