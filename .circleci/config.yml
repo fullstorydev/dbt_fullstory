@@ -98,6 +98,14 @@ jobs:
             cd integration_tests
             dbt compile --target snowflake
 
+      - run:
+          name: "Compile - Redshift"
+          command: |
+            . venv/bin/activate
+            echo `pwd`
+            cd integration_tests
+            dbt compile --target redshift
+
   bigquery_test:
     docker:
       - image: cimg/python:3.11.4
