@@ -74,10 +74,9 @@ jobs:
             - "venv"
             - "integration_tests/dbt_packages"
 
-  compile:
+  compile_bigquery:
     docker:
       - image: cimg/python:3.11.4
-
     steps:
       - setup_job
       - run:
@@ -90,6 +89,12 @@ jobs:
             cd integration_tests
             dbt compile --target bigquery
 
+  compile_snowflake:
+    docker:
+      - image: cimg/python:3.11.4
+
+    steps:
+      - setup_job
       - run:
           name: "Compile - Snowflake"
           command: |
@@ -98,6 +103,12 @@ jobs:
             cd integration_tests
             dbt compile --target snowflake
 
+  compile_redshift:
+    docker:
+      - image: cimg/python:3.11.4
+    steps:
+      - setup_job
+      - setup_reshift
       - run:
           name: "Compile - Redshift"
           command: |
@@ -186,13 +197,21 @@ workflows:
   commit:
     jobs:
       - setup_commit
-      - compile:
+      - compile_bigquery:
+          requires:
+            - setup_commit
+      - compile_snowflake:
+          requires:
+            - setup_commit
+      - compile_redshift:
           requires:
             - setup_commit
       - wait_for_approval:
           type: approval
           requires:
-            - compile
+            - compile_bigquery
+            - compile_snowflake
+            - compile_redshift
       - bigquery_test:
           requires:
             - wait_for_approval
