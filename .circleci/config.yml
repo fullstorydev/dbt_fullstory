@@ -19,6 +19,8 @@ commands:
           name: "Setup BigQuery Credentials"
           command: |
             echo $BIGQUERY_SERVICE_ACCOUNT_JSON > ${HOME}/bigquery-service-key.json
+      - aws-cli/setup:
+          role_arn: $AWS_ROLE_ARN
 
   setup_redshift:
     steps:
@@ -27,8 +29,6 @@ commands:
           name: Add redshift URL to hosts
           command: |
             sudo tee -a /etc/hosts \<<<'127.0.0.1 ${REDSHIFT_URL}'
-      - aws-cli/setup:
-          role_arn: $AWS_ROLE_ARN
       - run:
           name: Setup SSH Tunnel
           command: |
