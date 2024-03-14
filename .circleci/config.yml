@@ -22,7 +22,7 @@ commands:
       - aws-cli/setup:
           role_arn: $AWS_ROLE_ARN
           profile_name: default
-          aws_region: $AWS_REGION_NAME
+          region: $AWS_REGION_NAME
 
   setup_redshift:
     steps:
