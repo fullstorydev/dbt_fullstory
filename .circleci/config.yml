@@ -44,7 +44,7 @@ commands:
               --ssh-public-key file://aws-temp.pub \
               --profile default
 
-            ssh -N -f \
+            ssh -N -f -4 \
              -L 5439:${REDSHIFT_URL}:5439 \
               -o "IdentitiesOnly=yes" -o "Port=22" -o "StrictHostKeyChecking=no" \
               -i aws-temp \
