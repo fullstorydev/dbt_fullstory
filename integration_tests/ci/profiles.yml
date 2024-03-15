@@ -39,7 +39,7 @@ dbt_fullstory_integration_tests:
       host: "{{ env_var('REDSHIFT_URL') }}"
       port: 5439
       method: iam
-      user: dbt
+      user: IAMR:circleci-fullstorydev
       iam_profile: default
       dbname: dev
       schema: dbt_fullstory_integration_tests
