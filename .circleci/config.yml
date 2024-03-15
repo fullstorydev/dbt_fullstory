@@ -46,7 +46,7 @@ commands:
 
             ssh -N -f \
              -L 5439:${REDSHIFT_URL}:5439 \
-              -o "IdentitiesOnly=yes" -o "Port=22" \
+              -o "IdentitiesOnly=yes" -o "Port=22" -o "StrictHostKeyChecking=no" \
               -i aws-temp \
               ${AWS_BASTION_USER}@${BASTION_HOST}
 
