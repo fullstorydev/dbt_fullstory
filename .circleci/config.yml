@@ -19,6 +19,39 @@ commands:
           name: "Setup BigQuery Credentials"
           command: |
             echo $BIGQUERY_SERVICE_ACCOUNT_JSON > ${HOME}/bigquery-service-key.json
+      - aws-cli/setup:
+          role_arn: $AWS_ROLE_ARN
+          profile_name: default
+          region: $AWS_REGION_NAME
+
+  setup_redshift:
+    steps:
+      # TODO: remove when https://github.com/dbt-labs/dbt-redshift/issues/729 is resolved
+      - run:
+          name: Add redshift URL to hosts
+          command: |
+            sudo tee -a /etc/hosts \<<<"127.0.0.1 ${REDSHIFT_URL}"
+      - run:
+          name: Setup SSH Tunnel
+          command: |
+            ssh-keygen -t rsa -f aws-temp -q -N "" \<<<y >/dev/null 2>&1
+
+            aws ec2-instance-connect send-ssh-public-key \
+              --region ${AWS_REGION_NAME} \
+              --availability-zone ${AWS_AVAILABILITY_ZONE} \
+              --instance-id ${BASTION_INSTANCE_ID} \
+              --instance-os-user ${AWS_BASTION_USER} \
+              --ssh-public-key file://aws-temp.pub \
+              --profile default
+
+            ssh -N -f -4 \
+             -L 5439:${REDSHIFT_URL}:5439 \
+              -o "IdentitiesOnly=yes" -o "Port=22" -o "StrictHostKeyChecking=no" \
+              -i aws-temp \
+              ${AWS_BASTION_USER}@${BASTION_HOST}
+
+orbs:
+  aws-cli: circleci/aws-cli@4.1.3
 
 jobs:
   setup_commit:
@@ -44,10 +77,9 @@ jobs:
             - "venv"
             - "integration_tests/dbt_packages"
 
-  compile:
+  compile_bigquery:
     docker:
       - image: cimg/python:3.11.4
-
     steps:
       - setup_job
       - run:
@@ -60,6 +92,12 @@ jobs:
             cd integration_tests
             dbt compile --target bigquery
 
+  compile_snowflake:
+    docker:
+      - image: cimg/python:3.11.4
+
+    steps:
+      - setup_job
       - run:
           name: "Compile - Snowflake"
           command: |
@@ -67,6 +105,20 @@ jobs:
             echo `pwd`
             cd integration_tests
             dbt compile --target snowflake
+
+  compile_redshift:
+    docker:
+      - image: cimg/python:3.11.4
+    steps:
+      - setup_job
+      - setup_redshift
+      - run:
+          name: "Compile - Redshift"
+          command: |
+            . venv/bin/activate
+            echo `pwd`
+            cd integration_tests
+            dbt compile --target redshift
 
   bigquery_test:
     docker:
@@ -126,20 +178,51 @@ jobs:
             dbt run --target snowflake --full-refresh
             dbt test --target snowflake
 
+  redshift_test:
+    docker:
+      - image: cimg/python:3.11.4
+    steps:
+      - setup_job
+      - setup_redshift
+      - run:
+          name: "Test - Redshift"
+          command: |
+            . venv/bin/activate
+            echo `pwd`
+            cd integration_tests
+            dbt seed --target redshift --full-refresh
+            dbt compile --target redshift
+            dbt run --target redshift --full-refresh --select redshift_events_shim
+            dbt run --target redshift --full-refresh
+            dbt test --target redshift
+
 workflows:
   commit:
     jobs:
       - setup_commit
-      - compile:
+      - compile_bigquery:
+          requires:
+            - setup_commit
+      - compile_snowflake:
+          requires:
+            - setup_commit
+      - compile_redshift:
+          context: aws
           requires:
             - setup_commit
       - wait_for_approval:
           type: approval
           requires:
-            - compile
+            - compile_bigquery
+            - compile_snowflake
+            - compile_redshift
       - bigquery_test:
           requires:
             - wait_for_approval
       - snowflake_test:
+          requires:
+            - wait_for_approval
+      - redshift_test:
+          context: aws
           requires:
             - wait_for_approval

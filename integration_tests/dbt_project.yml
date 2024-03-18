@@ -22,6 +22,7 @@ clean-targets: # directories to be removed by `dbt clean`
 # Configuring models
 # Full documentation: https://docs.getdbt.com/docs/configuring-models
 models:
+  +bind: false
   +persist_docs:
     columns: true
     relation: true
