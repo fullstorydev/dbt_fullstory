@@ -107,7 +107,7 @@ dbt_fullstory:
       method: iam
       host: my-cluster-id.12345678910.us-east-1.redshift.amazonaws.com
       port: 5439
-      user: serverlessuser
+      user: admin
       iam_profile: my-aws-profile
       dbname: dev
       schema: dbt
