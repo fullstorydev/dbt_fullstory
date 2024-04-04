@@ -61,6 +61,7 @@ vars:
 - BigQuery
 - Snowflake
 - Redshift
+- Redshift Serverless
 
 ### Example Profile Configurations
 #### BigQuery
