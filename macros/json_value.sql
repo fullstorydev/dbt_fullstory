@@ -28,18 +28,7 @@
     {{ return(column) }}
   {%- endif -%}
 
-  {# Split the path into parts #}
-  {%- set parts = path.split('.') -%}
-  {%- set formatted_parts = [] -%}
-  {# Surrond each part with single quotes #}
-  {%- for part in parts -%}
-    {%- set _ = formatted_parts.append("'" + part + "'") -%}
-  {%- endfor -%}
-  {%- if formatted_parts.length == 0 -%}
-    {{ column }}
-  {%- else -%}
-  NULLIF(JSON_EXTRACT_PATH_TEXT({{column}}, {{formatted_parts|join(',')}}, true), '')
-  {%- endif -%}
+  {{column}}.{{path}}
 {%- endmacro -%}
 
 {%- macro snowflake__json_value(column, path, array, dtype, skip_parse) -%}
