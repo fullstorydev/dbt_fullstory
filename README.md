@@ -1,5 +1,5 @@
-# The Official FullStory dbt Package for Data Destinations
-This dbt package contains models, macros, seeds, and tests for [FullStory](https://www.fullstory.com/)'s [Data Destinations](https://help.fullstory.com/hc/en-us/articles/6295300682903-Data-Destinations) add-on.
+# The Official Fullstory dbt Package for Data Destinations
+This dbt package contains models, macros, seeds, and tests for [Fullstory](https://www.fullstory.com/)'s [Data Destinations](https://help.fullstory.com/hc/en-us/articles/6295300682903-Data-Destinations) add-on.
 
 ## Models
 | model | description |
@@ -9,15 +9,15 @@ This dbt package contains models, macros, seeds, and tests for [FullStory](https
 | events | All events (incremental materialization possible) |
 | identified_users | All users who have been identified. |
 | identities | All identify events. |
-| sessions | Session-level aggregations, including event counts broken down by type, location and device information, duration, FullStory session replay links, etc.
+| sessions | Session-level aggregations, including event counts broken down by type, location and device information, duration, Fullstory session replay links, etc.
 | users | User-level aggregations, including email addresses, location and device information, session counts, etc.
 
 ## Vars
 | var | description |
 | - | - |
-| fullstory_events_database | The database where your FullStory events table lives. |
-| fullstory_events_schema | The schema inside of your database where your FullStory events table lives. |
-| fullstory_events_table | The name of the table inside your schema where your FullStory events table lives. |
+| fullstory_events_database | The database where your Fullstory events table lives. |
+| fullstory_events_schema | The schema inside of your database where your Fullstory events table lives. |
+| fullstory_events_table | The name of the table inside your schema where your Fullstory events table lives. |
 | fullstory_replay_host | The hostname to use when building links to session replay. |
 | fullstory_sessions_model_name | The name of the model for the canonical list of sessions. |
 | fullstory_anonymous_users_model_name | The customized name of the `anonymous_users` model. |
@@ -31,7 +31,7 @@ This dbt package contains models, macros, seeds, and tests for [FullStory](https
 | fullstory_min_event_time | All events before this date will not be considered for analysis. Use this option to limit table size. |
 | fullstory_event_types | A list of event types to auto-generate rollups for in the `users` and `sessions` model. |
 
-> We **highly recommend** using `fullstory_events_database`, `fullstory_events_schema` and `fullstory_events_table` to indicate the location of the FullStory events table that is synced from Data Destinations. Using these variables allow you to use a separate database or schema for the FullStory events table than your dbt package.
+> We **highly recommend** using `fullstory_events_database`, `fullstory_events_schema` and `fullstory_events_table` to indicate the location of the Fullstory events table that is synced from Data Destinations. Using these variables allow you to use a separate database or schema for the Fullstory events table than your dbt package.
 
 #### Example use of vars for Big Query
 ```yaml
@@ -67,7 +67,7 @@ dbt_fullstory:
       threads: 1
 ```
 
-#### SnowFlake
+#### Snowflake
 ```yaml
 dbt_fullstory:
   target: prod
@@ -91,14 +91,14 @@ General information about dbt packages can be found [here](https://docs.getdbt.c
 
 ### Requirements
 - dbt version >= 1.6.0
-- FullStory Data Destination events table
+- Fullstory Data Destination events table
   - In BigQuery, this table will be named `fullstory_events_o_123_na1` where `o-123-na1` is your org id.
     - Your org ID can be found in the URL when logged into fullstory.
     ```
     app.fullstory.com/ui/<your-org-id>/...
     ```
   - In Snowflake, this table will be named `events`.
-  - The events table will be created the first time that FullStory syncs event data to your warehouse.
+  - The events table will be created the first time that Fullstory syncs event data to your warehouse.
 
 ### Adding to an Existing Project
 Include the following into your packages.yml file:
@@ -148,7 +148,7 @@ models:
 
 When loading data incrementally, DBT needs to know how far back to look in the current table for data to compare to the incoming data. We will look back 2 days for data to update by default. This interval can be configured with the variable `fullstory_incremental_interval` and should be specified as a SQL interval like `INTERVAL 2 DAY`.
 
-Two days was decided upon because we typically drop late arriving events after 24 hours. To understand why a event may arrive late, please check out [this article on swan songs](https://help.fullstory.com/hc/en-us/articles/360048109714-Swan-songs-How-FullStory-captures-sessions-that-end-unexpectedly#:~:text=If%20the%20user%20navigates%20away,FullStory%20before%20the%20page%20closes.).
+Two days was decided upon because we typically drop late arriving events after 24 hours. To understand why a event may arrive late, please check out [this article on swan songs](https://help.fullstory.com/hc/en-us/articles/360048109714-Swan-songs-How-Fullstory-captures-sessions-that-end-unexpectedly#:~:text=If%20the%20user%20navigates%20away,Fullstory%20before%20the%20page%20closes.).
 
 This incremental interval is important; it can limit the cost of a query by greatly reducing the amount of work that needs to be done in order to add new data. Ultimatley, this setting will be specific to your needs; we recommend starting with the default and updating once you understand the trends of your data set.
 
