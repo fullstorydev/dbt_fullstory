@@ -1,6 +1,6 @@
 with x as (
   {%- if target.type == 'redshift' -%}
-  select '{"good_key":"good_value"}'::TEXT as col
+  select JSON_PARSE('{"good_key":"good_value"}') as col
   {%- elif target.type == 'snowflake' -%}
   select PARSE_JSON('{"good_key":"good_value"}') as col
   {%- else -%}

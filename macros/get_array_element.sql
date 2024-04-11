@@ -5,7 +5,3 @@
 {%- macro default__get_array_element(column, index) -%}
 {{column}}[{{index}}]
 {%- endmacro %}
-
-{%- macro redshift__get_array_element(column, index) -%}
-JSON_EXTRACT_ARRAY_ELEMENT_TEXT({{column}}, {{index}})
-{%- endmacro %}
