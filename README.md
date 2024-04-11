@@ -49,9 +49,19 @@ vars:
   fullstory_events_table: my_table
 ```
 
+#### Example use of vars for Redshift or Redshift Serverless
+```yaml
+vars:
+  fullstory_events_database: my_database
+  fullstory_events_schema: my_schema
+  fullstory_events_table: my_table
+```
+
 ## Supported Warehouses
 - BigQuery
 - Snowflake
+- Redshift
+- Redshift Serverless
 
 ### Example Profile Configurations
 #### BigQuery
@@ -84,6 +94,46 @@ dbt_fullstory:
       threads: 1
       client_session_keep_alive: False
       query_tag: [fullstory_dbt]
+```
+
+#### Redshift
+```yaml
+dbt_fullstory:
+  target: prod
+  outputs:
+    prod:
+      type: redshift
+      cluster_id: my-cluster-id
+      method: iam
+      host: my-cluster-id.12345678910.us-east-1.redshift.amazonaws.com
+      port: 5439
+      user: admin
+      iam_profile: my-aws-profile
+      dbname: dev
+      schema: dbt
+      region: us-east-1
+      threads: 8
+      connect_timeout: 30
+```
+
+#### Redshift Serverless
+```yaml
+dbt_fullstory:
+  target: prod
+  outputs:
+    prod:
+      type: redshift
+      cluster_id: my-namespace-id
+      method: iam
+      host: my-workgroup.12345678910.us-east-1.redshift-serverless.amazonaws.com
+      port: 5439
+      user: serverlessuser
+      iam_profile: my-aws-profile
+      dbname: dev
+      schema: dbt
+      region: us-east-1
+      threads: 8
+      connect_timeout: 30
 ```
 
 ## Installation
