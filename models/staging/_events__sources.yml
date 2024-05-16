@@ -6,7 +6,7 @@ sources:
     schema: "{{ var('fullstory_events_schema', target.schema or target.dataset) }}"
     tables:
       - name: events
-        description: The FullStory events table.
+        description: The Fullstory events table.
         identifier: "{% if var('fullstory_events_table', '') %}{{ var('fullstory_events_table') }}{% else %}{% if target.type == 'bigquery' %}fullstory_events_{{ modules.re.sub('[^a-zA-Z\\d_\\-]', '_', target.name) }}{% else %}events{% endif %}{% endif %}"
         columns:
           - name: event_id

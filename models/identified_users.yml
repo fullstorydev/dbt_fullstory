@@ -60,3 +60,15 @@ models:
           - type: not_null
         tests:
           - not_null
+      - name: last_updated_time
+        description: '{{ doc("column_last_updated_time") }}'
+        constraints:
+          - type: not_null
+        tests:
+          - not_null
+      - name: last_processed_time
+        description: '{{ doc("column_last_processed_time") }}'
+        constraints:
+          - type: not_null
+        tests:
+          - not_null

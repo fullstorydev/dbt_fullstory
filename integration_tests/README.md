@@ -1,5 +1,5 @@
-# The official FullStory dbt package for integration testing
-This dbt package contains the integration tests for the dbt_fullstory package. This project spoofs a FullStory events table using a CSV file and the `dbt seeds` command.
+# The official Fullstory dbt package for integration testing
+This dbt package contains the integration tests for the dbt_fullstory package. This project spoofs a Fullstory events table using a CSV file and the `dbt seeds` command.
 
 ## Setting up your warehouse
 This dbt package deploys all the models and a fake events table to your warehouse. To do so, you will need a separate integrations test dataset/schema. **Do NOT use your production or staging environments. It needs to be a dedicated, separate dataset/schema for integration testing.**

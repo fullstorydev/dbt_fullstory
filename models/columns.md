@@ -35,7 +35,7 @@ The device's user agent.
 {% enddocs %}
 
 {% docs column_element_definition_id %}
-The element definition of ID of the configured element in FullStory.
+The element definition of ID of the configured element in Fullstory.
 {% enddocs %}
 
 {% docs column_event_time %}
@@ -146,8 +146,16 @@ The last type of the device seen for this user, device or session.
 The last user agent to be seen for this user, device or session.
 {% enddocs %}
 
+{% docs column_last_updated_time %}
+The last time this row was updated.
+{% enddocs %}
+
+{% docs column_last_processed_time %}
+The last time this row was processed.
+{% enddocs %}
+
 {% docs column_processed_time %}
-The time the event was processed by FullStory internal systems.
+The time the event was processed by Fullstory internal systems.
 {% enddocs %}
 
 {% docs column_session_id %}

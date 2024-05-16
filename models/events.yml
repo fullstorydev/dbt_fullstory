@@ -6,7 +6,7 @@ models:
       contract:
         enforce: true
     description: |-
-      All events emitted by FullStory.
+      All events emitted by Fullstory.
     columns:
       - name: event_id
         description: '{{ doc("column_event_id") }}'
@@ -46,6 +46,8 @@ models:
           - type: not_null
         tests:
           - not_null
+      - name: element_definition_id
+        description: '{{ doc("column_element_definition_id") }}'
       - name: source_type
         description: '{{ doc("column_source_type") }}'
         constraints:
@@ -118,3 +120,15 @@ models:
         description: '{{ doc("column_event_properties") }}'
       - name: source_properties
         description: '{{ doc("column_source_properties") }}'
+      - name: target_masked
+        description: '{{ doc("column_target_masked") }}'
+      - name: target_raw_selector
+        description: '{{ doc("column_target_raw_selector") }}'
+      - name: target_text
+        description: '{{ doc("column_target_text") }}'
+      - name: user_display_name
+        description: '{{ doc("column_user_display_name") }}'
+      - name: user_id
+        description: '{{ doc("column_user_id") }}'
+      - name: user_properties
+        description: '{{ doc("column_user_properties") }}'

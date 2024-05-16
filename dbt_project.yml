@@ -32,7 +32,7 @@ models:
   +on_schema_change: fail
 
   # This controls how incremental models are sync'ed.
-  # The FullStory event pipeline is not a monotonic process (append-only);
+  # The Fullstory event pipeline is not a monotonic process (append-only);
   # therefore, merge is required on incremental models.
   +incremental_strategy: merge
 
