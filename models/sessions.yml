@@ -156,8 +156,8 @@ session_cols:
     name: replay_url
     data_type: string
     description: |-
-      The FullStory replay URL for the session.
-      You may receive an 'unable to retrieve session' error on FullStory if the session is outside of your retention window.
+      The Fullstory replay URL for the session.
+      You may receive an 'unable to retrieve session' error on Fullstory if the session is outside of your retention window.
 
   #
   # Event count column definitions
@@ -419,6 +419,15 @@ session_cols:
     tests:
       - not_null
 
+  - &session_desc_row_num_col
+    name: desc_row_num
+    data_type: number
+    description: A row number that numbers a user's sessions starting from 1 with their most recent session. Use this number to select the most recent session, or the most recent n sessions.
+    constraints:
+      - type: not_null
+    tests:
+      - not_null
+
 models:
   - name: sessions
     access: public
@@ -482,3 +491,4 @@ models:
       - *session_total_paste_events_col
       - *session_total_pinch_gesture_events_col
       - *session_total_request_events_col
+      - *session_desc_row_num_col
