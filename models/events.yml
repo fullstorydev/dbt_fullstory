@@ -48,6 +48,8 @@ models:
           - not_null
       - name: element_definition_id
         description: '{{ doc("column_element_definition_id") }}'
+      - name: additional_element_definition_ids
+        description: '{{ doc("column_additional_element_definition_ids") }}'
       - name: source_type
         description: '{{ doc("column_source_type") }}'
         constraints:
@@ -128,6 +130,8 @@ models:
         description: '{{ doc("column_target_text") }}'
       - name: user_display_name
         description: '{{ doc("column_user_display_name") }}'
+      - name: user_email
+        description: '{{ doc("column_user_email") }}'
       - name: user_id
         description: '{{ doc("column_user_id") }}'
       - name: user_properties
