@@ -2,7 +2,7 @@
 
 # dbt packages
 dbt-bigquery==1.7.6
-dbt-core==1.7.13
+dbt-core==1.7.15
 dbt-snowflake==1.7.2
 dbt-redshift==1.7.4
 cffi>=1.15.1,<2.0.0
