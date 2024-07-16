@@ -179,6 +179,12 @@ select
                     "cast_as": dbt.type_string(),
                 },
                 {
+                    "name": "target_extracted_properties",
+                    "path": "$.target.raw_selector",
+                    "dtype": "object",
+                    "skip_parse": var("fullstory_skip_json_parse", False),
+                }
+                {
                     "name": "element_definition_id",
                     "path": "$.target.element_definition_id",
                     "skip_parse": var("fullstory_skip_json_parse", False),
