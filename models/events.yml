@@ -126,6 +126,8 @@ models:
         description: '{{ doc("column_target_masked") }}'
       - name: target_raw_selector
         description: '{{ doc("column_target_raw_selector") }}'
+      - name: target_extracted_properties
+        description: '{{ doc("column_target_extracted_properties") }}'
       - name: target_text
         description: '{{ doc("column_target_text") }}'
       - name: user_display_name
