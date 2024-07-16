@@ -210,7 +210,7 @@ models:
             where: event_id = 'user_total_sessions_test_3'
       - dbt_utils.expression_is_true:
           name: element_properties_testPrice_is_correct
-          expression: "{{ dbt_fullstory.json_value('event_properties', '$.target.event_properties.testPrice', skip_parse=True) }} = 3.14"
+          expression: "{{ dbt_fullstory.json_value('event_properties', '$.target.element_properties.testPrice', skip_parse=True) }} = 3.14"
           config:
             where: event_id = 'event_properties_target_test_1'
       - dbt_utils.expression_is_true:
