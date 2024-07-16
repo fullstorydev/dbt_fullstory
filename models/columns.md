@@ -174,6 +174,10 @@ Whether or not the target is masked by a privacy rule.
 The raw CSS selector that points to the target element.
 {% enddocs %}
 
+{% docs column_target_extracted_properties %}
+The extracted properties for the target element.
+{% enddocs %}
+
 {% docs column_target_text %}
 The text of the target that the event was dispatched from.
 {% enddocs %}
