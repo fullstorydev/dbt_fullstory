@@ -179,8 +179,8 @@ select
                     "cast_as": dbt.type_string(),
                 },
                 {
-                    "name": "target_extracted_properties",
-                    "path": "$.target.raw_selector",
+                    "name": "target_element_properties",
+                    "path": "$.target.element_properties",
                     "dtype": "object",
                     "skip_parse": var("fullstory_skip_json_parse", False),
                 }
