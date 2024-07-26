@@ -22,6 +22,7 @@
 {%- macro redshift__json_value(column, path, array, dtype, skip_parse) -%}
   {# Remove the leading $. from the path #}
   {%- set path = modules.re.sub('\$\.?', '', path) -%}
+  {%- set path = modules.re.sub('([^.]+)', '"\g<0>"', path)%}
 
   {# We can exit early if the path references the root. #}
   {%- if not path -%}
