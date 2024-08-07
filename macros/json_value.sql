@@ -14,6 +14,8 @@
   JSON_VALUE_ARRAY({{column}}, '{{path}}')
 {%- elif dtype == "object" -%}
   JSON_QUERY({{column}}, '{{path}}')
+{%- elif dtype == "float64" %}
+  FLOAT64(JSON_EXTRACT({{column}}, '{{path}}'))
 {%- else -%}
   JSON_VALUE({{column}}, '{{path}}')
 {%- endif -%}
@@ -22,6 +24,7 @@
 {%- macro redshift__json_value(column, path, array, dtype, skip_parse) -%}
   {# Remove the leading $. from the path #}
   {%- set path = modules.re.sub('\$\.?', '', path) -%}
+  {%- set path = modules.re.sub('([^.]+)', '"\g<0>"', path)%}
 
   {# We can exit early if the path references the root. #}
   {%- if not path -%}
