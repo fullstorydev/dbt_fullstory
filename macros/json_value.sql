@@ -14,6 +14,8 @@
   JSON_VALUE_ARRAY({{column}}, '{{path}}')
 {%- elif dtype == "object" -%}
   JSON_QUERY({{column}}, '{{path}}')
+{%- elif dtype == "float64" %}
+  FLOAT64(JSON_EXTRACT({{column}}, '{{path}}'))
 {%- else -%}
   JSON_VALUE({{column}}, '{{path}}')
 {%- endif -%}
