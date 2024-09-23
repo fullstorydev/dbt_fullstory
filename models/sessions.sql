@@ -32,6 +32,7 @@ select
     base.total_mobile_app_events,
     base.total_page_views,
     base.total_unique_urls,
+    base.course_duration,
     {% for type in var("fullstory_events_types") -%}
     base.total_{{ type }}_events{% if not loop.last %},{% endif %}
     {% endfor %},
