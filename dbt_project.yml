@@ -55,7 +55,11 @@ models:
 vars:
   dbt_date:time_zone: Etc/UTC
   fullstory_incremental_interval: INTERVAL 2 DAY
-  fullstory_replay_host: app.fullstory.com
+  fullstory_replay_host: app.fullstory.com  
+  fullstory_events_database: fullstory
+  fullstory_events_schema: fullstory_o_4jv7_eu1
+  fullstory_events_table: events
+
 
   # For filtering all event data, if necessary
   fullstory_min_event_time: "1900-01-01 00:00:00" # Inclusive
