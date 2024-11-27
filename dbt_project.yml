@@ -48,10 +48,10 @@ models:
     intermediate:
       +materialized: ephemeral
 
-    events:
-      +materialized: incremental
-      +dist: event_id
-      +sort: updated_time   
+    #events:
+    #  +materialized: incremental
+    #  +dist: event_id
+    #  +sort: updated_time   
 
   +persist_docs:
     columns: true
