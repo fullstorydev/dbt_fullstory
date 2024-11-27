@@ -7,7 +7,7 @@ select
     max(events.event_time) as end_time,
     max(events.updated_time) as updated_time,
     -- {{- dbt.datediff("min(event_time)", "max(event_time)", "second") -}} as duration,
-    datediff(second,min(events.event_time),max(events.event_time)) as duration,
+    datediff(second,min(events.event_time)::timestamp,max(events.event_time)::timestamp) as duration,
     count(distinct events.event_id) as total_events,
     count(
         distinct case when events.event_type = 'navigate' then events.event_id end
