@@ -1,5 +1,6 @@
 select
     full_session_id,
+    source_properties.url.full_url as landing_page,
     source_properties.initial_referrer.full_url as referral_url,
     row_number() over (
         partition by full_session_id
