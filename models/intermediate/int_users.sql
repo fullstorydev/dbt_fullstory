@@ -1,6 +1,7 @@
 select
     sessions.user_id as user_id,
     max(sessions.updated_time) as updated_time,
+    max(sessions.start_time) as last_session_start_time,
     max(sessions.end_time) as last_event_time,
     sum(total_events) as total_events,
     count(1) as total_sessions,
