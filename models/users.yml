@@ -372,6 +372,33 @@ user_cols:
     tests:
       - not_null
 
+  - &user_Last_Num_Pages_col
+    name: Last_Num_Pages
+    data_type: number
+    description: Total number of pages visited in the last session.
+    constraints:
+      - type: not_null
+    tests:
+      - not_null
+
+  - &user_Last_Num_Events_col
+    name: Last_Num_Events
+    data_type: number
+    description: Total number of events in the last session.
+    constraints:
+      - type: not_null
+    tests:
+      - not_null
+
+  - &user_Last_Duration_col
+    name: Last_Duration
+    data_type: number
+    description: Total duration of the last session.
+    constraints:
+      - type: not_null
+    tests:
+      - not_null
+
 models:
   - name: users
     access: public
@@ -399,6 +426,9 @@ models:
       - *user_last_region_col
       - *user_last_city_col
       - *user_last_lat_long_col
+      - *user_Last_Num_Pages_col
+      - *user_Last_Num_Events_col
+      - *user_Last_Duration_col
       - *user_total_events_col
       - *user_total_sessions_col
       - *user_total_session_duration_col
