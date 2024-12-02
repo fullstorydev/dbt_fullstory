@@ -7,6 +7,7 @@ select
     updated_time,
     processed_time,
     source_type,
+    events.source_properties.url.full_url as page_url,
     row_number() over (
         partition by full_session_id
         order by
