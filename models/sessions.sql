@@ -12,7 +12,10 @@ select
     base.start_time,
     base.end_time,
     base.updated_time,
+    ref_url.referral_url as referral_url,
+    ref_url.landing_page as landing_page,
     sources.source_type as last_source_type,
+    sources.page_url as last_page_url,
     emails.user_email as last_email,
     display_names.user_display_name as last_display_name,
     devices.device_user_agent as last_user_agent,
@@ -46,6 +49,10 @@ left join
     {{ ref("stg_events__source_types") }} as sources
     on sources.desc_row_num = 1
     and base.full_session_id = sources.full_session_id
+left join
+    {{ ref("stg_events__referral_url") }} as ref_url
+    on ref_url.asc_row_num = 1
+    and base.full_session_id = ref_url.full_session_id    
 left join
     {{ ref("stg_events__emails") }} as emails
     on emails.desc_row_num = 1
