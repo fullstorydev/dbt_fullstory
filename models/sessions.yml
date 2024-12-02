@@ -64,11 +64,30 @@ session_cols:
   # These columns will be stable and predicatable.
   # Again, these values may change throughout the session. This is especially true of
   # "twitchy" values like the minutes on a user's lat_long coordinates.
-  - &session_last_source_type_col
-    name: last_source_type
+
+  - &session_referral_url_col
+    name: referral_url
     data_type: string
     description: |-
-      The last source type for the session: mobile_app, server, or web.
+      The user's referral page for the session.
+
+  - &session_landing_page_col
+    name: landing_page
+    data_type: string
+    description: |-
+      The user's landing page for the session.
+  
+  - &session_last_page_url_col
+    name: last_page_url
+    data_type: string
+    description: |-
+      The last page visited for the session.
+
+  - &session_landing_page_col
+    name: landing_page
+    data_type: string
+    description: |-
+      The user's landing page for the session.
 
   - &session_last_email_col
     name: last_email
