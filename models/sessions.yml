@@ -465,7 +465,10 @@ models:
       - *session_start_time_col
       - *session_end_time_col
       - *session_updated_time_col
+      - *session_referral_url_col
+      - *session_landing_page_col
       - *session_last_source_type_col
+      - *session_last_page_url_col
       - *session_last_email_col
       - *session_last_display_name_col
       - *session_last_user_agent_col
