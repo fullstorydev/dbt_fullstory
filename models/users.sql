@@ -7,6 +7,7 @@
 select
     base.user_id,
     base.updated_time,
+    base.last_session_start_time,
     base.last_event_time,
     sessions.last_email as last_email,
     sessions.last_display_name as last_display_name,
@@ -20,6 +21,9 @@ select
     sessions.last_region as last_region,
     sessions.last_city as last_city,
     sessions.last_lat_long as last_lat_long,
+    sessions.total_page_views as Last_Num_Pages,
+    sessions.total_events as Last_Num_Events,
+    sessions.duration as Last_Duration,
     base.total_events,
     base.total_sessions,
     base.total_session_duration,
