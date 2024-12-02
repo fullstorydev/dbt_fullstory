@@ -76,18 +76,18 @@ session_cols:
     data_type: string
     description: |-
       The user's landing page for the session.
+
+  - &session_last_source_type_col
+    name: last_source_type
+    data_type: string
+    description: |-
+      The user's last source type for the session.
   
   - &session_last_page_url_col
     name: last_page_url
     data_type: string
     description: |-
       The last page visited for the session.
-
-  - &session_landing_page_col
-    name: landing_page
-    data_type: string
-    description: |-
-      The user's landing page for the session.
 
   - &session_last_email_col
     name: last_email
