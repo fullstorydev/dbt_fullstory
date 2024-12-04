@@ -18,7 +18,8 @@ select
          WHEN event_type='first_input_delay' THEN event_properties.first_input_delay_millis
          WHEN event_type='force_restart' THEN event_properties.elapsed_millis
          WHEN event_type='form_abandon' THEN event_properties.target.text
-         WHEN event_type='identify' THEN cast(event_properties.user_display_name as varchar)
+         WHEN event_type='identify' AND event_properties.user_display_name like 'User %' THEN cast(event_properties.user_display_name as varchar)
+         WHEN event_type='identify' AND NOT (event_properties.user_display_name like 'User %') THEN cast(event_properties.user_id as varchar)
          WHEN event_type='interaction_to_next_paint' THEN event_properties.event_name
          WHEN event_type='load' THEN event_properties.load_time_millis     
          WHEN event_type='navigate' THEN event_properties.navigate_reason      
