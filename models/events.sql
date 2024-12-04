@@ -9,12 +9,12 @@ select
          WHEN event_type='change' THEN event_properties.target.text 
          WHEN event_type='click' THEN event_properties.target.text
          WHEN event_type='consent' THEN event_properties.is_consent_given
-         WHEN event_type='console_message' THEN cast(event_properties.message as varchar)
+         WHEN event_type='console_message' THEN event_properties.message
          WHEN event_type='copy' THEN event_properties.target.text
          WHEN event_type='crash' THEN 'Mobile app crashed'
          WHEN event_type='custom' THEN event_properties.event_name
-         WHEN event_type='element_seen' THEN cast(event_properties.element_type as varchar)||', '||cast(event_properties.target.text as varchar)
-         WHEN event_type='exception' THEN cast(event_properties.message as varchar)
+         WHEN event_type='element_seen' THEN cast(event_properties.element_type as text)||', '||cast(event_properties.target.text as text)
+         WHEN event_type='exception' THEN event_properties.message
          WHEN event_type='first_input_delay' THEN event_properties.first_input_delay_millis
          WHEN event_type='force_restart' THEN event_properties.elapsed_millis
          WHEN event_type='form_abandon' THEN event_properties.target.text
