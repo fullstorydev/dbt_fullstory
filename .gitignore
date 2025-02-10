@@ -1,6 +1,7 @@
 
 .dbtenv/
 .ds_store
+.venv/
 .vscode/
 target/
 dbt_packages/

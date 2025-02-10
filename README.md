@@ -194,6 +194,16 @@ models:
         granularity: day
       cluster_by:
         - device_id
+    sessions: # The model name
+      materialized: incremental
+      unique_key: full_session_id
+      # The following options are Big Query specific optimizations. For specific configuration options for your warehouse see: https://docs.getdbt.com/reference/model-configs#warehouse-specific-configurations
+      +partition_by: 
+        field: updated_time
+        data_type: timestamp
+        granularity: day
+      cluster_by:
+        - user_id
 ```
 
 When loading data incrementally, DBT needs to know how far back to look in the current table for data to compare to the incoming data. We will look back 2 days for data to update by default. This interval can be configured with the variable `fullstory_incremental_interval` and should be specified as a SQL interval like `INTERVAL 2 DAY`.

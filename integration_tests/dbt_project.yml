@@ -26,6 +26,9 @@ models:
   +persist_docs:
     columns: true
     relation: true
+  dbt_fullstory:
+    sessions:
+      +materialized: incremental
 
 vars:
   fullstory_events_table: fullstory_events_integration_tests
@@ -57,7 +60,7 @@ vars:
       "pinch_gesture",
       "request",
     ]
-  fullstory_incremental_interval: INTERVAL 12 HOUR
+  fullstory_incremental_interval: INTERVAL '12' HOUR
   fullstory_replay_host: app.fullstory.com
 
 seeds:
