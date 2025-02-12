@@ -1,3 +1,8 @@
+{{
+    config(
+        unique_key='full_session_id',
+    )
+}}
 select
     base.full_session_id,
     coalesce(base.user_id, {{ dbt.concat(["'anon_'", "base.device_id"]) }}) as user_id,
