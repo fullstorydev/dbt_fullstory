@@ -244,5 +244,5 @@ where
         -- we can't use the max event_time because event_time is specified by the client. We cannot guarantee
         -- that it is accurate. Instead, we will use the current timestamp, and look back a configurable
         -- distance for updates.
-        and event_time >= current_timestamp - {{ var("fullstory_incremental_interval") }}
+        and cast(event_time as timestamp) >= current_timestamp - {{ var("fullstory_incremental_interval") }}
     {% endif %}

@@ -1,3 +1,8 @@
+{{
+    config(
+        unique_key='full_session_id',
+    )
+}}
 select
     events.full_session_id as full_session_id,
     {{ dbt.any_value("users.user_id") }} as user_id,
@@ -31,5 +36,9 @@ left outer join
     {{ ref("stg_events__user_keys") }} as users on
         users.desc_row_num = 1 and
         events.device_id = users.device_id
-where events.full_session_id is not null
+where
+    events.full_session_id is not null
+    {% if is_incremental() %}
+    cast(base.updated_time as timestamp) >= current_timestamp - {{ var("fullstory_incremental_interval") }}
+    {% endif %}
 group by events.full_session_id
