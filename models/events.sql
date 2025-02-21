@@ -1,3 +1,8 @@
+{{
+    config(
+        unique_key='event_id'
+    )
+}}
 select
     event_id as event_id,
     device_id,

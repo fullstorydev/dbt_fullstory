@@ -1,6 +1,6 @@
 {{
     config(
-        unique_key='full_session_id',
+        unique_key='full_session_id'
     )
 }}
 select

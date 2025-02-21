@@ -1,6 +1,6 @@
 {{
     config(
-        unique_key='full_session_id',
+        unique_key='full_session_id'
     )
 }}
 select
@@ -39,6 +39,6 @@ left outer join
 where
     events.full_session_id is not null
     {% if is_incremental() %}
-    cast(base.updated_time as timestamp) >= current_timestamp - {{ var("fullstory_incremental_interval") }}
+    and cast(events.event_time as timestamp) >= current_timestamp - {{ var("fullstory_incremental_interval") }}
     {% endif %}
 group by events.full_session_id
