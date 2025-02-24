@@ -63,5 +63,5 @@ left join
     and base.full_session_id = locations.full_session_id
 {% if is_incremental() %}
 where
-    cast(base.updated_time as timestamp) >= {{ dbt.dateadd(datepart="hour", interval=-1 * var("fullstory_incremental_interval_hours", 7 * 24), from_date_or_timestamp="current_timestamp") }}
+    {{ dbt.cast("base.updated_time", api.Column.translate_type("datetime")) }} >= {{ dbt.dateadd(datepart="hour", interval=-1 * var("fullstory_incremental_interval_hours", 7 * 24), from_date_or_timestamp=dbt.current_timestamp()) }}
 {% endif %}
