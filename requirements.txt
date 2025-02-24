@@ -1,10 +1,10 @@
 # Python Requirements File
 
 # dbt packages
-dbt-bigquery==1.7.6
-dbt-core==1.7.15
-dbt-snowflake==1.7.2
-dbt-redshift==1.7.4
+dbt-bigquery==1.9.1
+dbt-core==1.9.1
+dbt-snowflake==1.9.1
+dbt-redshift==1.9.0
 cffi>=1.15.1,<2.0.0
 
 # Git pre-commit hooks
