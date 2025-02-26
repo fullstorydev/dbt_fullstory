@@ -1,6 +1,6 @@
 {{
     config(
-        unique_key='full_session_id',
+        unique_key='full_session_id'
     )
 }}
 select
@@ -38,7 +38,7 @@ left outer join
         events.device_id = users.device_id
 where
     events.full_session_id is not null
-    {% if is_incremental() %}
-    cast(base.updated_time as timestamp) >= current_timestamp - {{ var("fullstory_incremental_interval") }}
-    {% endif %}
+    {# {% if is_incremental() %} #}
+    and {{ dbt.cast("events.event_time", api.Column.translate_type("datetime")) }} >= {{ dbt.dateadd(datepart="hour", interval=-1 * var("fullstory_incremental_interval_hours", 7 * 24), from_date_or_timestamp=dbt.current_timestamp()) }}
+    {# {% endif %} #}
 group by events.full_session_id

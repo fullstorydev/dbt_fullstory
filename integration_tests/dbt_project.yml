@@ -60,7 +60,7 @@ vars:
       "pinch_gesture",
       "request",
     ]
-  fullstory_incremental_interval: INTERVAL '12' HOUR
+  fullstory_incremental_interval_hours: 192
   fullstory_replay_host: app.fullstory.com
 
 seeds:

@@ -138,6 +138,7 @@ jobs:
             dbt compile --target bigquery
             dbt run --target bigquery --full-refresh --select bigquery_events_shim
             dbt run --target bigquery --full-refresh
+            dbt run --target bigquery
             dbt test --target bigquery
 
   bigquery_v2_test:
@@ -158,6 +159,7 @@ jobs:
             dbt compile --target bigquery_v2 --vars '{"fullstory_skip_json_parse": true}'
             dbt run --target bigquery_v2 --full-refresh --select bigquery_v2_events_shim --vars '{"fullstory_skip_json_parse": true}'
             dbt run --target bigquery_v2 --full-refresh --vars '{"fullstory_skip_json_parse": true}'
+            dbt run --target bigquery_v2 --vars '{"fullstory_skip_json_parse": true}'
             dbt test --target bigquery_v2 --vars '{"fullstory_skip_json_parse": true}'
 
   snowflake_test:
@@ -176,6 +178,7 @@ jobs:
             dbt compile --target snowflake
             dbt run --target snowflake --full-refresh --select snowflake_events_shim
             dbt run --target snowflake --full-refresh
+            dbt run --target snowflake
             dbt test --target snowflake
 
   redshift_test:
@@ -194,6 +197,7 @@ jobs:
             dbt compile --target redshift
             dbt run --target redshift --full-refresh --select redshift_events_shim
             dbt run --target redshift --full-refresh
+            dbt run --target redshift
             dbt test --target redshift
 
 workflows:

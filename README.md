@@ -171,7 +171,7 @@ DBT provides a powerful mechanism for improving the performance of your models a
 
 > If you are running DBT on a regular interval, be aware that `dbt run` will take longer to run with the incremental materialization than with a view materialization.
 
-In this package, it is important to start with the incrementalization of the `events` model, since it functions as an activity log and is an ancestor to all models in this package.
+In this package, it is important to start with the incrementalization of the `events` model, since it functions as an activity log and is an ancestor to all models in this package. If you do decide you need more incrementalization than just the events table, you should consider incrementalizing the ancestor models of your target model in order to reap the biggest benefit.
 
 ### Getting started with incremental models
 
@@ -184,9 +184,15 @@ models:
   ...
 
   dbt_fullstory: # The package name you are customizing
+    intermediate:
+      int_sessions:
+        materialized: incremental
+        +partition_by:
+          field: updated_time
+          data_type: timestamp
+          granularity: day
     events: # The model name
       materialized: incremental
-      unique_key: event_id
       # The following options are Big Query specific optimizations. For specific configuration options for your warehouse see: https://docs.getdbt.com/reference/model-configs#warehouse-specific-configurations
       +partition_by: 
         field: event_time
@@ -196,7 +202,6 @@ models:
         - device_id
     sessions: # The model name
       materialized: incremental
-      unique_key: full_session_id
       # The following options are Big Query specific optimizations. For specific configuration options for your warehouse see: https://docs.getdbt.com/reference/model-configs#warehouse-specific-configurations
       +partition_by: 
         field: updated_time
@@ -206,7 +211,7 @@ models:
         - user_id
 ```
 
-When loading data incrementally, DBT needs to know how far back to look in the current table for data to compare to the incoming data. We will look back 2 days for data to update by default. This interval can be configured with the variable `fullstory_incremental_interval` and should be specified as a SQL interval like `INTERVAL 2 DAY`.
+When loading data incrementally, DBT needs to know how far back to look in the current table for data to compare to the incoming data. We will look back 2 days for data to update by default. This interval can be configured with the variable `fullstory_incremental_interval_hours`.
 
 Two days was decided upon because we typically drop late arriving events after 24 hours. To understand why a event may arrive late, please check out [this article on swan songs](https://help.fullstory.com/hc/en-us/articles/360048109714-Swan-songs-How-Fullstory-captures-sessions-that-end-unexpectedly#:~:text=If%20the%20user%20navigates%20away,Fullstory%20before%20the%20page%20closes.).
 
