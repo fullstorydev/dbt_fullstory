@@ -29,7 +29,7 @@ This dbt package contains models, macros, seeds, and tests for [Fullstory](https
 | fullstory_skip_json_parse | Whether or not to skip JSON parsing when processing the data, default False. |
 | fullstory_users_model_name | The customized name of the `users`` model. |
 | fullstory_min_event_time | All events before this date will not be considered for analysis. Use this option to limit table size. |
-| fullstory_event_types | A list of event types to auto-generate rollups for in the `users` and `sessions` model. |
+| fullstory_events_types | A list of event types to auto-generate rollups for in the `users` and `sessions` model. |
 
 > We **highly recommend** using `fullstory_events_database`, `fullstory_events_schema` and `fullstory_events_table` to indicate the location of the Fullstory events table that is synced from Data Destinations. Using these variables allow you to use a separate database or schema for the Fullstory events table than your dbt package.
 

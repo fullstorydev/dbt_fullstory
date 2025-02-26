@@ -1,7 +1,7 @@
 version: 2
 
 seeds:
-  - name: fullstory_event_types
+  - name: fullstory_events_types
     description: Classifiers for the types of event.
     columns:
       - name: name
