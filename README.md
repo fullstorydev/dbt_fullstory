@@ -211,7 +211,7 @@ models:
         - user_id
 ```
 
-When loading data incrementally, DBT needs to know how far back to look in the current table for data to compare to the incoming data. We will look back 2 days for data to update by default. This interval can be configured with the variable `fullstory_incremental_interval` and should be specified as a SQL interval like `INTERVAL 2 DAY`.
+When loading data incrementally, DBT needs to know how far back to look in the current table for data to compare to the incoming data. We will look back 2 days for data to update by default. This interval can be configured with the variable `fullstory_incremental_interval_hours`.
 
 Two days was decided upon because we typically drop late arriving events after 24 hours. To understand why a event may arrive late, please check out [this article on swan songs](https://help.fullstory.com/hc/en-us/articles/360048109714-Swan-songs-How-Fullstory-captures-sessions-that-end-unexpectedly#:~:text=If%20the%20user%20navigates%20away,Fullstory%20before%20the%20page%20closes.).
 
