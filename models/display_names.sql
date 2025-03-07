@@ -1,17 +1,19 @@
-{{
-    config(
-        unique_key='event_id'
-    )
-}}
+with devices as (
 
-with events as (
-
-    select * from {{ ref("stg_fullstory__events") }}
+    select * from {{ ref('int_events__display_names') }}
 
 )
+
 select
-    {{ dbt_utils.star(ref('stg_fullstory__events')) }}
-from events
+    full_session_id,
+    session_id,
+    device_id,
+    view_id,
+    event_time,
+    updated_time,
+    processed_time,
+    user_display_name
+from devices
 {% if is_incremental() %}
   -- we can't use the max event_time because event_time is specified by the client. We cannot guarantee
   -- that it is accurate. Instead, we will use the current timestamp, and look back a configurable

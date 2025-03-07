@@ -7,3 +7,5 @@ target/
 dbt_packages/
 logs/
 working/
+
+package-lock.concurrent-update-lock

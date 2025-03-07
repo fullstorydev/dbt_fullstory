@@ -19,5 +19,13 @@ select
   devices.updated_time as last_updated_time,
   devices.processed_time as last_processed_time
 from {{ ref('identifies') }} identifies
-join {{ ref('devices') }} devices on identifies.device_id = devices.id and devices.event_seq_num_desc = 1
+inner join {{ ref('devices') }} devices on identifies.device_id = devices.id
 where identifies.event_seq_num_desc = 1
+and devices.event_seq_num_desc = 1
+{% if is_incremental() %}
+  -- we can't use the max event_time because event_time is specified by the client. We cannot guarantee
+  -- that it is accurate. Instead, we will use the current timestamp, and look back a configurable
+  -- distance for updates.
+  
+  and {{ dbt.cast("event_time", api.Column.translate_type("datetime")) }} >= {{ dbt.dateadd(datepart="hour", interval=-1 * var("fullstory_incremental_interval_hours", 7 * 24), from_date_or_timestamp=dbt.current_timestamp()) }}
+{% endif %}
