@@ -1,3 +1,12 @@
+{{
+  config(
+    materialized='incremental',
+    unique_key='full_session_id',
+    on_schema_change= 'sync_all_columns'
+  )
+}}
+{% set incremental_adjustment = -1 * var("fullstory_incremental_interval_hours", 7 * 24) %}
+
 with devices as (
 
     select * from {{ ref('int_events__display_names') }}
@@ -14,10 +23,10 @@ select
     processed_time,
     user_display_name
 from devices
+
 {% if is_incremental() %}
-  -- we can't use the max event_time because event_time is specified by the client. We cannot guarantee
-  -- that it is accurate. Instead, we will use the current timestamp, and look back a configurable
-  -- distance for updates.
-  where
-   {{ dbt.cast("event_time", api.Column.translate_type("datetime")) }} >= {{ dbt.dateadd(datepart="hour", interval=-1 * var("fullstory_incremental_interval_hours", 7 * 24), from_date_or_timestamp=dbt.current_timestamp()) }}
+where
+    updated_time >=  (select max(updated_time) from {{ this }})  
+    and
+    event_time >= {{ dbt.dateadd("hour", incremental_adjustment, dbt.current_timestamp()) }} 
 {% endif %}

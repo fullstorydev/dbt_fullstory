@@ -1,8 +1,17 @@
+{{
+  config(
+    materialized='incremental',
+    unique_key='user_id',
+    on_schema_change= 'sync_all_columns'
+  )
+}}
+{% set incremental_adjustment = -1 * var("fullstory_incremental_interval_hours", 7 * 24) %}
+
 select
-  user_id,
-  user_email,
-  user_display_name,
-  user_properties,
+  identifies.user_id,
+  identifies.user_email,
+  identifies.user_display_name,
+  identifies.user_properties,
   devices.id as last_device_id,
   devices.user_agent as last_device_user_agent,
   devices.type as last_device_type,
@@ -23,9 +32,8 @@ inner join {{ ref('devices') }} devices on identifies.device_id = devices.id
 where identifies.event_seq_num_desc = 1
 and devices.event_seq_num_desc = 1
 {% if is_incremental() %}
-  -- we can't use the max event_time because event_time is specified by the client. We cannot guarantee
-  -- that it is accurate. Instead, we will use the current timestamp, and look back a configurable
-  -- distance for updates.
-  
-  and {{ dbt.cast("event_time", api.Column.translate_type("datetime")) }} >= {{ dbt.dateadd(datepart="hour", interval=-1 * var("fullstory_incremental_interval_hours", 7 * 24), from_date_or_timestamp=dbt.current_timestamp()) }}
+and
+identifies.updated_time >=  (select max(identifies.updated_time) from {{ this }})  
+and
+identifies.event_time >= {{ dbt.dateadd("hour", incremental_adjustment, dbt.current_timestamp()) }} 
 {% endif %}

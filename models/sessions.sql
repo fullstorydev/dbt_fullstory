@@ -1,20 +1,39 @@
 {{
-    config(
-        unique_key='full_session_id'
-    )
+  config(
+    materialized='incremental',
+    unique_key='full_session_id',
+    on_schema_change= 'sync_all_columns'
+  )
 }}
+{% set incremental_adjustment = -1 * var("fullstory_incremental_interval_hours", 7 * 24) %}
 
 with int_sessions as (
 
-    select * from {{ ref('int_events__sessions') }}
+    select * 
+    from {{ ref('int_events__sessions') }}
 
 )
-
 
 , stg_events as (
 
     select * from {{ ref('stg_fullstory__events') }}
 )
+
+{% if is_incremental() %}
+, updated_sessions as (
+
+    select distinct
+        full_session_id
+    from {{ ref('stg_fullstory__events') }}
+    {% if is_incremental() %}
+    where
+    updated_time >=  (select max(updated_time) from {{ this }})  
+    and
+    event_time >= {{ dbt.dateadd("hour", incremental_adjustment, dbt.current_timestamp()) }} 
+    {% endif %}
+
+)
+{% endif %}
 
 select
     int_sessions.full_session_id,
@@ -41,7 +60,6 @@ select
             int_sessions.end_time desc,
             int_sessions.full_session_id desc
     ) as desc_row_num,
-
     stg_events.source_type as last_source_type,
     stg_events.user_email as last_email,
     stg_events.user_display_name as last_display_name,
@@ -56,9 +74,8 @@ select
     stg_events.geo_city as last_city,
     stg_events.geo_lat_long as last_lat_long,
 from int_sessions
+{% if is_incremental() %}
+inner join updated_sessions on int_sessions.full_session_id = updated_sessions.full_session_id
+{% endif %}
 inner join stg_events on int_sessions.full_session_id = stg_events.full_session_id
 where stg_events.full_session_id_rn = 1
-{% if is_incremental() %}
-and
-    {{ dbt.cast("base.updated_time", api.Column.translate_type("datetime")) }} >= {{ dbt.dateadd(datepart="hour", interval=-1 * var("fullstory_incremental_interval_hours", 7 * 24), from_date_or_timestamp=dbt.current_timestamp()) }}
-{% endif %}

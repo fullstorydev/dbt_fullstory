@@ -1,9 +1,3 @@
-{{
-    config(
-        unique_key='full_session_id'
-    )
-}}
-
 with events as (
 
     select * from {{ ref('stg_fullstory__events') }} 

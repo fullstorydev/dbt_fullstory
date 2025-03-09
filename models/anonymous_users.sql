@@ -20,3 +20,4 @@ where
   and identifies.device_id is null
   and devices.event_seq_num_desc = 1
   and devices.source_type != 'server' -- exclude server events, they won't have geo or device values.
+  

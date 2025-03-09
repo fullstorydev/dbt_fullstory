@@ -28,4 +28,4 @@ and source_type != 'server' -- exclude server events, they won't have geo or dev
 )
 
 
-select * from events 
+select * from events
