@@ -1,0 +1,54 @@
+version: 2
+
+models:
+  - name: stg_fullstory__events
+    description: "Staging of the Fullstory Events Table"
+    columns:
+      - name: event_id        
+        tests: 
+          - not_null
+          - unique
+      - name: device_id
+      - name: session_id
+      - name: view_id
+      - name: event_time
+      - name: event_type
+      - name: source_type
+      - name: updated_time
+      - name: processed_time
+      - name: full_session_id
+      - name: device_user_agent
+      - name: device_type
+      - name: device_operating_system
+      - name: device_browser
+      - name: device_browser_version
+      - name: geo_ip_address
+      - name: geo_country
+      - name: geo_region
+      - name: geo_city
+      - name: geo_lat_long
+      - name: url_full_url
+      - name: url_host
+      - name: url_path
+      - name: url_query
+      - name: url_hash_path
+      - name: url_hash_query
+      - name: initial_referrer_full_url
+      - name: initial_referrer_host
+      - name: initial_referrer_path
+      - name: initial_referrer_query
+      - name: initial_referrer_hash_path
+      - name: initial_referrer_hash_query
+      - name: source_properties
+      - name: target_text
+      - name: target_masked
+      - name: target_raw_selector
+      - name: target_element_properties
+      - name: element_definition_id
+      - name: additional_element_definition_ids
+      - name: user_id
+      - name: user_email
+      - name: user_display_name
+      - name: user_properties
+      - name: event_properties
+
