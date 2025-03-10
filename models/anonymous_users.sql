@@ -12,12 +12,12 @@ select
   devices.geo_lat_long as last_geo_lat_long,
   devices.event_time as last_event_time,
   devices.event_id as last_event_id
-from {{ ref('devices') }} devices
+from {{ ref('devices') }} as devices
+left join {{ ref('identifies') }} as identifies
+  on devices.id = identifies.device_id
 where
   devices.id is not null
+  and identifies.device_id is null
   and devices.event_seq_num_desc = 1
   and devices.source_type != 'server' -- exclude server events, they won't have geo or device values.
-  and devices.id not in (
-    select device_id
-    from {{ ref('identifies') }}
-  )
+  

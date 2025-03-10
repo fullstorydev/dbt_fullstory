@@ -1,37 +1,28 @@
 {{
   config(
     materialized='incremental',
-    unique_key='event_id',
+    unique_key='full_session_id',
   )
 }}
-
 {% set incremental_adjustment = -1 * var("fullstory_incremental_interval_hours", 7 * 24) %}
 
 with devices as (
 
-    select * from {{ ref('int_events__devices') }}
+    select * from {{ ref('int_events__display_names') }}
 
 )
 
 select
-    event_id,
-    id,
+    full_session_id,
+    session_id,
+    device_id,
+    view_id,
     event_time,
     updated_time,
     processed_time,
-    user_agent,
-    {% if target.type == "redshift" -%}"type"{%- else -%}type{%- endif -%},
-    operating_system,
-    browser,
-    browser_version,
-    geo_ip_address,
-    geo_country,
-    geo_region,
-    geo_city,
-    geo_lat_long,
-    source_type,
-    event_seq_num_desc
+    user_display_name
 from devices
+
 {% if is_incremental() %}
 where
     updated_time >=  (select max(updated_time) from {{ this }})  

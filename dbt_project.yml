@@ -1,5 +1,5 @@
 name: "dbt_fullstory"
-version: "0.1.0"
+version: "0.9.0"
 config-version: 2
 require-dbt-version: [">=1.6.0", "<2.0.0"]
 
@@ -43,10 +43,12 @@ models:
 
     # These materializations are for the protected, intermediate and staging models; they are not intended for direct querying
     # or use in other dbt packages.
+    +materialized: table
     staging:
-      +materialized: ephemeral
+      +materialized: view
     intermediate:
       +materialized: ephemeral
+      
 
   +persist_docs:
     columns: true
