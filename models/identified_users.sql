@@ -2,7 +2,6 @@
   config(
     materialized='incremental',
     unique_key='user_id',
-    on_schema_change= 'sync_all_columns'
   )
 }}
 {% set incremental_adjustment = -1 * var("fullstory_incremental_interval_hours", 7 * 24) %}
@@ -31,6 +30,7 @@ from {{ ref('identifies') }} identifies
 inner join {{ ref('devices') }} devices on identifies.device_id = devices.id
 where identifies.event_seq_num_desc = 1
 and devices.event_seq_num_desc = 1
+and identifies.user_id is not null
 {% if is_incremental() %}
 and
 identifies.updated_time >=  (select max(identifies.updated_time) from {{ this }})  

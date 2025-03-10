@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [1.0.0] - 2025-03-10
+## [0.9.0] - 2025-03-10
 ## 🚨 Breaking Change 🚨
 - **Customers with incremental loading enabled** - Due to the upgrades in the incremental loading strategy, upgrading `dbt_fullstory` to `0.2.x` will break exisiting runs. Please run `dbt run --full-refresh` or `dbt build --full-refresh` firstly. Subsequent incremental loads will be substantially quicker.
 ### Fixed

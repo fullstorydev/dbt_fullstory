@@ -2,7 +2,7 @@
   config(
     materialized='incremental',
     unique_key='full_session_id',
-    on_schema_change= 'sync_all_columns'
+
   )
 }}
 {% set incremental_adjustment = -1 * var("fullstory_incremental_interval_hours", 7 * 24) %}
