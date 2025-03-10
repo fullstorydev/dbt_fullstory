@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [0.2.0] - 2025-03-10
+## [0.9.0] - 2025-03-10
 ## 🚨 Breaking Change 🚨
 - **Customers with incremental loading enabled** - Due to the upgrades in the incremental loading strategy, upgrading `dbt_fullstory` to `0.2.x` will break exisiting runs. Please run `dbt run --full-refresh` or `dbt build --full-refresh` firstly. Subsequent incremental loads will be substantially quicker.
 ### Fixed
@@ -22,5 +22,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `events.sql` and `identifies.sql` - materialization is now a `view`. This reduces waste on a minorly transformed `fullstory_events_[id]` source table.
 - `identified_users.sql` - styling improvements
 - `sessions.sql` and upstream models - improved DAG that improves performance and reduces data warehouse load.
-## [0.1.x] - Inception to 2025-03-10
+## [0.8.x] - Inception to 2025-03-10
 All `dbt_fullstory` development prior to `CHANGELOG.md` being added
