@@ -23,19 +23,6 @@ clean-targets: # directories to be removed by `dbt clean`
 # Configuring models
 # Full documentation: https://docs.getdbt.com/docs/configuring-models
 models:
-  # This controls how incremental models are changed when dbt encounters schema changes.
-  # See https://docs.getdbt.com/docs/build/incremental-models#what-if-the-columns-of-my-incremental-model-change for more details.
-  # - ignore -> the dbt default
-  # - fail -> triggers an error message, we will pick for safety since incremental processing could be expensive and time consuming to add/drop columns
-  # - append_new_columns -> will only add new columns, will not drop columns
-  # - sync_all_columns -> is helpful for dev, provided datasets are reasonably small, and will add and drop columns as needed
-  +on_schema_change: fail
-
-  # This controls how incremental models are sync'ed.
-  # The Fullstory event pipeline is not a monotonic process (append-only);
-  # therefore, merge is required on incremental models.
-  +incremental_strategy: merge
-
   dbt_fullstory:
     # Materializations for "final", top-level semantic models are controlled via a config block in the sql files themselves.
     # The models in the /models folder are intended for use in databases and/or consumption in other dbt packages.
@@ -44,6 +31,8 @@ models:
     # These materializations are for the protected, intermediate and staging models; they are not intended for direct querying
     # or use in other dbt packages.
     +materialized: table
+    +incremental_strategy: merge
+    +on_schema_change: fail
     staging:
       +materialized: view
     intermediate:
