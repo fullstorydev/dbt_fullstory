@@ -7,54 +7,54 @@ models:
           name: last_device_user_agent_is_correct
           expression: last_device_user_agent = 'good_user_agent'
           config:
-            where: device_id = 7
+            where: device_id = "7"
       - dbt_utils.expression_is_true:
           name: last_device_type_is_correct
           expression: last_device_type = 'good_device_type'
           config:
-            where: device_id = 7
+            where: device_id = "7"
       - dbt_utils.expression_is_true:
           name: last_device_operating_system_is_correct
           expression: last_device_operating_system = 'good_operating_system'
           config:
-            where: device_id = 7
+            where: device_id = "7"
       - dbt_utils.expression_is_true:
           name: last_device_browser_is_correct
           expression: last_device_browser = 'good_browser'
           config:
-            where: device_id = 7
+            where: device_id = "7"
       - dbt_utils.expression_is_true:
           name: last_device_browser_version_is_correct
           expression: last_device_browser_version = 'good_browser_version'
           config:
-            where: device_id = 7
+            where: device_id = "7"
       - dbt_utils.expression_is_true:
           name: last_geo_ip_address_is_correct
           expression: last_geo_ip_address = 'good_ip_address'
           config:
-            where: device_id = 7
+            where: device_id = "7"
       - dbt_utils.expression_is_true:
           name: last_geo_region_is_correct
           expression: last_geo_region = 'good_region'
           config:
-            where: device_id = 7
+            where: device_id = "7"
       - dbt_utils.expression_is_true:
           name: last_geo_city_is_correct
           expression: last_geo_city = 'good_city'
           config:
-            where: device_id = 7
+            where: device_id = "7"
       - dbt_utils.expression_is_true:
           name: last_geo_lat_long_is_correct
           expression: last_geo_lat_long = 'good_lat_long'
           config:
-            where: device_id = 7
+            where: device_id = "7"
       - dbt_utils.expression_is_true:
           name: last_event_time_is_correct
           expression: last_event_time = '2023-01-01T14:00:00'
           config:
-            where: device_id = 7
+            where: device_id = "7"
       - dbt_utils.expression_is_true:
           name: last_event_time_is_correct
           expression: last_event_id = 'user_last_source_properties_test_3'
           config:
-            where: device_id = 7
+            where: device_id = "7"

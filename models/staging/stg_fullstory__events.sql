@@ -7,9 +7,9 @@ with source as (
 
     select
         {{ dbt.cast("event_id", api.Column.translate_type("string")) }} as event_id,
-        {{ dbt.cast("device_id", api.Column.translate_type("integer")) }} as device_id,
-        {{ dbt.cast("session_id", api.Column.translate_type("integer")) }} as session_id,
-        {{ dbt.cast("view_id", api.Column.translate_type("integer")) }} as view_id,
+        {{ dbt.cast("device_id", api.Column.translate_type("string")) }} as device_id,
+        {{ dbt.cast("session_id", api.Column.translate_type("string")) }} as session_id,
+        {{ dbt.cast("view_id", api.Column.translate_type("string")) }} as view_id,
         {{ dbt.cast("event_time", api.Column.translate_type("datetime")) }} as event_time,
         {{ dbt.cast("event_type", api.Column.translate_type("string")) }} as event_type,
         {{ dbt.cast("source_type", api.Column.translate_type("string")) }} as source_type,

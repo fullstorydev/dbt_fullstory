@@ -5,17 +5,17 @@ models:
     tests:
       - dbt_utils.expression_is_true:
           name: device_id_is_correct
-          expression: device_id = 1
+          expression: device_id = "1"
           config:
             where: event_id = 'simple_session_test_1'
       - dbt_utils.expression_is_true:
           name: session_id_is_correct
-          expression: session_id = 1
+          expression: session_id = "1"
           config:
             where: event_id = 'simple_session_test_1'
       - dbt_utils.expression_is_true:
           name: view_id_is_correct
-          expression: view_id = 1
+          expression: view_id = "1"
           config:
             where: event_id = 'simple_session_test_1'
       - dbt_utils.expression_is_true:
