@@ -1,3 +1,21 @@
+{{
+  config(
+    materialized='incremental',
+    unique_key='device_id',
+  )
+}}
+{% set incremental_adjustment = -1 * var("fullstory_incremental_interval_hours", 7 * 24) %}
+
+with devices as (
+
+  select * from {{ ref('devices') }}
+)
+
+, identifies as (
+
+  select * from {{ ref('identifies') }}
+)
+
 select
   devices.id as device_id,
   devices.user_agent as last_device_user_agent,
@@ -12,8 +30,8 @@ select
   devices.geo_lat_long as last_geo_lat_long,
   devices.event_time as last_event_time,
   devices.event_id as last_event_id
-from {{ ref('devices') }} as devices
-left join {{ ref('identifies') }} as identifies
+from devices
+left join identifies
   on devices.id = identifies.device_id
 where
   devices.id is not null
