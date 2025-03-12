@@ -1,5 +1,6 @@
 {{
   config(
+    materialized='view',
     unique_key='full_session_id',
   )
 }}

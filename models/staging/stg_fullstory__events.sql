@@ -254,7 +254,7 @@ with source as (
 
     select
     *,   
-    last_value(user_id ignore nulls)  over (
+    first_value(user_id ignore nulls)  over (
         partition by full_session_id
         order by
             event_time desc,
