@@ -260,6 +260,7 @@ with source as (
             event_time desc,
             updated_time desc,
             processed_time desc
+        rows between unbounded preceding and unbounded following
     ) as latest_user_id,
     row_number() over (
         partition by full_session_id
