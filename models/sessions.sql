@@ -69,7 +69,7 @@ select
     stg_events.geo_country as last_country,
     stg_events.geo_region as last_region,
     stg_events.geo_city as last_city,
-    stg_events.geo_lat_long as last_lat_long,
+    stg_events.geo_lat_long as last_lat_long
 from int_sessions
 {% if is_incremental() %}
 inner join updated_sessions on int_sessions.full_session_id = updated_sessions.full_session_id

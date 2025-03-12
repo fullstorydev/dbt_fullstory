@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.9.0] - 2025-03-10
 ## 🚨 Breaking Change 🚨
 - **Customers with incremental loading enabled** - Due to the upgrades in the incremental loading strategy, upgrading `dbt_fullstory` to `0.2.x` will break exisiting runs. Please run `dbt run --full-refresh` or `dbt build --full-refresh` firstly. Subsequent incremental loads will be substantially quicker.
+- The `view_id`, `device_id`, and `session_id` columns are now strictly casted from **integer** to **varchar/string** data types. This may affect downstream uses.
 ### Fixed
 - Incremental models that require a event_time adjustment via the `fullstory_incremental_interval_hours` variable now have a cleaner implementation. A Jinja variable named `incremental_adjustment` will be used in its place.
 - All final models, (e.g. `sessions.sql`), have a lineage with an intermediate model.
