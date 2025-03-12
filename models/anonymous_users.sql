@@ -33,7 +33,7 @@ left join identifies
   on devices.id = identifies.device_id
 where
   devices.id is not null
-  and identifies.device_id is null
+  and identifies.device_id is not null
   and devices.event_seq_num_desc = 1
   and devices.source_type != 'server' -- exclude server events, they won't have geo or device values.
   
