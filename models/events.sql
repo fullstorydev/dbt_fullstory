@@ -1,4 +1,8 @@
-{{ config(materialized='view') }}
+{{
+  config(
+    unique_key='event_id',
+  )
+}}
 
 with events as (
 

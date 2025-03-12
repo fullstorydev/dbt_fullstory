@@ -28,6 +28,8 @@ with int_sessions as (
     updated_time >=  (select max(updated_time) from {{ this }})  
     and
     event_time >= {{ dbt.dateadd("hour", incremental_adjustment, dbt.current_timestamp()) }} 
+    and
+    full_session_id_rn = 1
 
 )
 {% endif %}

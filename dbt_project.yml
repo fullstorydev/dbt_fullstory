@@ -28,9 +28,12 @@ models:
     # The models in the /models folder are intended for use in databases and/or consumption in other dbt packages.
     # See https://docs.getdbt.com/docs/build/incremental-models for more details.
 
-    +materialized: table
+    +materialized: view
     +incremental_strategy: merge
     +on_schema_change: fail
+
+    sessions:
+      +materialized: incremental
 
     # These materializations are for the protected, intermediate and staging models; they are not intended for direct querying
     # or use in other dbt packages.

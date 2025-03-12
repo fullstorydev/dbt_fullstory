@@ -4,8 +4,6 @@
   )
 }}
 
-{% set incremental_adjustment = -1 * var("fullstory_incremental_interval_hours", 7 * 24) %}
-
 with devices as (
 
     select * from {{ ref('int_events__devices') }}
@@ -31,9 +29,3 @@ select
     source_type,
     event_seq_num_desc
 from devices
-{% if is_incremental() %}
-where
-    updated_time >=  (select max(updated_time) from {{ this }})  
-    and
-    event_time >= {{ dbt.dateadd("hour", incremental_adjustment, dbt.current_timestamp()) }} 
-{% endif %}
