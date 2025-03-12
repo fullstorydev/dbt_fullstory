@@ -11,6 +11,7 @@ select
 from {{ ref("stg_fullstory__events") }}
 where
     user_display_name is not null
+    and event_type = 'identify'
     and full_session_id_rn = 1
 )
 

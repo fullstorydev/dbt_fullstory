@@ -24,12 +24,10 @@ with int_sessions as (
     select distinct
         full_session_id
     from {{ ref('stg_fullstory__events') }}
-    {% if is_incremental() %}
     where
     updated_time >=  (select max(updated_time) from {{ this }})  
     and
     event_time >= {{ dbt.dateadd("hour", incremental_adjustment, dbt.current_timestamp()) }} 
-    {% endif %}
 
 )
 {% endif %}

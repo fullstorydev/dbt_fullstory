@@ -3,7 +3,6 @@
     unique_key='device_id',
   )
 }}
-{% set incremental_adjustment = -1 * var("fullstory_incremental_interval_hours", 7 * 24) %}
 
 with devices as (
 
