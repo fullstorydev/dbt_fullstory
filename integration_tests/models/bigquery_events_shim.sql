@@ -8,6 +8,6 @@ select
   {{ dbt.cast("source_type", api.Column.translate_type("string")) }} as source_type,
   {{ dbt.cast("updated_time", api.Column.translate_type("datetime")) }} as updated_time,
   {{ dbt.cast("processed_time", api.Column.translate_type("datetime")) }} as processed_time,
-  parse_json(event_properties) as event_properties,
-  parse_json(source_properties) as source_properties
+  event_properties,
+  source_properties
 from {{ ref('fullstory_events_integration_seeds') }}

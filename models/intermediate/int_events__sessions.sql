@@ -6,7 +6,7 @@ with events as (
 
 select
     events.full_session_id as full_session_id,
-    {{ dbt.any_value("latest_user_id") }} as user_id,
+    max(latest_user_id) as user_id,
     {{ dbt.any_value("device_id") }} as device_id,
     {{ dbt.any_value("session_id") }} as session_id,
     min(event_time) as start_time,
