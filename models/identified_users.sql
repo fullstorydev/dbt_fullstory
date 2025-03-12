@@ -1,8 +1,15 @@
+{{
+  config(
+    unique_key='user_id',
+  )
+}}
+{% set incremental_adjustment = -1 * var("fullstory_incremental_interval_hours", 7 * 24) %}
+
 select
-  user_id,
-  user_email,
-  user_display_name,
-  user_properties,
+  identifies.user_id,
+  identifies.user_email,
+  identifies.user_display_name,
+  identifies.user_properties,
   devices.id as last_device_id,
   devices.user_agent as last_device_user_agent,
   devices.type as last_device_type,
@@ -19,5 +26,13 @@ select
   devices.updated_time as last_updated_time,
   devices.processed_time as last_processed_time
 from {{ ref('identifies') }} identifies
-join {{ ref('devices') }} devices on identifies.device_id = devices.id and devices.event_seq_num_desc = 1
+inner join {{ ref('devices') }} devices on identifies.device_id = devices.id
 where identifies.event_seq_num_desc = 1
+and devices.event_seq_num_desc = 1
+and identifies.user_id is not null
+{% if is_incremental() %}
+and
+identifies.updated_time >=  (select max(identifies.updated_time) from {{ this }})  
+and
+identifies.event_time >= {{ dbt.dateadd("hour", incremental_adjustment, dbt.current_timestamp()) }} 
+{% endif %}

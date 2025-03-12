@@ -6,7 +6,7 @@ This dbt package contains models, macros, seeds, and tests for [Fullstory](https
 | - | - |
 | anonymous_users | All users that have not been identified. |
 | devices | All events with their device information parsed. |
-| events | All events (incremental materialization possible) |
+| events | All events |
 | identified_users | All users who have been identified. |
 | identities | All identify events. |
 | sessions | Session-level aggregations, including event counts broken down by type, location and device information, duration, Fullstory session replay links, etc.
@@ -155,7 +155,7 @@ Include the following into your packages.yml file:
 
 ```yaml
   - package: fullstorydev/dbt_fullstory
-    revision: 0.6.0
+    revision: 0.9.0
 ```
 
 Then, run `dbt deps` to install the package. We highly recommend pinning to a specific release. Pinning your version helps prevent unintended changes to your warehouse.
@@ -169,13 +169,15 @@ dbt seed
 
 DBT provides a powerful mechanism for improving the performance of your models and reducing query costs: [incremental models](https://docs.getdbt.com/docs/build/incremental-models). An incremental model only processes new or updated records since the last run, thereby saving significant processing power and time.
 
-> If you are running DBT on a regular interval, be aware that `dbt run` will take longer to run with the incremental materialization than with a view materialization.
+> If your organization generates an arbitrarily large amount of events or grows at a large rate, then each `dbt build` will increase past the point of acceptance. 
 
-In this package, it is important to start with the incrementalization of the `events` model, since it functions as an activity log and is an ancestor to all models in this package. If you do decide you need more incrementalization than just the events table, you should consider incrementalizing the ancestor models of your target model in order to reap the biggest benefit.
+For most customers, `sessions` will be the most taxing to your data warehouse, and we recommend you start incremental loading there.
 
 ### Getting started with incremental models
 
-You can configure your project to load the `events` table from this package incrementally. All you need to do is add a configuration block for the `dbt_fullstory` project under the `models` key in your `dbt_project.yml`:
+> The following models have the option of being materialized as a table incrementally: `devices`, `display_names`, `identified_users`, `sessions`.
+
+You can configure your project to load any of the forementioned models from this package incrementally. All you need to do is add a configuration block for the `dbt_fullstory` project under the `models` key in your `dbt_project.yml`:
 
 ```yaml
 # Configuring models
@@ -184,31 +186,16 @@ models:
   ...
 
   dbt_fullstory: # The package name you are customizing
-    intermediate:
-      int_sessions:
-        materialized: incremental
-        +partition_by:
-          field: updated_time
-          data_type: timestamp
-          granularity: day
-    events: # The model name
-      materialized: incremental
-      # The following options are Big Query specific optimizations. For specific configuration options for your warehouse see: https://docs.getdbt.com/reference/model-configs#warehouse-specific-configurations
-      +partition_by: 
+    sessions: # The model name
+      +materialized: incremental
+      # The following optional options are Big Query specific optimizations. For specific configuration options for your warehouse see: https://docs.getdbt.com/reference/model-configs#warehouse-specific-configurations
+      +partition_by: # Optional Config
         field: event_time
         data_type: timestamp
         granularity: day
-      cluster_by:
-        - device_id
-    sessions: # The model name
-      materialized: incremental
-      # The following options are Big Query specific optimizations. For specific configuration options for your warehouse see: https://docs.getdbt.com/reference/model-configs#warehouse-specific-configurations
-      +partition_by: 
-        field: updated_time
-        data_type: timestamp
-        granularity: day
-      cluster_by:
-        - user_id
+    devices: # The model Name
+      +materialized: incremental
+    # .. more models
 ```
 
 When loading data incrementally, DBT needs to know how far back to look in the current table for data to compare to the incoming data. We will look back 2 days for data to update by default. This interval can be configured with the variable `fullstory_incremental_interval_hours`.
@@ -225,10 +212,11 @@ This incremental interval is important; it can limit the cost of a query by grea
 
 Think about whether using date-partitioned tables, continuous rollups (using window functions), or occasionally running full-refreshes might serve your use case better.
 
-Remember, fine tuning model performance and costs is a balancing act. Incremental models may not suit all scenarios, but when managed correctly, they can be incredibly powerful. Start with the `events` model, measure the benefits, and then increment other models as necessary. Happy modeling!
+Remember, fine tuning model performance and costs is a balancing act. Incremental models may not suit all scenarios, but when managed correctly, they can be incredibly powerful. Start with the `sessions` model, measure the benefits, and then increment other models as necessary. Happy modeling!
 
-### Other models
-Although, we often find the incrementalization of the `events` model to be sufficient, you can customize the materialization method of any model in this package. Enabling additional incrementalization can be done in the same way as the `events` table, simply add a configuration block to your `dbt_project.yml`.
+### Other models 
+Although, we often find the incrementalization of the `sessions` model to be sufficient, you can customize the materialization method of any model in this package. Enabling additional incrementalization can be done in the same way as the `sessions` table, simply add a configuration block to your `dbt_project.yml`.
+
 
 ## Running Integration Tests
 The `integration_tests` directory is a DBT project itself that depends on `dbt_fullstory`. We use this package to test how our models will execute in the real world as it simulates a live environment and is used in CI to hit actual databases. If you wish, you can run these tests locally. All you need is a target configured in your `profiles.yml` that is authenticated to a supported warehouse type.

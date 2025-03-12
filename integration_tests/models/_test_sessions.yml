@@ -259,4 +259,4 @@ models:
           name: session_device_identify_user_works
           expression: user_id = 'session_device_identify_user_id'
           config:
-            where: full_session_id = '12:1'
+            where: full_session_id = '12:2'
