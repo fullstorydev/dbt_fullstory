@@ -218,3 +218,8 @@ models:
           expression: "{{ dbt_fullstory.json_value('event_properties', '$.target.element_properties.testTitle', skip_parse=True) }} = 'Test test Test.'"
           config:
             where: event_id = 'event_properties_target_test_1'
+      - dbt_utils.expression_is_true:
+          name: duplicate_event_id_test_1
+          expression: source_type = 'mobile_app'
+          config:
+            where: event_id = 'duplicate_event_id_test_1'
