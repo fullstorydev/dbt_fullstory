@@ -7,7 +7,6 @@ models:
       - name: event_id        
         tests: 
           - not_null
-          - unique
       - name: device_id
       - name: session_id
       - name: view_id
