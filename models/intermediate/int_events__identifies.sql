@@ -1,9 +1,9 @@
-with events as (
+with staging as (
 
     select * from {{ ref('stg_fullstory__events') }}
-)
+),
 
-, rn_cte as (
+rn_cte as (
 
     select
         event_id,
@@ -18,7 +18,7 @@ with events as (
         user_email,
         user_display_name,
         user_properties
-    from events
+    from staging
     where
         event_type = 'identify'
         and user_id is not null
@@ -26,4 +26,4 @@ with events as (
 
 )
 
-select * from events
+select * from rn_cte

@@ -33,7 +33,7 @@ This dbt package contains models, macros, seeds, and tests for [Fullstory](https
 
 > We **highly recommend** using `fullstory_events_database`, `fullstory_events_schema` and `fullstory_events_table` to indicate the location of the Fullstory events table that is synced from Data Destinations. Using these variables allow you to use a separate database or schema for the Fullstory events table than your dbt package.
 
-#### Example use of vars for Big Query
+#### Example use of vars for BigQuery
 ```yaml
 vars:
   fullstory_events_database: my-gcp-project

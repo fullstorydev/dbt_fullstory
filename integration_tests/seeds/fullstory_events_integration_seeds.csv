@@ -81,3 +81,6 @@ session_device_identify_user_test_1,2023-01-01 13:00:00,2023-01-01 12:00:00,2023
 session_device_identify_user_test_2,2023-01-01 13:00:05,2023-01-01 12:00:00,2023-01-01 00:00:00,12,1,1,click,{},web,{}
 session_device_identify_user_test_3,2023-01-01 13:00:00,2023-01-01 12:00:00,2023-01-01 00:00:00,12,2,1,identify,"{""user_id"":""session_device_identify_user_id""}",web,{}
 event_properties_target_test_1,2023-01-01 13:00:00,2023-01-01 12:00:00,2023-01-01 00:00:00,12,2,1,click,"{""target"":{""element_properties"":{""testPrice"":3.14,""testTitle"":""Test test Test.""},""raw_selector"":"".test-button"",""text"":""Test Button ****"",""masked"":true,""element_definition_id"":""good_element_definition_id"",""additional_element_definition_ids"":[""good_additional_element_definition_id""]}}",web,{}
+duplicate_event_id_test_1 ,2023-01-01 12:00:00,2023-01-01 13:00:00,2023-01-01 13:30:00,13,13,1,click,{},web,{}
+duplicate_event_id_test_1 ,2023-01-01 12:00:00,2023-01-01 14:00:00,2023-01-01 14:00:00,13,13,1,click,{},unknown,{}
+duplicate_event_id_test_1 ,2023-01-01 12:00:00,2023-01-01 14:00:00,2023-01-01 14:15:00,13,13,1,click,{},mobile_app,{}
