@@ -13,7 +13,10 @@ with source as (
         {{ dbt.cast("event_time", api.Column.translate_type("datetime")) }} as event_time,
         {{ dbt.cast("event_type", api.Column.translate_type("string")) }} as event_type,
         {{ dbt.cast("source_type", api.Column.translate_type("string")) }} as source_type,
-        {{ dbt.cast("updated_time", api.Column.translate_type("datetime")) }} as updated_time,
+        coalesce(
+            {{ dbt.cast("updated_time", api.Column.translate_type("datetime")) }},
+            {{ dbt.cast("processed_time", api.Column.translate_type("datetime")) }}
+            ) as updated_time,
         {{ dbt.cast("processed_time", api.Column.translate_type("datetime")) }} as processed_time,
         {{ dbt.concat(["device_id", "':'", "session_id"]) }} as full_session_id,
         {{
