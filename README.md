@@ -155,7 +155,7 @@ Include the following into your packages.yml file:
 
 ```yaml
   - package: fullstorydev/dbt_fullstory
-    revision: 0.9.2
+    revision: 0.9.3
 ```
 
 Then, run `dbt deps` to install the package. We highly recommend pinning to a specific release. Pinning your version helps prevent unintended changes to your warehouse.
@@ -165,7 +165,33 @@ To use the seed tables which have some info around common types, run:
 dbt seed
 ```
 
-## Incremental modeling
+## Customizing model materialization
+
+### Materializing models as a table
+
+You can configure your project to materialize any model from this package as a *table*. All you need to do is add a configuration block for the `dbt_fullstory` project under the `models` key in your `dbt_project.yml`:
+
+
+#### Configuring Individual Model as Table
+```yaml
+# Configuring models
+# Full documentation: https://docs.getdbt.com/docs/configuring-models
+models:
+  ...
+
+  dbt_fullstory: # The package name you are customizing
+    anonymous_users: # The model name
+      +materialized: table
+      # The following optional options are Big Query specific optimizations. For specific configuration options for your warehouse see: https://docs.getdbt.com/reference/model-configs#warehouse-specific-configurations
+      +partition_by: # Optional Config
+        field: event_time
+        data_type: timestamp
+        granularity: day
+    # .. more models
+```
+
+
+### Incremental modeling
 
 DBT provides a powerful mechanism for improving the performance of your models and reducing query costs: [incremental models](https://docs.getdbt.com/docs/build/incremental-models). An incremental model only processes new or updated records since the last run, thereby saving significant processing power and time.
 
@@ -173,7 +199,7 @@ DBT provides a powerful mechanism for improving the performance of your models a
 
 For most customers, `sessions` will be the most taxing to your data warehouse, and we recommend you start incremental loading there.
 
-### Getting started with incremental models
+#### Getting started with incremental models
 
 > The following models have the option of being materialized as a table incrementally: `devices`, `display_names`, `identified_users`, `sessions`.
 
