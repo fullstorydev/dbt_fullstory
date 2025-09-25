@@ -9,3 +9,4 @@ logs/
 working/
 
 package-lock.concurrent-update-lock
+dbt_internal_packages/
