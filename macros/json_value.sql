@@ -40,3 +40,53 @@
 {%- endif -%}
 
 {%- endmacro -%}
+
+{%- macro redshift__json_value(column, path, array, dtype, skip_parse, column_dtype, error_handling) -%}
+  {# Handle JSON parsing for Redshift #}
+  {%- if not skip_parse and column_dtype == 'STRING' -%}
+    {%- set column = "JSON_PARSE(" + column + ")" -%}
+  {%- endif -%}
+
+  {# Remove the leading $. from the path #}
+  {%- set path = modules.re.sub('\$\.?', '', path) -%}
+  {%- set path = modules.re.sub('([^.]+)', '"\g<0>"', path)%}
+
+  {# We can exit early if the path references the root. #}
+  {%- if not path -%}
+    {{ return(column) }}
+  {%- endif -%}
+
+  {%- if array -%}
+    {# Redshift does not have native array extraction, return the path access #}
+    {{column}}.{{path}}
+  {%- elif dtype == "object" -%}
+    {{column}}.{{path}}
+  {%- else -%}
+    {{column}}.{{path}}
+  {%- endif -%}
+{%- endmacro -%}
+
+{%- macro snowflake__json_value(column, path, array, dtype, skip_parse, column_dtype, error_handling) -%}
+  {# Handle JSON parsing for Snowflake #}
+  {%- if not skip_parse and column_dtype == 'STRING' -%}
+    {%- set column = "PARSE_JSON(" + column + ")" -%}
+  {%- endif -%}
+
+  {# Remove the leading $. from the path #}
+  {%- set path = modules.re.sub('\$\.?', '', path) -%}
+  {# Replace dots with colons in the path #}
+  {%- set path = modules.re.sub('\.', ':', path) -%}
+  {# If there is a path, prefix with a colon #}
+  {%- if path != '' -%}
+  {%- set path = ':' + path -%}
+  {%- endif -%}
+
+  {%- if array -%}
+    {# Snowflake array handling #}
+    {{column}}{{path}}
+  {%- elif dtype == "object" -%}
+    {{column}}{{path}}
+  {%- else -%}
+    {{column}}{{path}}
+  {%- endif -%}
+{%- endmacro -%}

@@ -12,7 +12,7 @@
         
         {{ column.prefix -}}
         {%- if column.cast_as -%}
-            {%- if error_handling == 'safe' -%}
+            {%- if target.type == 'bigquery' and error_handling == 'safe' -%}
                 safe_cast({{ inner }} as {{ column.cast_as }})
             {%- else -%}
                 cast({{ inner }} as {{ column.cast_as }})
