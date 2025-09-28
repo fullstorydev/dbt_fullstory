@@ -33,6 +33,9 @@ This dbt package contains models, macros, seeds, and tests for [Fullstory](https
 | fullstory_users_model_name | The customized name of the `users` model. |
 | fullstory_min_event_time | All events before this date will not be considered for analysis. Use this option to limit table size. |
 | fullstory_event_types | A list of event types to auto-generate rollups for in the `users` and `sessions` model. |
+| **fullstory_enable_safe_json_parsing** | **NEW in v0.10.0** - Enables safe JSON parsing with error handling. When `true` (default), uses `SAFE.PARSE_JSON` in BigQuery to handle malformed JSON gracefully. Set to `false` for strict parsing. |
+| **fullstory_enable_data_tests** | **NEW in v0.10.0** - Controls whether dbt data tests are enabled. When `true`, runs comprehensive data quality tests on all models. Default is `false` for performance. |
+| **fullstory_test_store_failures** | **NEW in v0.10.0** - When data tests are enabled, controls whether test failures are stored in your warehouse for analysis. Default is `false`. Only applicable when `fullstory_enable_data_tests` is `true`. |
 
 > We **highly recommend** using `fullstory_events_database`, `fullstory_events_schema` and `fullstory_events_table` to indicate the location of the Fullstory events table that is synced from Data Destinations. Using these variables allow you to use a separate database or schema for the Fullstory events table than your dbt package.
 
@@ -62,6 +65,68 @@ vars:
   fullstory_events_schema: my_schema
   fullstory_events_table: my_table
 ```
+
+## Configuration Variables (New in v0.10.0)
+
+### Data Quality and Error Handling
+
+The dbt_fullstory package now includes enhanced configuration options for better data quality management and error handling:
+
+#### Safe JSON Parsing
+
+```yaml
+vars:
+  fullstory_enable_safe_json_parsing: true  # Default: true
+```
+
+Controls how JSON data is parsed from Fullstory events:
+
+- **`true` (recommended)**: Uses safe JSON parsing functions (e.g., `SAFE.PARSE_JSON` in BigQuery) that handle malformed JSON gracefully
+- **`false`**: Uses strict JSON parsing that will fail on invalid JSON data
+
+This is particularly useful when dealing with:
+
+- Malformed JSON in event or source properties
+- Edge cases in data synchronization
+- Development environments with test data
+
+#### Data Testing Configuration
+
+```yaml
+vars:
+  fullstory_enable_data_tests: false        # Default: false
+  fullstory_test_store_failures: false     # Default: false
+```
+
+**Enable Data Tests:**
+
+- **`fullstory_enable_data_tests: true`**: Activates comprehensive data quality tests across all models
+- **`fullstory_enable_data_tests: false`**: Disables tests for faster builds (default for performance)
+
+**Store Test Failures:**
+
+- **`fullstory_test_store_failures: true`**: Saves failed test results in your warehouse for analysis
+- **`fullstory_test_store_failures: false`**: Does not store test failure details (default)
+
+#### Example Complete Configuration
+
+```yaml
+vars:
+  # Connection settings
+  fullstory_events_database: my-project
+  fullstory_events_schema: fullstory_data
+  fullstory_events_table: fullstory_events_o_123_na1
+  
+  # Data quality settings (NEW in v0.10.0)
+  fullstory_enable_safe_json_parsing: true
+  fullstory_enable_data_tests: true
+  fullstory_test_store_failures: false
+  
+  # Performance settings
+  fullstory_incremental_interval_hours: 48  # Look back 2 days for incremental updates
+```
+
+> **💡 Tip**: For production environments, we recommend keeping `fullstory_enable_safe_json_parsing: true` and enabling data tests during initial setup to validate data quality, then disabling them for regular runs to improve performance.
 
 ## Supported Warehouses
 

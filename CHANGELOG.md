@@ -25,6 +25,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- **Cross-warehouse compatibility** - Restored Snowflake and Redshift support by adding warehouse-specific implementations of JSON parsing macros
 - **BigQuery JSON parsing errors** - Resolved "No matching signature for function PARSE_JSON" errors by properly handling JSON vs STRING data types
 - **Window function performance** - Isolated expensive window operations to ephemeral intermediate model to improve overall pipeline performance
 - **Safe JSON parsing** - Added SAFE.PARSE_JSON usage when `fullstory_enable_safe_json_parsing` is enabled for better error resilience
