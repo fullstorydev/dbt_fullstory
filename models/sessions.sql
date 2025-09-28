@@ -15,7 +15,7 @@ with int_sessions as (
 
 , stg_events as (
 
-    select * from {{ ref('stg_fullstory__events') }}
+    select * from {{ ref('int_events__windowed') }}
 )
 
 {% if is_incremental() %}
@@ -23,7 +23,7 @@ with int_sessions as (
 
     select distinct
         full_session_id
-    from {{ ref('stg_fullstory__events') }}
+    from {{ ref('int_events__windowed') }}
     where
     updated_time >=  (select max(updated_time) from {{ this }})  
     and

@@ -20,7 +20,7 @@ with events as (
             partition by device_id
             order by event_time desc
         ) as event_seq_num_desc
-from {{ ref("stg_fullstory__events") }}
+from {{ ref("int_events__windowed") }}
 where full_session_id_rn = 1
 and device_id is not null
 and source_type != 'server' -- exclude server events, they won't have geo or device values.

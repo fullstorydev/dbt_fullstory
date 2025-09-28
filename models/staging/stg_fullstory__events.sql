@@ -1,10 +1,11 @@
-with source as (
 
+{%- set data_types = get_data_types_in_relation(source('fullstory', 'events')) -%}
+
+with source as (
     select * from {{ source("fullstory", "events") }}
 )
 
 , renamed as (
-
     select
         {{ dbt.cast("event_id", api.Column.translate_type("string")) }} as event_id,
         {{ dbt.cast("device_id", api.Column.translate_type("string")) }} as device_id,
@@ -16,7 +17,7 @@ with source as (
         coalesce(
             {{ dbt.cast("updated_time", api.Column.translate_type("datetime")) }},
             {{ dbt.cast("processed_time", api.Column.translate_type("datetime")) }}
-            ) as updated_time,
+        ) as updated_time,
         {{ dbt.cast("processed_time", api.Column.translate_type("datetime")) }} as processed_time,
         {{ dbt.concat(["device_id", "':'", "session_id"]) }} as full_session_id,
         {{
@@ -162,6 +163,7 @@ with source as (
                         "skip_parse": var("fullstory_skip_json_parse", False),
                     },
                 ],
+                data_types.get('source_properties', 'STRING')
             )
         }},
         {{
@@ -207,6 +209,7 @@ with source as (
                         "skip_parse": var("fullstory_skip_json_parse", False),
                     },
                 ],
+                data_types.get('event_properties', 'STRING')
             )
         }},
         {{
@@ -244,51 +247,15 @@ with source as (
                         "skip_parse": var("fullstory_skip_json_parse", False),
                     },
                 ],
+                data_types.get('event_properties', 'STRING')
             )
         }}
     from source
     where
-    event_type is not null and
-    event_time >= '{{ var("fullstory_min_event_time") }}'
-
-)
-
-, add_cols as (
-
-    select
-    *,   
-    first_value(user_id ignore nulls)  over (
-        partition by full_session_id
-        order by
-            event_time desc,
-            updated_time desc,
-            processed_time desc
-        rows between unbounded preceding and unbounded following
-    ) as latest_user_id,
-    row_number() over (
-        partition by full_session_id
-        order by
-            event_time desc,
-            updated_time desc,
-            processed_time desc
-    ) as full_session_id_rn,
-    row_number() over (
-        partition by device_id
-        order by
-            event_time desc,
-            updated_time desc,
-            processed_time desc
-    ) as device_id_rn,
-    row_number() over (
-        partition by user_id
-        order by
-            event_time desc,
-            updated_time desc,
-            processed_time desc
-    ) as user_id_rn
-from renamed
+        event_type is not null and
+        event_time >= '{{ var("fullstory_min_event_time") }}'
 )
 
 select
     *
-from add_cols
+from renamed
