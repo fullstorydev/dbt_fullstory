@@ -1,6 +1,6 @@
 with events as (
 
-    select * from {{ ref('stg_fullstory__events') }} 
+    select * from {{ ref('int_events__windowed') }} 
     
 )
 

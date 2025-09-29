@@ -1,5 +1,5 @@
 name: "dbt_fullstory"
-version: "0.9.3"
+version: "0.10.0"
 config-version: 2
 require-dbt-version: [">=1.6.0", "<2.0.0"]
 
@@ -24,30 +24,59 @@ clean-targets: # directories to be removed by `dbt clean`
 # Full documentation: https://docs.getdbt.com/docs/configuring-models
 models:
   dbt_fullstory:
-    # Materializations for "final", top-level semantic models are controlled via a config block in the sql files themselves.
-    # The models in the /models folder are intended for use in databases and/or consumption in other dbt packages.
-    # See https://docs.getdbt.com/docs/build/incremental-models for more details.
-
     +materialized: view
     +incremental_strategy: merge
     +on_schema_change: fail
-
-    sessions:
-      +materialized: incremental
-
-    # These materializations are for the protected, intermediate and staging models; they are not intended for direct querying
-    # or use in other dbt packages.
+    
+    # Performance optimizations
+    +persist_docs:
+      columns: true
+      relation: true
+      
+    # Staging layer - fast, minimal processing
     staging:
       +materialized: view
+      +tags: ['staging']
+      stg_fullstory__events:
+        +materialized: view
+        
+    # Intermediate layer - ephemeral for performance
     intermediate:
-      +materialized: ephemeral
+      +materialized: ephemeral  
+      +tags: ['intermediate']
+      
+    # Mart layer - materialized appropriately
+    sessions:
+      +materialized: incremental
+      +unique_key: full_session_id
+      +incremental_strategy: merge
+      +tags: ['mart', 'incremental']
+      
+    events:
+      # +materialized: incremental  # Consider changing from view if large
+      +unique_key: event_id
+      +incremental_strategy: merge  
+      +tags: ['mart', 'incremental']
 
+# Test configurations based on variables
+tests:
+  dbt_fullstory:
+    +enabled: "{{ var('fullstory_enable_data_tests', false) }}"
+    +store_failures: "{{ var('fullstory_test_store_failures', false) }}"
+    +warn_if: ">= 1"
+    +error_if: ">= 100"
 
-  +persist_docs:
-    columns: true
-    relation: true
 
 vars:
+  # Data quality
+  fullstory_enable_safe_json_parsing: true
+  
+  # Testing
+  fullstory_enable_data_tests: false
+  fullstory_test_store_failures: false
+
+# Project-level configurations
+
   dbt_date:time_zone: Etc/UTC
   fullstory_incremental_interval_hours: 192 # 8 days
   fullstory_replay_host: app.fullstory.com
