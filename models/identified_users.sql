@@ -32,7 +32,7 @@ and devices.event_seq_num_desc = 1
 and identifies.user_id is not null
 {% if is_incremental() %}
 and
-identifies.updated_time >=  (select max(identifies.updated_time) from {{ this }})  
+identifies.updated_time >=  (select max(updated_time) from {{ this }})  
 and
 identifies.event_time >= {{ dbt.dateadd("hour", incremental_adjustment, dbt.current_timestamp()) }} 
 {% endif %}

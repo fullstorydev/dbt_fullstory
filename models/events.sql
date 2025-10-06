@@ -71,7 +71,7 @@ from staging
 where event_id_rn = 1
 {% if is_incremental() %}
 and
-staging.updated_time >=  (select max(staging.updated_time) from {{ this }})  
+updated_time >=  (select max(updated_time) from {{ this }})  
 and
-staging.event_time >= {{ dbt.dateadd("hour", incremental_adjustment, dbt.current_timestamp()) }} 
+event_time >= {{ dbt.dateadd("hour", incremental_adjustment, dbt.current_timestamp()) }} 
 {% endif %}
