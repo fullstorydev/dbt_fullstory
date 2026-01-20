@@ -1,5 +1,9 @@
 # The Official Fullstory dbt Package for Data Destinations
 
+> ⚠️ **DEPRECATION NOTICE**: This repository is deprecated and no longer maintained. No further updates, bug fixes, or security patches will be provided.
+>
+> **Fullstory now provides this functionality natively through [Ready to Analyze Views](https://developer.fullstory.com/anywhere/warehouse/ready-to-analyze-views/).** If you are an existing customer, please contact your Fullstory representative to have it enabled. If you are a new customer, your newly connected warehouse will be opted-in automatically.
+
 This dbt package contains models, macros, seeds, and tests for [Fullstory](https://www.fullstory.com/)'s [Data Destinations](https://help.fullstory.com/hc/en-us/articles/6295300682903-Data-Destinations) add-on.
 
 ## Models
