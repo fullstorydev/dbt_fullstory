@@ -374,6 +374,9 @@ user_cols:
 
 models:
   - name: users
+
+    deprecation_date: 2026-01-21
+
     access: public
     config:
       alias: "{% if var('fullstory_users_model_name', '') %}{{ var('fullstory_users_model_name') }}{% else %}{% if target.type == 'bigquery' %}fullstory_users_{{ modules.re.sub('[^a-zA-Z\\d_\\-]', '_', target.name) }}{% else %}users{% endif %}{% endif %}"

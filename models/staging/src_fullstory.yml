@@ -2,6 +2,9 @@ version: 2
 
 models:
   - name: stg_fullstory__events
+
+    deprecation_date: 2026-01-21
+
     description: |
       **Staging model for Fullstory Events**
       

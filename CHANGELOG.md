@@ -5,11 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Deprecated] - 2026-01-20
+## [0.11.0] - 2026-01-21
 
-### Notice
+### ⚠️ DEPRECATION NOTICE
 
-- **This package is now deprecated and will no longer receive updates.**
+**This package will be deprecated as of 2026-01-21 and will no longer receive updates.** 
+
 - No further bug fixes, features, or security patches will be provided.
 - The repository has been archived and is now read-only.
 - Existing users may continue to use version 0.10.0, but no support will be available.

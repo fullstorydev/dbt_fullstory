@@ -1,5 +1,6 @@
 models:
   - name: anonymous_users
+    deprecation_date: 2026-01-21
     access: public
     config:
       alias: "{{ var('fullstory_anonymous_users_model_name', 'anonymous_users') }}"
@@ -47,6 +48,7 @@ models:
         tests:
           - not_null
   - name: devices
+    deprecation_date: 2026-01-21
     access: public
     config:
       alias: "{{ var('fullstory_devices_model_name', 'devices') }}"
@@ -116,6 +118,7 @@ models:
         tests:
           - not_null
   - name: events
+    deprecation_date: 2026-01-21
     access: public
     config:
       alias: "{{ var('fullstory_events_model_name', 'events') }}"
@@ -255,6 +258,7 @@ models:
       - name: user_properties
         description: '{{ doc("column_user_properties") }}'
   - name: identified_users
+    deprecation_date: 2026-01-21
     access: public
     config:
       alias: "{{ var('fullstory_identified_users_model_name', 'identified_users') }}"
@@ -328,6 +332,7 @@ models:
         tests:
           - not_null
   - name: identifies
+    deprecation_date: 2026-01-21
     access: public
     config:
       alias: "{{ var('fullstory_identifies_model_name', 'identifies') }}"
