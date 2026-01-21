@@ -241,7 +241,7 @@ Include the following into your packages.yml file:
 
 ```yaml
   - package: fullstorydev/dbt_fullstory
-    revision: 0.10.0
+    revision: 0.11.0
 ```
 
 Then, run `dbt deps` to install the package. We highly recommend pinning to a specific release. Pinning your version helps prevent unintended changes to your warehouse.
