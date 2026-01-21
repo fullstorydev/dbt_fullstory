@@ -430,6 +430,9 @@ session_cols:
 
 models:
   - name: sessions
+
+    deprecation_date: 2026-01-21
+
     access: public
     config:
       alias: "{% if var('fullstory_sessions_model_name', '') %}{{ var('fullstory_sessions_model_name') }}{% else %}{% if target.type == 'bigquery' %}fullstory_sessions_{{ modules.re.sub('[^a-zA-Z\\d_\\-]', '_', target.name) }}{% else %}sessions{% endif %}{% endif %}"

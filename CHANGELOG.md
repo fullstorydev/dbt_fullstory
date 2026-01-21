@@ -5,6 +5,20 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.11.0] - 2026-01-21
+
+### ⚠️ DEPRECATION NOTICE
+
+**This package will be deprecated as of 2026-01-21 and will no longer receive updates.** 
+
+- No further bug fixes, features, or security patches will be provided.
+- The repository has been archived and is now read-only.
+- Existing users may continue to use version 0.10.0, but no support will be available.
+
+### Migration
+
+Fullstory now provides this functionality natively through [Ready to Analyze Views](https://developer.fullstory.com/anywhere/warehouse/ready-to-analyze-views/). If you are an existing customer, please contact your Fullstory representative to have it enabled. If you are a new customer, your newly connected warehouse will be opted-in automatically.
+
 ## [0.10.0] - 2025-09-28
 
 ### Added
